@@ -1,0 +1,24 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+__unconfig*
+todos.json
+
+# generated i18n output (built by the Paraglide vite plugin)
+src/paraglide
+project.inlang/cache
+
+# personal Claude Code overrides
+.claude/settings.local.json
+CLAUDE.local.md
+
+# local secrets (Cloudflare)
+.dev.vars*

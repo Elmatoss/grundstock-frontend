@@ -1,0 +1,76 @@
+{
+	"permissions": {
+		"allow": [
+			"Bash(pnpm *)",
+			"Bash(rtk pnpm *)",
+			"Bash(ls *)",
+			"Bash(rtk ls *)",
+			"Bash(rtk grep *)",
+			"Bash(rtk read *)",
+			"Bash(git status*)",
+			"Bash(git diff*)",
+			"Bash(git log*)",
+			"Bash(git show*)",
+			"Bash(git branch*)",
+			"Bash(git fetch*)",
+			"Bash(git add *)",
+			"Bash(git commit *)",
+			"Bash(git switch *)",
+			"Bash(git checkout -b *)",
+			"Bash(git stash*)",
+			"Bash(rtk git status*)",
+			"Bash(rtk git diff*)",
+			"Bash(rtk git log*)",
+			"Bash(rtk git show*)",
+			"Bash(rtk git branch*)",
+			"Bash(rtk git add *)",
+			"Bash(rtk git commit *)",
+			"Bash(gh pr view*)",
+			"Bash(gh pr diff*)",
+			"Bash(gh pr list*)",
+			"Bash(gh pr checks*)",
+			"Bash(rtk gh pr diff*)",
+			"Bash(rtk gh pr view*)"
+		],
+		"ask": [
+			"Bash(pnpm deploy*)",
+			"Bash(pnpm run deploy*)",
+			"Bash(rtk pnpm deploy*)",
+			"Bash(rtk pnpm run deploy*)",
+			"Bash(pnpm exec wrangler deploy*)",
+			"Bash(npx wrangler deploy*)",
+			"Bash(wrangler deploy*)",
+			"Bash(git push*)",
+			"Bash(rtk git push*)"
+		],
+		"deny": [
+			"Read(.env*)",
+			"Read(.dev.vars*)",
+			"Read(**/*.pem)"
+		]
+	},
+	"hooks": {
+		"PreToolUse": [
+			{
+				"matcher": "Edit|Write",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/protect-generated.sh\""
+					}
+				]
+			}
+		],
+		"PostToolUse": [
+			{
+				"matcher": "Edit|Write",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/biome-fix.sh\""
+					}
+				]
+			}
+		]
+	}
+}
