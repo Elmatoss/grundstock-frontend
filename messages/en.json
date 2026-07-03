@@ -1,9 +1,11 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "home_page": "Home page",
-  "about_page": "About page",
-  "example_message": "Welcome to your i18n app.",
-  "language_label": "Language",
-  "current_locale": "Current locale: {locale}",
-  "learn_router": "Learn Paraglide JS"
+  "meta_title": "Grundstock Festival 2026 — August 13–16, Vilswörth",
+  "meta_description": "Three days of festival from friends for friends near Regensburg — live music, workshops, food included. August 13–16, 2026 in Vilswörth.",
+  "hero_date_location": "August 13–16, 2026 · Vilswörth",
+  "hero_tagline": "A festival from friends for friends — from Regensburg, for Regensburg.",
+  "hero_coming_soon": "The new website is in the making. Tickets are already available.",
+  "cta_tickets": "Get tickets",
+  "cta_helfen": "Get involved",
+  "footer_credit": "Grundstock is a project by Neues Brett e.V. — a registered non-profit."
 }
