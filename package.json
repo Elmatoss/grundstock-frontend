@@ -2,6 +2,7 @@
   "name": "grundstock-frontend",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@11.9.0",
   "imports": {
     "#/*": "./src/*"
   },
@@ -16,6 +17,8 @@
     "lint": "biome lint",
     "check": "biome check",
     "check:fix": "biome check --write",
+    "i18n:compile": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide",
+    "prepare": "husky && pnpm i18n:compile",
     "deploy": "pnpm run build && wrangler deploy"
   },
   "dependencies": {
@@ -52,7 +55,9 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "husky": "^9.1.7",
     "jsdom": "^28.1.0",
+    "lint-staged": "^17.0.8",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
     "vitest": "^4.1.5",

@@ -9,6 +9,7 @@ TanStack Start (SSR) deployed to Cloudflare Workers. React 19 + React Compiler, 
 - `pnpm check` — Biome lint + format + import-order (read-only; `check:fix` writes)
 - `pnpm test` — Vitest, single run
 - `pnpm generate-routes` — regenerate route tree (vite plugin also does this on dev/build)
+- `pnpm i18n:compile` — compile Paraglide messages into `src/paraglide/` (runs automatically on install and dev/build)
 - `pnpm build` / `pnpm deploy` — build / deploy to Cloudflare. Never deploy unprompted.
 
 Verify changes with `pnpm typecheck && pnpm check`. A PostToolUse hook auto-formats every edited file — never spend turns on pure formatting.
@@ -39,4 +40,5 @@ Reference implementation for these patterns: `../smart-hems-service-portal-front
 ## Git
 
 - `develop` is the integration branch; feature branches (`feat/<name>`, `fix/<name>`) branch off it. `main` is for releases.
-- Conventional commits (`feat:`, `fix:`, `chore:`, `refactor:`). Never push without being asked.
+- Conventional commits (`feat:`, `fix:`, `chore:`, `refactor:`). Never stage, commit, or push — the developer runs all git write operations himself.
+- Pre-commit (husky + lint-staged) runs Biome on staged files + full typecheck; CI (`.github/workflows/ci.yml`) runs typecheck, check, and tests on pushes to main/develop and all PRs.
