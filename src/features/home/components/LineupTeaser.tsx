@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { m } from "#/paraglide/messages";
 import { Section } from "./Section";
 
@@ -8,9 +9,12 @@ export function LineupTeaser() {
 				<p className="m-0">{m.lineup_text()}</p>
 				<p className="m-0">{m.lineup_stages()}</p>
 			</div>
-			<p className="mt-6 inline-block rounded-full border border-glow/40 bg-glow/10 px-4 py-2 font-display text-sm font-semibold text-glow-soft">
-				{m.lineup_soon()}
-			</p>
+			<Link
+				to="/lineup"
+				className="mt-6 inline-block rounded-full border border-glow/40 bg-glow/10 px-4 py-2 font-display text-sm font-semibold text-glow-soft no-underline transition-colors hover:border-glow hover:text-glow"
+			>
+				{m.lineup_cta()} →
+			</Link>
 		</Section>
 	);
 }

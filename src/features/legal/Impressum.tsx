@@ -2,8 +2,7 @@ import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { LegalLayout } from "./LegalLayout";
 
-// German-only static draft; moves to CMS portable text in Phase 2 (docs/PLAN.md §5).
-// TODO before launch: replace the address placeholder with the ladungsfähige Anschrift.
+// German-only static draft; moves to CMS portable text later (docs/PLAN.md §5).
 export function ImpressumPage() {
 	return (
 		<LegalLayout title={m.legal_impressum_title()}>
@@ -11,7 +10,9 @@ export function ImpressumPage() {
 			<p>
 				Neues Brett e.V.
 				<br />
-				<strong>[Ladungsfähige Anschrift wird nachgetragen]</strong>
+				Bischof-Konrad-Str. 23
+				<br />
+				93051 Regensburg
 			</p>
 			<p>
 				Vertreten durch den Vorstand (§ 26 BGB):

@@ -9,13 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkshopsRouteImport } from './routes/workshops'
 import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as MittelgschaftlerRouteImport } from './routes/mittelgschaftler'
+import { Route as LineupRouteImport } from './routes/lineup'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as HelfenRouteImport } from './routes/helfen'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArtistsSlugRouteImport } from './routes/artists.$slug'
 
+const WorkshopsRoute = WorkshopsRouteImport.update({
+  id: '/workshops',
+  path: '/workshops',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TicketsRoute = TicketsRouteImport.update({
   id: '/tickets',
   path: '/tickets',
@@ -24,6 +32,11 @@ const TicketsRoute = TicketsRouteImport.update({
 const MittelgschaftlerRoute = MittelgschaftlerRouteImport.update({
   id: '/mittelgschaftler',
   path: '/mittelgschaftler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LineupRoute = LineupRouteImport.update({
+  id: '/lineup',
+  path: '/lineup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImpressumRoute = ImpressumRouteImport.update({
@@ -46,22 +59,33 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArtistsSlugRoute = ArtistsSlugRouteImport.update({
+  id: '/artists/$slug',
+  path: '/artists/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/datenschutz': typeof DatenschutzRoute
   '/helfen': typeof HelfenRoute
   '/impressum': typeof ImpressumRoute
+  '/lineup': typeof LineupRoute
   '/mittelgschaftler': typeof MittelgschaftlerRoute
   '/tickets': typeof TicketsRoute
+  '/workshops': typeof WorkshopsRoute
+  '/artists/$slug': typeof ArtistsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/datenschutz': typeof DatenschutzRoute
   '/helfen': typeof HelfenRoute
   '/impressum': typeof ImpressumRoute
+  '/lineup': typeof LineupRoute
   '/mittelgschaftler': typeof MittelgschaftlerRoute
   '/tickets': typeof TicketsRoute
+  '/workshops': typeof WorkshopsRoute
+  '/artists/$slug': typeof ArtistsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +93,11 @@ export interface FileRoutesById {
   '/datenschutz': typeof DatenschutzRoute
   '/helfen': typeof HelfenRoute
   '/impressum': typeof ImpressumRoute
+  '/lineup': typeof LineupRoute
   '/mittelgschaftler': typeof MittelgschaftlerRoute
   '/tickets': typeof TicketsRoute
+  '/workshops': typeof WorkshopsRoute
+  '/artists/$slug': typeof ArtistsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,24 +106,33 @@ export interface FileRouteTypes {
     | '/datenschutz'
     | '/helfen'
     | '/impressum'
+    | '/lineup'
     | '/mittelgschaftler'
     | '/tickets'
+    | '/workshops'
+    | '/artists/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/datenschutz'
     | '/helfen'
     | '/impressum'
+    | '/lineup'
     | '/mittelgschaftler'
     | '/tickets'
+    | '/workshops'
+    | '/artists/$slug'
   id:
     | '__root__'
     | '/'
     | '/datenschutz'
     | '/helfen'
     | '/impressum'
+    | '/lineup'
     | '/mittelgschaftler'
     | '/tickets'
+    | '/workshops'
+    | '/artists/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -104,12 +140,22 @@ export interface RootRouteChildren {
   DatenschutzRoute: typeof DatenschutzRoute
   HelfenRoute: typeof HelfenRoute
   ImpressumRoute: typeof ImpressumRoute
+  LineupRoute: typeof LineupRoute
   MittelgschaftlerRoute: typeof MittelgschaftlerRoute
   TicketsRoute: typeof TicketsRoute
+  WorkshopsRoute: typeof WorkshopsRoute
+  ArtistsSlugRoute: typeof ArtistsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/workshops': {
+      id: '/workshops'
+      path: '/workshops'
+      fullPath: '/workshops'
+      preLoaderRoute: typeof WorkshopsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tickets': {
       id: '/tickets'
       path: '/tickets'
@@ -122,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/mittelgschaftler'
       fullPath: '/mittelgschaftler'
       preLoaderRoute: typeof MittelgschaftlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lineup': {
+      id: '/lineup'
+      path: '/lineup'
+      fullPath: '/lineup'
+      preLoaderRoute: typeof LineupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/impressum': {
@@ -152,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/artists/$slug': {
+      id: '/artists/$slug'
+      path: '/artists/$slug'
+      fullPath: '/artists/$slug'
+      preLoaderRoute: typeof ArtistsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -160,8 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   DatenschutzRoute: DatenschutzRoute,
   HelfenRoute: HelfenRoute,
   ImpressumRoute: ImpressumRoute,
+  LineupRoute: LineupRoute,
   MittelgschaftlerRoute: MittelgschaftlerRoute,
   TicketsRoute: TicketsRoute,
+  WorkshopsRoute: WorkshopsRoute,
+  ArtistsSlugRoute: ArtistsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

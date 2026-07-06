@@ -4,8 +4,6 @@ import { m } from "#/paraglide/messages";
 
 export default function Header() {
 	const anchors = [
-		["lineup", m.nav_lineup()],
-		["workshops", m.nav_workshops()],
 		["helfen", m.nav_helfen()],
 		["anreise", m.nav_anreise()],
 	] as const;
@@ -20,6 +18,20 @@ export default function Header() {
 					Grundstock <span className="text-glow">2026</span>
 				</Link>
 				<div className="hidden items-center gap-6 md:flex">
+					<Link
+						to="/lineup"
+						className="text-sm font-semibold text-moon-dim no-underline transition-colors hover:text-moon"
+						activeProps={{ className: "text-moon" }}
+					>
+						{m.nav_lineup()}
+					</Link>
+					<Link
+						to="/workshops"
+						className="text-sm font-semibold text-moon-dim no-underline transition-colors hover:text-moon"
+						activeProps={{ className: "text-moon" }}
+					>
+						{m.nav_workshops()}
+					</Link>
 					{anchors.map(([hash, label]) => (
 						<Link
 							key={hash}

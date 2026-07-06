@@ -30,6 +30,12 @@
   "lineup_text": "This year old friends meet fresh acts — from hip-hop to indie, Latin, DnB, rock, disco and techno. The full lineup lands here as soon as it's set.",
   "lineup_stages": "Three stages: the Turtle (our big tent), the Mainstage and the Bunker — where DJs play until the morning.",
   "lineup_soon": "Being put together right now — stay tuned.",
+  "lineup_cta": "See the lineup",
+  "artist_back": "Back to lineup",
+  "workshops_soon": "The workshop programme lands here as soon as it's set.",
+  "state_loading": "Loading …",
+  "state_error_title": "Something went wrong.",
+  "state_error_text": "Try again in a moment — or head back to the homepage.",
 
   "workshops_kicker": "Workshops",
   "workshops_title": "Try things, hang out, get inspired",
@@ -64,6 +70,7 @@
   "shuttle_zurueck": "Grundstock → Regensburg",
   "day_do": "Thursday",
   "day_fr": "Friday",
+  "day_sa": "Saturday",
   "day_so": "Sunday",
 
   "story_kicker": "Our story",

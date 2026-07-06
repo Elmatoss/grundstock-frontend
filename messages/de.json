@@ -30,6 +30,12 @@
   "lineup_text": "Dieses Jahr treffen alte Bekannte auf frische Acts — von Hip-Hop über Indie und Latin bis DnB, Rock, Disco und Techno. Das volle Lineup landet hier, sobald es steht.",
   "lineup_stages": "Drei Bühnen: das Turtle (unser großes Zelt), die Mainstage und der Bunker — wo die DJs bis in den Morgen spielen.",
   "lineup_soon": "Wird gerade geschnürt — stay tuned.",
+  "lineup_cta": "Zum Lineup",
+  "artist_back": "Zurück zum Lineup",
+  "workshops_soon": "Das Workshop-Programm landet hier, sobald es steht.",
+  "state_loading": "Lädt …",
+  "state_error_title": "Da ist was schiefgelaufen.",
+  "state_error_text": "Versuch es gleich nochmal — oder geh zurück zur Startseite.",
 
   "workshops_kicker": "Workshops",
   "workshops_title": "Ausprobieren, abhängen, inspirieren lassen",
@@ -64,6 +70,7 @@
   "shuttle_zurueck": "Grundstock → Regensburg",
   "day_do": "Donnerstag",
   "day_fr": "Freitag",
+  "day_sa": "Samstag",
   "day_so": "Sonntag",
 
   "story_kicker": "Unsere Geschichte",
