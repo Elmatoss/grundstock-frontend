@@ -144,17 +144,6 @@ body {
   background: color-mix(in oklab, var(--glow) 35%, transparent);
 }
 
-a {
-  color: var(--glow-soft);
-  text-decoration-color: color-mix(in oklab, var(--glow) 40%, transparent);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-}
-
-a:hover {
-  color: var(--glow);
-}
-
 .page-wrap {
   width: min(1080px, calc(100% - 2rem));
   margin-inline: auto;
@@ -167,5 +156,16 @@ a:hover {
   body {
     background-color: var(--background);
     color: var(--foreground);
+  }
+  /* Inside @layer base so Tailwind utility classes (e.g. text-night on
+     button-styled links) always win — unlayered rules would override them */
+  a {
+    color: var(--glow-soft);
+    text-decoration-color: color-mix(in oklab, var(--glow) 40%, transparent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+  a:hover {
+    color: var(--glow);
   }
 }

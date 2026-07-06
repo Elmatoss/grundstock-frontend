@@ -30,7 +30,7 @@ const STARS = [
 
 export function Hero() {
 	return (
-		<section className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-4 text-center">
+		<section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 text-center">
 			<div
 				aria-hidden
 				className="pointer-events-none absolute inset-0 bg-[radial-gradient(700px_420px_at_50%_38%,rgba(255,181,36,0.14),transparent_65%),radial-gradient(900px_600px_at_50%_30%,rgba(139,92,246,0.12),transparent_70%)]"
@@ -62,8 +62,10 @@ export function Hero() {
 				<p className="m-0 font-serif text-lg tracking-wide text-glow-soft sm:text-xl">
 					{m.hero_date_location()}
 				</p>
-				<h1 className="m-0 font-display text-6xl font-bold text-moon [text-shadow:0_0_48px_rgba(255,181,36,0.35)] sm:text-8xl">
-					„Grundstock“
+				<h1 className="m-0 font-display text-6xl leading-none font-bold text-moon [text-shadow:0_0_48px_rgba(255,181,36,0.35)] sm:text-8xl">
+					Grund
+					<wbr />
+					stock
 				</h1>
 				<p className="m-0 max-w-xl text-balance text-moon-dim">
 					{m.hero_tagline()}

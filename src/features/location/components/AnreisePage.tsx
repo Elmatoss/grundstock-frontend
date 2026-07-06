@@ -1,8 +1,9 @@
 import { ShuttleTables } from "#/features/home/components/ShuttleTables";
 import { m } from "#/paraglide/messages";
 
-const OSM_SEARCH_URL =
-	"https://www.openstreetmap.org/search?query=Vilsw%C3%B6rth%20Rieden";
+// Opens the Google Maps app on phones via the official Maps search URL
+const MAPS_URL =
+	"https://www.google.com/maps/search/?api=1&query=Vilsw%C3%B6rth+Rieden";
 
 export function AnreisePage() {
 	return (
@@ -17,7 +18,7 @@ export function AnreisePage() {
 				{m.anreise_intro()}
 			</p>
 			<a
-				href={OSM_SEARCH_URL}
+				href={MAPS_URL}
 				target="_blank"
 				rel="noopener noreferrer"
 				className="mt-5 inline-block rounded-full border border-moon-dim/40 px-5 py-2.5 text-sm font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
