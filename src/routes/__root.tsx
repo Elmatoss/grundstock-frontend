@@ -43,6 +43,15 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{ property: "og:image", content: `${site.baseUrl}/recap-poster.jpg` },
 			{ property: "og:image:width", content: "1280" },
 			{ property: "og:image:height", content: "720" },
+			{ property: "og:image:alt", content: "Grundstock Festival" },
+			{
+				property: "og:locale",
+				content: getLocale() === "de" ? "de_DE" : "en_GB",
+			},
+			{
+				property: "og:locale:alternate",
+				content: getLocale() === "de" ? "en_GB" : "de_DE",
+			},
 			{ name: "twitter:card", content: "summary_large_image" },
 		],
 		links: [

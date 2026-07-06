@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HomePage } from "#/features/home/components/HomePage";
 import { featuredArtistsQueryOptions } from "#/features/lineup/api/artists";
+import { seo } from "#/lib/seo";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 
@@ -10,8 +11,11 @@ export const Route = createFileRoute("/")({
 	loader: ({ context }) =>
 		context.queryClient.prefetchQuery(featuredArtistsQueryOptions),
 	head: () => ({
-		meta: [{ title: m.meta_title() }],
-		links: [{ rel: "canonical", href: `${site.baseUrl}/` }],
+		...seo({
+			title: m.meta_title(),
+			description: m.meta_description(),
+			path: "/",
+		}),
 		scripts: [
 			{
 				type: "application/ld+json",
@@ -19,6 +23,7 @@ export const Route = createFileRoute("/")({
 					"@context": "https://schema.org",
 					"@type": "MusicFestival",
 					name: "Grundstock Festival 2026",
+					url: site.baseUrl,
 					startDate: "2026-08-13",
 					endDate: site.festivalEndDate,
 					eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
