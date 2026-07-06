@@ -3,5 +3,11 @@
   "name": "grundstock-frontend",
   "compatibility_date": "2025-09-02",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "./src/server.ts"
+  "main": "./src/server.ts",
+  // Custom domains — require the grundstock-festival.de zone to be active
+  // on the same Cloudflare account before deploying
+  "routes": [
+    { "pattern": "grundstock-festival.de", "custom_domain": true },
+    { "pattern": "www.grundstock-festival.de", "custom_domain": true }
+  ]
 }
