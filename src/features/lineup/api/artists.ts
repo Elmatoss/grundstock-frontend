@@ -23,6 +23,17 @@ export const artistListQueryOptions = queryOptions({
 	staleTime: 5 * 60 * 1000,
 });
 
+export const featuredArtistsQueryOptions = queryOptions({
+	queryKey: ["artists", "featured"],
+	queryFn: async () => {
+		const result = await sanityClient.fetch(
+			`*[_type == "artist" && featured == true && defined(slug.current)] | order(name asc) [0...8] { ${CARD_PROJECTION} }`,
+		);
+		return zArtistList.parse(result);
+	},
+	staleTime: 5 * 60 * 1000,
+});
+
 export const artistDetailQueryOptions = (slug: string) =>
 	queryOptions({
 		queryKey: ["artist", slug],

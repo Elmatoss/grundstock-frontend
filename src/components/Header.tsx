@@ -3,10 +3,7 @@ import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 
 export default function Header() {
-	const anchors = [
-		["helfen", m.nav_helfen()],
-		["anreise", m.nav_anreise()],
-	] as const;
+	const anchors = [["helfen", m.nav_helfen()]] as const;
 
 	return (
 		<header className="sticky top-0 z-50 border-b border-border bg-night/70 backdrop-blur-md">
@@ -42,6 +39,20 @@ export default function Header() {
 							{label}
 						</Link>
 					))}
+					<Link
+						to="/anreise"
+						className="text-sm font-semibold text-moon-dim no-underline transition-colors hover:text-moon"
+						activeProps={{ className: "text-moon" }}
+					>
+						{m.nav_anreise()}
+					</Link>
+					<Link
+						to="/infos"
+						className="text-sm font-semibold text-moon-dim no-underline transition-colors hover:text-moon"
+						activeProps={{ className: "text-moon" }}
+					>
+						{m.nav_infos()}
+					</Link>
 				</div>
 				<a
 					href={site.ticketUrl}

@@ -16,6 +16,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://grundstock-festival.de/verein</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/anreise</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/infos</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://grundstock-festival.de/impressum</loc>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>

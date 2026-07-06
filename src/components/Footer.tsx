@@ -9,6 +9,12 @@ export default function Footer() {
 		<footer className="border-t border-border">
 			<div className="page-wrap flex flex-col items-center gap-4 py-8 text-center text-sm text-moon-dim">
 				<nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+					<Link to="/verein" className="text-moon-dim hover:text-moon">
+						{m.nav_verein()}
+					</Link>
+					<Link to="/infos" className="text-moon-dim hover:text-moon">
+						{m.nav_infos()}
+					</Link>
 					<Link to="/impressum" className="text-moon-dim hover:text-moon">
 						{m.footer_impressum()}
 					</Link>

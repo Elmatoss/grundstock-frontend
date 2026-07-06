@@ -1,18 +1,9 @@
-import { shuttles, site } from "#/lib/site";
+import { Link } from "@tanstack/react-router";
 import { m } from "#/paraglide/messages";
-import { Card } from "./Card";
 import { Section } from "./Section";
-
-const dayLabel: Record<string, () => string> = {
-	Do: m.day_do,
-	Fr: m.day_fr,
-	So: m.day_so,
-};
+import { ShuttleTables } from "./ShuttleTables";
 
 export function LocationSection() {
-	const outbound = shuttles.filter((s) => s.direction === "hin");
-	const inbound = shuttles.filter((s) => s.direction === "zurueck");
-
 	return (
 		<Section
 			id="anreise"
@@ -24,40 +15,15 @@ export function LocationSection() {
 				{m.shuttle_title()}
 			</h3>
 			<p className="m-0 max-w-2xl text-moon-dim">{m.shuttle_text()}</p>
-			<div className="mt-5 grid gap-4 sm:grid-cols-2">
-				<Card title={m.shuttle_hin()}>
-					<ul className="m-0 list-none space-y-1 p-0">
-						{outbound.map((s) => (
-							<li key={s.day} className="flex justify-between gap-4">
-								<span>{dayLabel[s.day]()}</span>
-								<span className="text-moon tabular-nums">
-									{s.times.join(" · ")}
-								</span>
-							</li>
-						))}
-					</ul>
-				</Card>
-				<Card title={m.shuttle_zurueck()}>
-					<ul className="m-0 list-none space-y-1 p-0">
-						{inbound.map((s) => (
-							<li key={s.day} className="flex justify-between gap-4">
-								<span>{dayLabel[s.day]()}</span>
-								<span className="text-moon tabular-nums">
-									{s.times.join(" · ")}
-								</span>
-							</li>
-						))}
-					</ul>
-					<a
-						href={site.ticketUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="mt-4 inline-block text-sm font-semibold"
-					>
-						{m.cta_tickets()} →
-					</a>
-				</Card>
+			<div className="mt-5">
+				<ShuttleTables />
 			</div>
+			<Link
+				to="/anreise"
+				className="mt-6 inline-block rounded-full border border-glow/40 bg-glow/10 px-4 py-2 font-display text-sm font-semibold text-glow-soft no-underline transition-colors hover:border-glow hover:text-glow"
+			>
+				{m.nav_anreise()} →
+			</Link>
 		</Section>
 	);
 }

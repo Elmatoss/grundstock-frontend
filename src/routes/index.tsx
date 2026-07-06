@@ -1,9 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HomePage } from "#/features/home/components/HomePage";
+import { featuredArtistsQueryOptions } from "#/features/lineup/api/artists";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 
 export const Route = createFileRoute("/")({
+	// prefetchQuery (not ensureQueryData): the homepage renders fine without
+	// the carousel and must never fail because Sanity is unreachable
+	loader: ({ context }) =>
+		context.queryClient.prefetchQuery(featuredArtistsQueryOptions),
 	head: () => ({
 		meta: [{ title: m.meta_title() }],
 		links: [{ rel: "canonical", href: `${site.baseUrl}/` }],

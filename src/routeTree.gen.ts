@@ -10,18 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkshopsRouteImport } from './routes/workshops'
+import { Route as VereinRouteImport } from './routes/verein'
 import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as MittelgschaftlerRouteImport } from './routes/mittelgschaftler'
 import { Route as LineupRouteImport } from './routes/lineup'
+import { Route as InfosRouteImport } from './routes/infos'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as HelfenRouteImport } from './routes/helfen'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
+import { Route as AnreiseRouteImport } from './routes/anreise'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArtistsSlugRouteImport } from './routes/artists.$slug'
 
 const WorkshopsRoute = WorkshopsRouteImport.update({
   id: '/workshops',
   path: '/workshops',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VereinRoute = VereinRouteImport.update({
+  id: '/verein',
+  path: '/verein',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TicketsRoute = TicketsRouteImport.update({
@@ -39,6 +47,11 @@ const LineupRoute = LineupRouteImport.update({
   path: '/lineup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InfosRoute = InfosRouteImport.update({
+  id: '/infos',
+  path: '/infos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImpressumRoute = ImpressumRouteImport.update({
   id: '/impressum',
   path: '/impressum',
@@ -54,6 +67,11 @@ const DatenschutzRoute = DatenschutzRouteImport.update({
   path: '/datenschutz',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnreiseRoute = AnreiseRouteImport.update({
+  id: '/anreise',
+  path: '/anreise',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,35 +85,44 @@ const ArtistsSlugRoute = ArtistsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/anreise': typeof AnreiseRoute
   '/datenschutz': typeof DatenschutzRoute
   '/helfen': typeof HelfenRoute
   '/impressum': typeof ImpressumRoute
+  '/infos': typeof InfosRoute
   '/lineup': typeof LineupRoute
   '/mittelgschaftler': typeof MittelgschaftlerRoute
   '/tickets': typeof TicketsRoute
+  '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
   '/artists/$slug': typeof ArtistsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/anreise': typeof AnreiseRoute
   '/datenschutz': typeof DatenschutzRoute
   '/helfen': typeof HelfenRoute
   '/impressum': typeof ImpressumRoute
+  '/infos': typeof InfosRoute
   '/lineup': typeof LineupRoute
   '/mittelgschaftler': typeof MittelgschaftlerRoute
   '/tickets': typeof TicketsRoute
+  '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
   '/artists/$slug': typeof ArtistsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/anreise': typeof AnreiseRoute
   '/datenschutz': typeof DatenschutzRoute
   '/helfen': typeof HelfenRoute
   '/impressum': typeof ImpressumRoute
+  '/infos': typeof InfosRoute
   '/lineup': typeof LineupRoute
   '/mittelgschaftler': typeof MittelgschaftlerRoute
   '/tickets': typeof TicketsRoute
+  '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
   '/artists/$slug': typeof ArtistsSlugRoute
 }
@@ -103,46 +130,58 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/anreise'
     | '/datenschutz'
     | '/helfen'
     | '/impressum'
+    | '/infos'
     | '/lineup'
     | '/mittelgschaftler'
     | '/tickets'
+    | '/verein'
     | '/workshops'
     | '/artists/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/anreise'
     | '/datenschutz'
     | '/helfen'
     | '/impressum'
+    | '/infos'
     | '/lineup'
     | '/mittelgschaftler'
     | '/tickets'
+    | '/verein'
     | '/workshops'
     | '/artists/$slug'
   id:
     | '__root__'
     | '/'
+    | '/anreise'
     | '/datenschutz'
     | '/helfen'
     | '/impressum'
+    | '/infos'
     | '/lineup'
     | '/mittelgschaftler'
     | '/tickets'
+    | '/verein'
     | '/workshops'
     | '/artists/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnreiseRoute: typeof AnreiseRoute
   DatenschutzRoute: typeof DatenschutzRoute
   HelfenRoute: typeof HelfenRoute
   ImpressumRoute: typeof ImpressumRoute
+  InfosRoute: typeof InfosRoute
   LineupRoute: typeof LineupRoute
   MittelgschaftlerRoute: typeof MittelgschaftlerRoute
   TicketsRoute: typeof TicketsRoute
+  VereinRoute: typeof VereinRoute
   WorkshopsRoute: typeof WorkshopsRoute
   ArtistsSlugRoute: typeof ArtistsSlugRoute
 }
@@ -154,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/workshops'
       fullPath: '/workshops'
       preLoaderRoute: typeof WorkshopsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verein': {
+      id: '/verein'
+      path: '/verein'
+      fullPath: '/verein'
+      preLoaderRoute: typeof VereinRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tickets': {
@@ -177,6 +223,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LineupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/infos': {
+      id: '/infos'
+      path: '/infos'
+      fullPath: '/infos'
+      preLoaderRoute: typeof InfosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/impressum': {
       id: '/impressum'
       path: '/impressum'
@@ -198,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DatenschutzRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/anreise': {
+      id: '/anreise'
+      path: '/anreise'
+      fullPath: '/anreise'
+      preLoaderRoute: typeof AnreiseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -217,12 +277,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnreiseRoute: AnreiseRoute,
   DatenschutzRoute: DatenschutzRoute,
   HelfenRoute: HelfenRoute,
   ImpressumRoute: ImpressumRoute,
+  InfosRoute: InfosRoute,
   LineupRoute: LineupRoute,
   MittelgschaftlerRoute: MittelgschaftlerRoute,
   TicketsRoute: TicketsRoute,
+  VereinRoute: VereinRoute,
   WorkshopsRoute: WorkshopsRoute,
   ArtistsSlugRoute: ArtistsSlugRoute,
 }
