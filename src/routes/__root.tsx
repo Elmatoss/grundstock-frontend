@@ -6,10 +6,12 @@ import {
 	Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import Footer from "#/components/Footer";
+import Header from "#/components/Header";
+import NotFound from "#/components/NotFound";
+import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { getLocale } from "#/paraglide/runtime";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
 
@@ -28,32 +30,38 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 	head: () => ({
 		meta: [
-			{
-				charSet: "utf-8",
-			},
-			{
-				name: "viewport",
-				content: "width=device-width, initial-scale=1",
-			},
-			{
-				title: m.meta_title(),
-			},
-			{
-				name: "description",
-				content: m.meta_description(),
-			},
-			{
-				name: "theme-color",
-				content: "#120826",
-			},
+			{ charSet: "utf-8" },
+			{ name: "viewport", content: "width=device-width, initial-scale=1" },
+			{ title: m.meta_title() },
+			{ name: "description", content: m.meta_description() },
+			{ name: "theme-color", content: "#120826" },
+			{ property: "og:site_name", content: "Grundstock Festival" },
+			{ property: "og:type", content: "website" },
+			{ property: "og:title", content: m.meta_title() },
+			{ property: "og:description", content: m.meta_description() },
+			{ property: "og:url", content: `${site.baseUrl}/` },
+			{ property: "og:image", content: `${site.baseUrl}/recap-poster.jpg` },
+			{ property: "og:image:width", content: "1280" },
+			{ property: "og:image:height", content: "720" },
+			{ name: "twitter:card", content: "summary_large_image" },
 		],
 		links: [
-			{
-				rel: "stylesheet",
-				href: appCss,
-			},
+			{ rel: "stylesheet", href: appCss },
+			{ rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+			{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+			{ rel: "manifest", href: "/manifest.json" },
 		],
+		scripts: site.cfBeaconToken
+			? [
+					{
+						src: "https://static.cloudflareinsights.com/beacon.min.js",
+						defer: true,
+						"data-cf-beacon": JSON.stringify({ token: site.cfBeaconToken }),
+					},
+				]
+			: [],
 	}),
+	notFoundComponent: NotFound,
 	shellComponent: RootDocument,
 });
 
