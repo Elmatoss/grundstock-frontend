@@ -18,7 +18,7 @@ export const site = {
 	},
 	// Cloudflare Web Analytics: create the site in the CF dashboard and paste
 	// the beacon token here — the script is only injected when non-empty
-	cfBeaconToken: "",
+	cfBeaconToken: "2f403d1780b94f6aaa8a92c2c27531a8",
 } as const;
 
 export const shuttles = [
