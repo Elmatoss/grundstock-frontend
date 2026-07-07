@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
 					eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
 					eventStatus: "https://schema.org/EventScheduled",
 					description: m.meta_description(),
-					image: [`${site.baseUrl}/recap-poster.jpg`],
+					image: [`${site.baseUrl}/og-image.jpg`],
 					location: {
 						"@type": "Place",
 						name: "Festivalgelände Vilswörth",

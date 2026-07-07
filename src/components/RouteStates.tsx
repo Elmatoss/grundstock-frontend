@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
+import { LogoMark } from "#/components/LogoMark";
 import { m } from "#/paraglide/messages";
 
 export function PagePending() {
 	return (
 		<main className="flex flex-1 items-center justify-center px-4 py-24">
-			<p className="m-0 animate-pulse font-display text-xl text-moon-dim">
-				{m.state_loading()}
-			</p>
+			<LogoMark className="h-14 animate-pulse text-glow-soft" />
+			<span className="sr-only">{m.state_loading()}</span>
 		</main>
 	);
 }

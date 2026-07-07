@@ -41,9 +41,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{ property: "og:title", content: m.meta_title() },
 			{ property: "og:description", content: m.meta_description() },
 			{ property: "og:url", content: `${site.baseUrl}/` },
-			{ property: "og:image", content: `${site.baseUrl}/recap-poster.jpg` },
-			{ property: "og:image:width", content: "1280" },
-			{ property: "og:image:height", content: "720" },
+			{ property: "og:image", content: `${site.baseUrl}/og-image.jpg` },
+			{ property: "og:image:width", content: "1200" },
+			{ property: "og:image:height", content: "630" },
 			{ property: "og:image:alt", content: "Grundstock Festival" },
 			{
 				property: "og:locale",

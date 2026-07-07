@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/react-router";
+import { LogoMark } from "#/components/LogoMark";
 import { m } from "#/paraglide/messages";
 
 export default function NotFound() {
 	return (
 		<main className="flex flex-1 flex-col items-center justify-center gap-4 px-4 py-24 text-center">
+			<LogoMark className="h-24 text-glow-soft sm:h-32" />
 			<p className="m-0 font-display text-7xl font-bold text-glow [text-shadow:0_0_48px_rgba(255,181,36,0.35)]">
 				404
 			</p>

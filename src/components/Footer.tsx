@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { LogoMark } from "#/components/LogoMark";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 
@@ -8,6 +9,7 @@ export default function Footer() {
 	return (
 		<footer className="border-t border-border">
 			<div className="page-wrap flex flex-col items-center gap-4 py-8 text-center text-sm text-moon-dim">
+				<LogoMark className="h-8" />
 				<nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
 					<Link to="/verein" className="text-moon-dim hover:text-moon">
 						{m.nav_verein()}

@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { site } from "#/lib/site";
+import { LogoMark } from "#/components/LogoMark";
+import { SiteMenu } from "#/components/SiteMenu";
 import { m } from "#/paraglide/messages";
 
 export default function Header() {
@@ -10,9 +11,12 @@ export default function Header() {
 			<nav className="page-wrap flex items-center justify-between gap-4 py-3">
 				<Link
 					to="/"
-					className="font-display text-lg font-bold tracking-wide text-moon no-underline hover:text-moon"
+					className="flex items-center gap-2.5 font-display text-lg font-bold tracking-wide text-moon no-underline hover:text-moon"
 				>
-					Grundstock <span className="text-glow">2026</span>
+					<LogoMark className="h-6" />
+					<span>
+						Grundstock <span className="text-glow">2026</span>
+					</span>
 				</Link>
 				<div className="hidden items-center gap-6 md:flex">
 					<Link
@@ -54,14 +58,7 @@ export default function Header() {
 						{m.nav_infos()}
 					</Link>
 				</div>
-				<a
-					href={site.ticketUrl}
-					target="_blank"
-					rel="noopener noreferrer"
-					className="rounded-full bg-glow px-4 py-2 text-sm font-semibold text-night no-underline transition-colors hover:bg-glow-soft hover:text-night"
-				>
-					{m.cta_tickets()}
-				</a>
+				<SiteMenu />
 			</nav>
 		</header>
 	);

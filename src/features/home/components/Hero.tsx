@@ -1,3 +1,4 @@
+import { LogoMark } from "#/components/LogoMark";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { Countdown } from "./Countdown";
@@ -12,6 +13,7 @@ export function Hero() {
 				className="pointer-events-none absolute inset-0 bg-[radial-gradient(700px_420px_at_50%_38%,rgba(255,181,36,0.14),transparent_65%),radial-gradient(900px_600px_at_50%_30%,rgba(139,92,246,0.12),transparent_70%)]"
 			/>
 			<div className="relative flex flex-col items-center gap-5 pt-16 pb-28">
+				<LogoMark className="h-16 text-glow-soft sm:h-24" />
 				<p className="m-0 font-serif text-lg tracking-wide text-glow-soft sm:text-xl">
 					{m.hero_date_location()}
 				</p>
