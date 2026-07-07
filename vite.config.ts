@@ -15,6 +15,25 @@ const config = defineConfig({
 			project: "./project.inlang",
 			outdir: "./src/paraglide",
 			strategy: ["url", "baseLocale"],
+			// Explicit patterns so the localized root is "/en" (not "/en/") —
+			// otherwise the router's trailing-slash normalization and localizeUrl
+			// redirect each other in an infinite 307 loop
+			urlPatterns: [
+				{
+					pattern: "/",
+					localized: [
+						["en", "/en"],
+						["de", "/"],
+					],
+				},
+				{
+					pattern: "/:path(.*)",
+					localized: [
+						["en", "/en/:path(.*)"],
+						["de", "/:path(.*)"],
+					],
+				},
+			],
 		}),
 		cloudflare({ viteEnvironment: { name: "ssr" } }),
 		tailwindcss(),

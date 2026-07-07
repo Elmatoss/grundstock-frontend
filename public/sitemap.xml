@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://grundstock-festival.de/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/en</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/lineup</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/lineup"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/lineup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/lineup"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/en/lineup</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/lineup"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/lineup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/lineup"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/workshops</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/workshops"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/workshops"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/workshops"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/en/workshops</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/workshops"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/workshops"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/workshops"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/verein</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/verein"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/verein"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/verein"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/en/verein</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/verein"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/verein"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/verein"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/anreise</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/anreise"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/anreise"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/anreise"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/en/anreise</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/anreise"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/anreise"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/anreise"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/infos</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/infos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/infos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/infos"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/en/infos</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/infos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/infos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/infos"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

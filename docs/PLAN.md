@@ -446,9 +446,8 @@ Resolved:
 - **Verein-Stammdaten**: VR 201964, Amtsgericht Regensburg; Vorstand Vinzenz Abt & Max
   Pindl. Only names go on the site — birth dates/home towns from the register do not.
 
-Still open:
+- **Anschrift** (resolved 2026-07): Neues Brett e.V., Bischof-Konrad-Str. 23,
+  93051 Regensburg — in Impressum + Datenschutz.
 
-1. **Ladungsfähige Anschrift** for Impressum + Datenschutz-Verantwortlicher — § 5 DDG
-   requires a street address (Postfach insufficient). Typical Verein fix: Vereinssitz
-   address or c/o address of a Vorstand member. This is the only remaining blocker, and it
-   only blocks the legal pages — not the build.
+Still open: nothing blocking. Remaining ops items (CF Analytics token, domain DNS +
+redirects) are in the §8 launch checklist.

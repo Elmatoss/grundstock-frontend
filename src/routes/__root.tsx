@@ -6,17 +6,19 @@ import {
 	Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import Footer from "#/components/Footer";
+import Header from "#/components/Header";
+import { NightBackground } from "#/components/NightBackground";
+import NotFound from "#/components/NotFound";
+import { site } from "#/lib/site";
+import { m } from "#/paraglide/messages";
 import { getLocale } from "#/paraglide/runtime";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
 
 interface MyRouterContext {
 	queryClient: QueryClient;
 }
-
-const THEME_INIT_SCRIPT = `(function(){try{var stored=window.localStorage.getItem('theme');var mode=(stored==='light'||stored==='dark'||stored==='auto')?stored:'auto';var prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;var resolved=mode==='auto'?(prefersDark?'dark':'light'):mode;var root=document.documentElement;root.classList.remove('light','dark');root.classList.add(resolved);if(mode==='auto'){root.removeAttribute('data-theme')}else{root.setAttribute('data-theme',mode)}root.style.colorScheme=resolved;}catch(e){}})();`;
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	beforeLoad: async () => {
@@ -29,24 +31,47 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 	head: () => ({
 		meta: [
+			{ charSet: "utf-8" },
+			{ name: "viewport", content: "width=device-width, initial-scale=1" },
+			{ title: m.meta_title() },
+			{ name: "description", content: m.meta_description() },
+			{ name: "theme-color", content: "#120826" },
+			{ property: "og:site_name", content: "Grundstock Festival" },
+			{ property: "og:type", content: "website" },
+			{ property: "og:title", content: m.meta_title() },
+			{ property: "og:description", content: m.meta_description() },
+			{ property: "og:url", content: `${site.baseUrl}/` },
+			{ property: "og:image", content: `${site.baseUrl}/og-image.jpg` },
+			{ property: "og:image:width", content: "1200" },
+			{ property: "og:image:height", content: "630" },
+			{ property: "og:image:alt", content: "Grundstock Festival" },
 			{
-				charSet: "utf-8",
+				property: "og:locale",
+				content: getLocale() === "de" ? "de_DE" : "en_GB",
 			},
 			{
-				name: "viewport",
-				content: "width=device-width, initial-scale=1",
+				property: "og:locale:alternate",
+				content: getLocale() === "de" ? "en_GB" : "de_DE",
 			},
-			{
-				title: "TanStack Start Starter",
-			},
+			{ name: "twitter:card", content: "summary_large_image" },
 		],
 		links: [
-			{
-				rel: "stylesheet",
-				href: appCss,
-			},
+			{ rel: "stylesheet", href: appCss },
+			{ rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+			{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+			{ rel: "manifest", href: "/manifest.json" },
 		],
+		scripts: site.cfBeaconToken
+			? [
+					{
+						src: "https://static.cloudflareinsights.com/beacon.min.js",
+						defer: true,
+						"data-cf-beacon": JSON.stringify({ token: site.cfBeaconToken }),
+					},
+				]
+			: [],
 	}),
+	notFoundComponent: NotFound,
 	shellComponent: RootDocument,
 });
 
@@ -54,14 +79,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang={getLocale()} suppressHydrationWarning>
 			<head>
-				{/* biome-ignore lint/security/noDangerouslySetInnerHtml: static theme-init script, runs before paint to prevent FOUC */}
-				<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
 				<HeadContent />
 			</head>
-			<body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
-				<Header />
-				{children}
-				<Footer />
+			<body className="font-sans antialiased wrap-anywhere">
+				<NightBackground />
+				<div className="flex min-h-svh flex-col">
+					<Header />
+					{children}
+					<Footer />
+				</div>
 				<TanStackDevtools
 					config={{
 						position: "bottom-right",

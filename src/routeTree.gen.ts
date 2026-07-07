@@ -9,14 +9,79 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as WorkshopsRouteImport } from './routes/workshops'
+import { Route as VereinRouteImport } from './routes/verein'
+import { Route as TicketsRouteImport } from './routes/tickets'
+import { Route as TicketbedingungenRouteImport } from './routes/ticketbedingungen'
+import { Route as MittelgschaftlerRouteImport } from './routes/mittelgschaftler'
+import { Route as LineupRouteImport } from './routes/lineup'
+import { Route as InfosRouteImport } from './routes/infos'
+import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as HelfenRouteImport } from './routes/helfen'
+import { Route as FestivalPolicyRouteImport } from './routes/festival-policy'
+import { Route as DatenschutzRouteImport } from './routes/datenschutz'
+import { Route as AnreiseRouteImport } from './routes/anreise'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
-import { Route as DemoI18nRouteImport } from './routes/demo.i18n'
+import { Route as ArtistsSlugRouteImport } from './routes/artists.$slug'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const WorkshopsRoute = WorkshopsRouteImport.update({
+  id: '/workshops',
+  path: '/workshops',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VereinRoute = VereinRouteImport.update({
+  id: '/verein',
+  path: '/verein',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TicketsRoute = TicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TicketbedingungenRoute = TicketbedingungenRouteImport.update({
+  id: '/ticketbedingungen',
+  path: '/ticketbedingungen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MittelgschaftlerRoute = MittelgschaftlerRouteImport.update({
+  id: '/mittelgschaftler',
+  path: '/mittelgschaftler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LineupRoute = LineupRouteImport.update({
+  id: '/lineup',
+  path: '/lineup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InfosRoute = InfosRouteImport.update({
+  id: '/infos',
+  path: '/infos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImpressumRoute = ImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelfenRoute = HelfenRouteImport.update({
+  id: '/helfen',
+  path: '/helfen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FestivalPolicyRoute = FestivalPolicyRouteImport.update({
+  id: '/festival-policy',
+  path: '/festival-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatenschutzRoute = DatenschutzRouteImport.update({
+  id: '/datenschutz',
+  path: '/datenschutz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnreiseRoute = AnreiseRouteImport.update({
+  id: '/anreise',
+  path: '/anreise',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -24,58 +89,213 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoI18nRoute = DemoI18nRouteImport.update({
-  id: '/demo/i18n',
-  path: '/demo/i18n',
+const ArtistsSlugRoute = ArtistsSlugRouteImport.update({
+  id: '/artists/$slug',
+  path: '/artists/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/demo/i18n': typeof DemoI18nRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/anreise': typeof AnreiseRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/festival-policy': typeof FestivalPolicyRoute
+  '/helfen': typeof HelfenRoute
+  '/impressum': typeof ImpressumRoute
+  '/infos': typeof InfosRoute
+  '/lineup': typeof LineupRoute
+  '/mittelgschaftler': typeof MittelgschaftlerRoute
+  '/ticketbedingungen': typeof TicketbedingungenRoute
+  '/tickets': typeof TicketsRoute
+  '/verein': typeof VereinRoute
+  '/workshops': typeof WorkshopsRoute
+  '/artists/$slug': typeof ArtistsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/demo/i18n': typeof DemoI18nRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/anreise': typeof AnreiseRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/festival-policy': typeof FestivalPolicyRoute
+  '/helfen': typeof HelfenRoute
+  '/impressum': typeof ImpressumRoute
+  '/infos': typeof InfosRoute
+  '/lineup': typeof LineupRoute
+  '/mittelgschaftler': typeof MittelgschaftlerRoute
+  '/ticketbedingungen': typeof TicketbedingungenRoute
+  '/tickets': typeof TicketsRoute
+  '/verein': typeof VereinRoute
+  '/workshops': typeof WorkshopsRoute
+  '/artists/$slug': typeof ArtistsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/demo/i18n': typeof DemoI18nRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/anreise': typeof AnreiseRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/festival-policy': typeof FestivalPolicyRoute
+  '/helfen': typeof HelfenRoute
+  '/impressum': typeof ImpressumRoute
+  '/infos': typeof InfosRoute
+  '/lineup': typeof LineupRoute
+  '/mittelgschaftler': typeof MittelgschaftlerRoute
+  '/ticketbedingungen': typeof TicketbedingungenRoute
+  '/tickets': typeof TicketsRoute
+  '/verein': typeof VereinRoute
+  '/workshops': typeof WorkshopsRoute
+  '/artists/$slug': typeof ArtistsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/demo/i18n' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/anreise'
+    | '/datenschutz'
+    | '/festival-policy'
+    | '/helfen'
+    | '/impressum'
+    | '/infos'
+    | '/lineup'
+    | '/mittelgschaftler'
+    | '/ticketbedingungen'
+    | '/tickets'
+    | '/verein'
+    | '/workshops'
+    | '/artists/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/demo/i18n' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/about' | '/demo/i18n' | '/demo/tanstack-query'
+  to:
+    | '/'
+    | '/anreise'
+    | '/datenschutz'
+    | '/festival-policy'
+    | '/helfen'
+    | '/impressum'
+    | '/infos'
+    | '/lineup'
+    | '/mittelgschaftler'
+    | '/ticketbedingungen'
+    | '/tickets'
+    | '/verein'
+    | '/workshops'
+    | '/artists/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/anreise'
+    | '/datenschutz'
+    | '/festival-policy'
+    | '/helfen'
+    | '/impressum'
+    | '/infos'
+    | '/lineup'
+    | '/mittelgschaftler'
+    | '/ticketbedingungen'
+    | '/tickets'
+    | '/verein'
+    | '/workshops'
+    | '/artists/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  DemoI18nRoute: typeof DemoI18nRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  AnreiseRoute: typeof AnreiseRoute
+  DatenschutzRoute: typeof DatenschutzRoute
+  FestivalPolicyRoute: typeof FestivalPolicyRoute
+  HelfenRoute: typeof HelfenRoute
+  ImpressumRoute: typeof ImpressumRoute
+  InfosRoute: typeof InfosRoute
+  LineupRoute: typeof LineupRoute
+  MittelgschaftlerRoute: typeof MittelgschaftlerRoute
+  TicketbedingungenRoute: typeof TicketbedingungenRoute
+  TicketsRoute: typeof TicketsRoute
+  VereinRoute: typeof VereinRoute
+  WorkshopsRoute: typeof WorkshopsRoute
+  ArtistsSlugRoute: typeof ArtistsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/workshops': {
+      id: '/workshops'
+      path: '/workshops'
+      fullPath: '/workshops'
+      preLoaderRoute: typeof WorkshopsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verein': {
+      id: '/verein'
+      path: '/verein'
+      fullPath: '/verein'
+      preLoaderRoute: typeof VereinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tickets': {
+      id: '/tickets'
+      path: '/tickets'
+      fullPath: '/tickets'
+      preLoaderRoute: typeof TicketsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ticketbedingungen': {
+      id: '/ticketbedingungen'
+      path: '/ticketbedingungen'
+      fullPath: '/ticketbedingungen'
+      preLoaderRoute: typeof TicketbedingungenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mittelgschaftler': {
+      id: '/mittelgschaftler'
+      path: '/mittelgschaftler'
+      fullPath: '/mittelgschaftler'
+      preLoaderRoute: typeof MittelgschaftlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lineup': {
+      id: '/lineup'
+      path: '/lineup'
+      fullPath: '/lineup'
+      preLoaderRoute: typeof LineupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/infos': {
+      id: '/infos'
+      path: '/infos'
+      fullPath: '/infos'
+      preLoaderRoute: typeof InfosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/impressum': {
+      id: '/impressum'
+      path: '/impressum'
+      fullPath: '/impressum'
+      preLoaderRoute: typeof ImpressumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/helfen': {
+      id: '/helfen'
+      path: '/helfen'
+      fullPath: '/helfen'
+      preLoaderRoute: typeof HelfenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/festival-policy': {
+      id: '/festival-policy'
+      path: '/festival-policy'
+      fullPath: '/festival-policy'
+      preLoaderRoute: typeof FestivalPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/datenschutz': {
+      id: '/datenschutz'
+      path: '/datenschutz'
+      fullPath: '/datenschutz'
+      preLoaderRoute: typeof DatenschutzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anreise': {
+      id: '/anreise'
+      path: '/anreise'
+      fullPath: '/anreise'
+      preLoaderRoute: typeof AnreiseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -85,18 +305,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/i18n': {
-      id: '/demo/i18n'
-      path: '/demo/i18n'
-      fullPath: '/demo/i18n'
-      preLoaderRoute: typeof DemoI18nRouteImport
+    '/artists/$slug': {
+      id: '/artists/$slug'
+      path: '/artists/$slug'
+      fullPath: '/artists/$slug'
+      preLoaderRoute: typeof ArtistsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -104,9 +317,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  DemoI18nRoute: DemoI18nRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  AnreiseRoute: AnreiseRoute,
+  DatenschutzRoute: DatenschutzRoute,
+  FestivalPolicyRoute: FestivalPolicyRoute,
+  HelfenRoute: HelfenRoute,
+  ImpressumRoute: ImpressumRoute,
+  InfosRoute: InfosRoute,
+  LineupRoute: LineupRoute,
+  MittelgschaftlerRoute: MittelgschaftlerRoute,
+  TicketbedingungenRoute: TicketbedingungenRoute,
+  TicketsRoute: TicketsRoute,
+  VereinRoute: VereinRoute,
+  WorkshopsRoute: WorkshopsRoute,
+  ArtistsSlugRoute: ArtistsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
