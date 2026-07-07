@@ -12,11 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkshopsRouteImport } from './routes/workshops'
 import { Route as VereinRouteImport } from './routes/verein'
 import { Route as TicketsRouteImport } from './routes/tickets'
+import { Route as TicketbedingungenRouteImport } from './routes/ticketbedingungen'
 import { Route as MittelgschaftlerRouteImport } from './routes/mittelgschaftler'
 import { Route as LineupRouteImport } from './routes/lineup'
 import { Route as InfosRouteImport } from './routes/infos'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as HelfenRouteImport } from './routes/helfen'
+import { Route as FestivalPolicyRouteImport } from './routes/festival-policy'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as AnreiseRouteImport } from './routes/anreise'
 import { Route as IndexRouteImport } from './routes/index'
@@ -35,6 +37,11 @@ const VereinRoute = VereinRouteImport.update({
 const TicketsRoute = TicketsRouteImport.update({
   id: '/tickets',
   path: '/tickets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TicketbedingungenRoute = TicketbedingungenRouteImport.update({
+  id: '/ticketbedingungen',
+  path: '/ticketbedingungen',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MittelgschaftlerRoute = MittelgschaftlerRouteImport.update({
@@ -62,6 +69,11 @@ const HelfenRoute = HelfenRouteImport.update({
   path: '/helfen',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FestivalPolicyRoute = FestivalPolicyRouteImport.update({
+  id: '/festival-policy',
+  path: '/festival-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DatenschutzRoute = DatenschutzRouteImport.update({
   id: '/datenschutz',
   path: '/datenschutz',
@@ -87,11 +99,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/anreise': typeof AnreiseRoute
   '/datenschutz': typeof DatenschutzRoute
+  '/festival-policy': typeof FestivalPolicyRoute
   '/helfen': typeof HelfenRoute
   '/impressum': typeof ImpressumRoute
   '/infos': typeof InfosRoute
   '/lineup': typeof LineupRoute
   '/mittelgschaftler': typeof MittelgschaftlerRoute
+  '/ticketbedingungen': typeof TicketbedingungenRoute
   '/tickets': typeof TicketsRoute
   '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
@@ -101,11 +115,13 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anreise': typeof AnreiseRoute
   '/datenschutz': typeof DatenschutzRoute
+  '/festival-policy': typeof FestivalPolicyRoute
   '/helfen': typeof HelfenRoute
   '/impressum': typeof ImpressumRoute
   '/infos': typeof InfosRoute
   '/lineup': typeof LineupRoute
   '/mittelgschaftler': typeof MittelgschaftlerRoute
+  '/ticketbedingungen': typeof TicketbedingungenRoute
   '/tickets': typeof TicketsRoute
   '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
@@ -116,11 +132,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/anreise': typeof AnreiseRoute
   '/datenschutz': typeof DatenschutzRoute
+  '/festival-policy': typeof FestivalPolicyRoute
   '/helfen': typeof HelfenRoute
   '/impressum': typeof ImpressumRoute
   '/infos': typeof InfosRoute
   '/lineup': typeof LineupRoute
   '/mittelgschaftler': typeof MittelgschaftlerRoute
+  '/ticketbedingungen': typeof TicketbedingungenRoute
   '/tickets': typeof TicketsRoute
   '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
@@ -132,11 +150,13 @@ export interface FileRouteTypes {
     | '/'
     | '/anreise'
     | '/datenschutz'
+    | '/festival-policy'
     | '/helfen'
     | '/impressum'
     | '/infos'
     | '/lineup'
     | '/mittelgschaftler'
+    | '/ticketbedingungen'
     | '/tickets'
     | '/verein'
     | '/workshops'
@@ -146,11 +166,13 @@ export interface FileRouteTypes {
     | '/'
     | '/anreise'
     | '/datenschutz'
+    | '/festival-policy'
     | '/helfen'
     | '/impressum'
     | '/infos'
     | '/lineup'
     | '/mittelgschaftler'
+    | '/ticketbedingungen'
     | '/tickets'
     | '/verein'
     | '/workshops'
@@ -160,11 +182,13 @@ export interface FileRouteTypes {
     | '/'
     | '/anreise'
     | '/datenschutz'
+    | '/festival-policy'
     | '/helfen'
     | '/impressum'
     | '/infos'
     | '/lineup'
     | '/mittelgschaftler'
+    | '/ticketbedingungen'
     | '/tickets'
     | '/verein'
     | '/workshops'
@@ -175,11 +199,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnreiseRoute: typeof AnreiseRoute
   DatenschutzRoute: typeof DatenschutzRoute
+  FestivalPolicyRoute: typeof FestivalPolicyRoute
   HelfenRoute: typeof HelfenRoute
   ImpressumRoute: typeof ImpressumRoute
   InfosRoute: typeof InfosRoute
   LineupRoute: typeof LineupRoute
   MittelgschaftlerRoute: typeof MittelgschaftlerRoute
+  TicketbedingungenRoute: typeof TicketbedingungenRoute
   TicketsRoute: typeof TicketsRoute
   VereinRoute: typeof VereinRoute
   WorkshopsRoute: typeof WorkshopsRoute
@@ -207,6 +233,13 @@ declare module '@tanstack/react-router' {
       path: '/tickets'
       fullPath: '/tickets'
       preLoaderRoute: typeof TicketsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ticketbedingungen': {
+      id: '/ticketbedingungen'
+      path: '/ticketbedingungen'
+      fullPath: '/ticketbedingungen'
+      preLoaderRoute: typeof TicketbedingungenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mittelgschaftler': {
@@ -244,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HelfenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/festival-policy': {
+      id: '/festival-policy'
+      path: '/festival-policy'
+      fullPath: '/festival-policy'
+      preLoaderRoute: typeof FestivalPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/datenschutz': {
       id: '/datenschutz'
       path: '/datenschutz'
@@ -279,11 +319,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnreiseRoute: AnreiseRoute,
   DatenschutzRoute: DatenschutzRoute,
+  FestivalPolicyRoute: FestivalPolicyRoute,
   HelfenRoute: HelfenRoute,
   ImpressumRoute: ImpressumRoute,
   InfosRoute: InfosRoute,
   LineupRoute: LineupRoute,
   MittelgschaftlerRoute: MittelgschaftlerRoute,
+  TicketbedingungenRoute: TicketbedingungenRoute,
   TicketsRoute: TicketsRoute,
   VereinRoute: VereinRoute,
   WorkshopsRoute: WorkshopsRoute,

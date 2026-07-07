@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zLocaleString, zSanityImage } from "#/lib/sanity";
+import { zLocaleBlock, zLocaleString, zSanityImage } from "#/lib/sanity";
 
 export const zFestivalDay = z.enum(["do", "fr", "sa"]);
 export type FestivalDay = z.infer<typeof zFestivalDay>;
@@ -30,7 +30,7 @@ export const zArtistCard = z.object({
 export const zArtistList = z.array(zArtistCard);
 
 export const zArtistDetail = zArtistCard.extend({
-	bio: z.looseObject({ de: z.array(z.unknown()).nullish() }).nullish(),
+	bio: zLocaleBlock.nullish(),
 	links: z
 		.object({
 			instagram: z.url().nullish(),

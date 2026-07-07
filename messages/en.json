@@ -77,8 +77,8 @@
   "inclusive_title": "Food included, drinks cheap",
   "inclusive_food_title": "Three meals a day",
   "inclusive_food_text": "Breakfast, lunch and dinner are included in your ticket — really good vegan food for everyone.",
-  "inclusive_snack_title": "New: midnight snack",
-  "inclusive_snack_text": "So nobody dances hungry at night.",
+  "inclusive_snack_title": "New: midnight meal",
+  "inclusive_snack_text": "Yours for a few Gulden on top — so nobody dances hungry at night.",
   "inclusive_drinks_title": "Bar & drinks",
   "inclusive_drinks_text": "Drinks at fair prices — from soda to espresso martini. You really don't need much money here.",
 
@@ -116,23 +116,31 @@
   "tickets_title": "Get your ticket",
   "tickets_text": "Food is included and drinks are cheap — all you need is your ticket and a good mood. Mittelgschaftler even pay only half.",
   "tickets_note_age": "18+ only",
+  "tickets_note_terms": "By buying a ticket you accept our",
+
+  "awareness_kicker": "Awareness",
+  "awareness_title": "Respect is non-negotiable",
+  "awareness_text": "Grundstock should be a place where everyone feels comfortable, safe and welcome — no matter who you are or who you love. There is no room for discrimination or abusive behaviour here. And if you ever feel uncomfortable, our awareness team is there for you.",
+  "awareness_more": "Our festival policy",
 
   "faq_kicker": "Good to know",
   "faq_title": "Frequent questions",
   "faq_q1": "Do I really have to take a shift?",
   "faq_a1": "Yes — exactly one. Grundstock only works if everyone pitches in. You pick what suits you in the Helfertool: kitchen, bar, cleanup and more.",
   "faq_q2": "What's included in the ticket?",
-  "faq_a2": "Entry for all festival days, three meals a day (vegan and really good) and the midnight snack. Drinks are extra — but cheap.",
+  "faq_a2": "Entry for all festival days and three meals a day (vegan and really good). New this year: a midnight meal for a few Gulden (our festival currency) on top! Drinks are extra — but cheap.",
   "faq_q3": "How do I get there?",
   "faq_a3": "By shuttle from Regensburg (Thursday and Friday), by car or carpool. All times are in the Getting there section.",
   "faq_q4": "What's the minimum age?",
-  "faq_a4": "18+ only — don't forget your ID.",
+  "faq_a4": "18+ only — don't forget your ID. Exception: minors accompanied by their parents may join the festival — at the parents' own responsibility.",
   "faq_q5": "What is a Mittelgschaftler?",
   "faq_a5": "Anyone who takes a longer shift (8 hours) and a bit more responsibility pays only half the ticket price. Anyone can apply.",
 
   "footer_credit": "Grundstock is a project by Neues Brett e.V. — a registered non-profit.",
   "footer_impressum": "Legal notice",
   "footer_datenschutz": "Privacy policy",
+  "footer_policy": "Festival policy",
+  "footer_ticketbedingungen": "Ticket terms",
   "footer_kontakt": "Contact",
 
   "notfound_title": "Nothing but darkness here.",
@@ -140,5 +148,7 @@
   "notfound_cta": "Back to home",
 
   "legal_impressum_title": "Impressum",
-  "legal_datenschutz_title": "Privacy policy"
+  "legal_datenschutz_title": "Privacy policy",
+  "legal_policy_title": "Festival policy",
+  "legal_ticketbedingungen_title": "Ticket terms"
 }

@@ -1,7 +1,7 @@
 import { PortableText } from "@portabletext/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { localized, sanityCropUrl } from "#/lib/sanity";
+import { localized, localizedBlock, sanityCropUrl } from "#/lib/sanity";
 import { m } from "#/paraglide/messages";
 import { artistDetailQueryOptions } from "../api/artists";
 import type { FestivalDay } from "../types";
@@ -24,7 +24,7 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 	// The loader already 404s on null; this narrows the type for TS
 	if (!artist) return null;
 
-	const bioBlocks = artist.bio?.de;
+	const bioBlocks = localizedBlock(artist.bio);
 
 	return (
 		<main className="page-wrap flex-1 py-16 sm:py-20">

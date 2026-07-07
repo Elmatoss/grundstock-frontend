@@ -2,32 +2,8 @@ import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { Countdown } from "./Countdown";
 
-// Deterministic positions — random values would cause hydration mismatches.
-// Fireflies are the amber ones, stars the small pale ones.
-const FIREFLIES = [
-	{ left: "12%", top: "22%", size: 5, delay: "0s" },
-	{ left: "26%", top: "58%", size: 4, delay: "1.2s" },
-	{ left: "44%", top: "16%", size: 3, delay: "2.1s" },
-	{ left: "68%", top: "30%", size: 5, delay: "0.6s" },
-	{ left: "82%", top: "60%", size: 4, delay: "1.8s" },
-	{ left: "90%", top: "20%", size: 3, delay: "2.7s" },
-	{ left: "8%", top: "72%", size: 3, delay: "0.9s" },
-	{ left: "58%", top: "70%", size: 4, delay: "2.4s" },
-];
-
-const STARS = [
-	{ left: "18%", top: "10%", delay: "0.4s" },
-	{ left: "34%", top: "34%", delay: "1.6s" },
-	{ left: "52%", top: "8%", delay: "2.8s" },
-	{ left: "63%", top: "48%", delay: "0.2s" },
-	{ left: "76%", top: "12%", delay: "1.1s" },
-	{ left: "88%", top: "42%", delay: "2.2s" },
-	{ left: "6%", top: "44%", delay: "1.9s" },
-	{ left: "40%", top: "62%", delay: "0.7s" },
-	{ left: "95%", top: "68%", delay: "1.4s" },
-	{ left: "22%", top: "80%", delay: "2.5s" },
-];
-
+// Fireflies/stars live in the global NightBackground layer; the hero only
+// adds its glow accents and the jungle silhouette (video replaces this later)
 export function Hero() {
 	return (
 		<section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 text-center">
@@ -35,29 +11,6 @@ export function Hero() {
 				aria-hidden
 				className="pointer-events-none absolute inset-0 bg-[radial-gradient(700px_420px_at_50%_38%,rgba(255,181,36,0.14),transparent_65%),radial-gradient(900px_600px_at_50%_30%,rgba(139,92,246,0.12),transparent_70%)]"
 			/>
-			<div aria-hidden className="pointer-events-none absolute inset-0">
-				{FIREFLIES.map((f) => (
-					<span
-						key={`${f.left}-${f.top}`}
-						style={{
-							left: f.left,
-							top: f.top,
-							width: f.size,
-							height: f.size,
-							animationDelay: f.delay,
-						}}
-						className="absolute rounded-full bg-glow shadow-[0_0_12px_4px_rgba(255,181,36,0.45)] motion-safe:animate-twinkle"
-					/>
-				))}
-				{STARS.map((s) => (
-					<span
-						key={`${s.left}-${s.top}`}
-						style={{ left: s.left, top: s.top, animationDelay: s.delay }}
-						className="absolute h-0.5 w-0.5 rounded-full bg-moon/80 motion-safe:animate-twinkle"
-					/>
-				))}
-			</div>
-
 			<div className="relative flex flex-col items-center gap-5 pt-16 pb-28">
 				<p className="m-0 font-serif text-lg tracking-wide text-glow-soft sm:text-xl">
 					{m.hero_date_location()}

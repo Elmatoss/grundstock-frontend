@@ -1,3 +1,4 @@
+import { AwarenessSection } from "./AwarenessSection";
 import { FaqSection } from "./FaqSection";
 import { GenreMarquee } from "./GenreMarquee";
 import { HelfenSection } from "./HelfenSection";
@@ -22,6 +23,7 @@ export function HomePage() {
 			<HelfenSection />
 			<LocationSection />
 			<StorySection />
+			<AwarenessSection />
 			<TicketsCta />
 			<FaqSection />
 		</main>

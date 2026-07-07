@@ -48,6 +48,20 @@ export function localized(value: LocaleString | null | undefined): string {
 	return value.de;
 }
 
+// Mirrors the CMS localeBlock object (portable text per language)
+export const zLocaleBlock = z.looseObject({
+	de: z.array(z.unknown()).nullish(),
+	en: z.array(z.unknown()).nullish(),
+});
+
+export type LocaleBlock = z.infer<typeof zLocaleBlock>;
+
+export function localizedBlock(value: LocaleBlock | null | undefined) {
+	if (!value) return undefined;
+	if (getLocale() === "en" && value.en?.length) return value.en;
+	return value.de ?? undefined;
+}
+
 export const zSanityImage = z.looseObject({
 	asset: z.unknown(),
 	alt: z.string().nullish(),

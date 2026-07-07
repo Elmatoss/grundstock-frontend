@@ -169,3 +169,54 @@ body {
     color: var(--glow);
   }
 }
+
+/* Night background: drifting/blinking fireflies */
+@keyframes firefly-float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(var(--fx1), var(--fy1));
+  }
+  66% {
+    transform: translate(var(--fx2), var(--fy2));
+  }
+}
+
+@keyframes firefly-blink {
+  0%,
+  25% {
+    opacity: 0;
+    box-shadow: 0 0 2px var(--glow-soft);
+  }
+  35%,
+  65% {
+    opacity: 1;
+    box-shadow:
+      0 0 6px var(--glow-soft),
+      0 0 14px var(--glow-soft),
+      0 0 22px rgba(255, 181, 36, 0.5);
+  }
+  75%,
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 2px var(--glow-soft);
+  }
+}
+
+.firefly {
+  animation:
+    firefly-float var(--float-duration, 10s) ease-in-out var(--float-delay, 0s)
+      infinite,
+    firefly-blink var(--blink-duration, 5s) ease-in-out var(--blink-delay, 0s)
+      infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .firefly {
+    animation: none;
+    opacity: 0.55;
+    box-shadow: 0 0 6px var(--glow-soft);
+  }
+}

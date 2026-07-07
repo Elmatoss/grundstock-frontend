@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 
@@ -24,6 +25,23 @@ export function TicketsCta() {
 				</a>
 				<p className="mt-4 mb-0 text-xs tracking-widest text-moon-dim/70 uppercase">
 					{m.tickets_note_age()}
+				</p>
+				<p className="mx-auto mt-3 mb-0 max-w-md text-xs text-moon-dim/70">
+					{m.tickets_note_terms()}{" "}
+					<Link
+						to="/festival-policy"
+						className="text-moon-dim underline hover:text-moon"
+					>
+						{m.footer_policy()}
+					</Link>{" "}
+					&{" "}
+					<Link
+						to="/ticketbedingungen"
+						className="text-moon-dim underline hover:text-moon"
+					>
+						{m.footer_ticketbedingungen()}
+					</Link>
+					.
 				</p>
 			</div>
 		</section>

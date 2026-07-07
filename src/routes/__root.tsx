@@ -8,6 +8,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import Footer from "#/components/Footer";
 import Header from "#/components/Header";
+import { NightBackground } from "#/components/NightBackground";
 import NotFound from "#/components/NotFound";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
@@ -81,6 +82,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body className="font-sans antialiased wrap-anywhere">
+				<NightBackground />
 				<div className="flex min-h-svh flex-col">
 					<Header />
 					{children}

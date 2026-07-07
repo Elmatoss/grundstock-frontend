@@ -77,8 +77,8 @@
   "inclusive_title": "Essen inklusive, Getränke günstig",
   "inclusive_food_title": "Drei Mahlzeiten am Tag",
   "inclusive_food_text": "Frühstück, Mittag- und Abendessen sind im Ticket drin — richtig gutes veganes Essen für alle.",
-  "inclusive_snack_title": "Neu: Mitternachtssnack",
-  "inclusive_snack_text": "Damit in der Nacht niemand hungrig tanzt.",
+  "inclusive_snack_title": "Neu: Mitternachtsessen",
+  "inclusive_snack_text": "Gibt's für wenige Gulden on top — damit in der Nacht niemand hungrig tanzt.",
   "inclusive_drinks_title": "Bar & Drinks",
   "inclusive_drinks_text": "Getränke gibt es zu fairen Preisen — von Spezi bis Espresso Martini. Du brauchst hier wirklich nicht viel Geld.",
 
@@ -116,23 +116,31 @@
   "tickets_title": "Sichere dir dein Ticket",
   "tickets_text": "Essen ist inklusive, die Getränke sind günstig — mehr als dein Ticket und gute Laune brauchst du nicht. Mittelgschaftler:innen zahlen sogar nur die Hälfte.",
   "tickets_note_age": "Einlass ab 18 Jahren",
+  "tickets_note_terms": "Mit dem Kauf akzeptierst du unsere",
+
+  "awareness_kicker": "Awareness",
+  "awareness_title": "Respekt ist nicht verhandelbar",
+  "awareness_text": "Das Grundstock soll ein Ort sein, an dem sich alle wohl, sicher und willkommen fühlen — unabhängig davon, wer du bist oder wen du liebst. Für Diskriminierung und übergriffiges Verhalten ist bei uns kein Platz. Und wenn du dich mal unwohl fühlst, ist unser Awareness-Team für dich da.",
+  "awareness_more": "Unsere Festival-Policy",
 
   "faq_kicker": "Gut zu wissen",
   "faq_title": "Häufige Fragen",
   "faq_q1": "Muss ich wirklich eine Schicht übernehmen?",
   "faq_a1": "Ja — genau eine. Grundstock funktioniert nur, wenn alle mit anpacken. Du suchst dir im Helfertool aus, was dir liegt: Küche, Bar, Cleanup und mehr.",
   "faq_q2": "Was ist im Ticket enthalten?",
-  "faq_a2": "Der Eintritt für alle Festivaltage, drei Mahlzeiten am Tag (vegan und richtig gut) und der Mitternachtssnack. Getränke zahlst du extra — aber günstig.",
+  "faq_a2": "Der Eintritt für alle Festivaltage und drei Mahlzeiten am Tag (vegan und richtig gut). Neu dieses Jahr: Ein Mitternachtsessen gibt's für wenige Gulden on top! Getränke zahlst du extra — aber günstig.",
   "faq_q3": "Wie komme ich hin?",
   "faq_a3": "Mit dem Shuttle ab Regensburg (Donnerstag und Freitag), mit dem Auto oder per Fahrgemeinschaft. Alle Zeiten findest du im Abschnitt Anreise.",
   "faq_q4": "Ab wie viel Jahren?",
-  "faq_a4": "Einlass ab 18 Jahren — Ausweis nicht vergessen.",
+  "faq_a4": "Einlass ab 18 Jahren — Ausweis nicht vergessen. Ausnahme: In Begleitung ihrer Eltern dürfen auch Minderjährige mit aufs Festival — die Verantwortung liegt dabei bei den Eltern.",
   "faq_q5": "Was ist ein:e Mittelgschaftler:in?",
   "faq_a5": "Wer eine längere Schicht (8 Stunden) und etwas mehr Verantwortung übernimmt, zahlt nur den halben Ticketpreis. Bewerben kann sich jede:r.",
 
   "footer_credit": "Grundstock ist ein Projekt von Neues Brett e.V. — gemeinnützig und ohne Gewinnabsicht.",
   "footer_impressum": "Impressum",
   "footer_datenschutz": "Datenschutz",
+  "footer_policy": "Festival-Policy",
+  "footer_ticketbedingungen": "Ticketbedingungen",
   "footer_kontakt": "Kontakt",
 
   "notfound_title": "Hier ist nur Dunkelheit.",
@@ -140,5 +148,7 @@
   "notfound_cta": "Zur Startseite",
 
   "legal_impressum_title": "Impressum",
-  "legal_datenschutz_title": "Datenschutzerklärung"
+  "legal_datenschutz_title": "Datenschutzerklärung",
+  "legal_policy_title": "Festival-Policy",
+  "legal_ticketbedingungen_title": "Ticketbedingungen"
 }
