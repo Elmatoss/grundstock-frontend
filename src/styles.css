@@ -144,6 +144,48 @@ body {
   background: color-mix(in oklab, var(--glow) 35%, transparent);
 }
 
+/* Scrollbars: dim ember gradient at rest, firefly glow on hover/drag.
+   Webkit path (Chromium/Safari) — transparent border + padding-box clip
+   narrows the visible thumb so the hover halo has track space to bleed into */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--glow-soft) 45%, var(--night-mist)),
+    color-mix(in oklab, var(--glow) 45%, var(--night-mist))
+  );
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  background-image: linear-gradient(180deg, var(--glow-soft), var(--glow));
+  box-shadow:
+    0 0 8px color-mix(in oklab, var(--glow) 55%, transparent),
+    inset 0 0 4px color-mix(in oklab, var(--glow-soft) 60%, transparent);
+}
+
+/* Firefox can't do gradients/shadows in scrollbars — flat muted amber.
+   Guarded so it never disables the webkit styling in Chromium */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--glow) 55%, var(--night-mist))
+      transparent;
+  }
+}
+
 .page-wrap {
   width: min(1080px, calc(100% - 2rem));
   margin-inline: auto;
