@@ -1,4 +1,5 @@
 import handler from "@tanstack/react-start/server-entry";
+import { localeRedirect } from "#/lib/locale-negotiation";
 import { site } from "#/lib/site";
 import { paraglideMiddleware } from "#/paraglide/server";
 
@@ -22,6 +23,9 @@ export default {
 			return Response.redirect(url.toString(), 301);
 		}
 
+		const redirect = localeRedirect(request, url);
+		if (redirect) return redirect;
+
 		// Scopes the request's locale via AsyncLocalStorage so getLocale()/m.*()
 		// resolve correctly during SSR. The handler must receive the ORIGINAL
 		// (still localized) URL — the router's rewrite.input de-localizes it;
@@ -33,6 +37,11 @@ export default {
 		const headers = new Headers(response.headers);
 		for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
 			headers.set(key, value);
+		}
+		// The same German URL answers 200 (German) or 302 → /en depending on
+		// these headers (localeRedirect above) — caches must key on them
+		if (headers.get("content-type")?.includes("text/html")) {
+			headers.append("Vary", "Accept-Language, Cookie");
 		}
 		// Keep *.workers.dev preview URLs out of search indexes — only the
 		// custom domain may be indexed

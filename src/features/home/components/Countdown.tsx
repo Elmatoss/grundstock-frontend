@@ -8,7 +8,7 @@ function remaining() {
 	return Math.max(0, TARGET - Date.now());
 }
 
-function split(ms: number) {
+export function splitCountdown(ms: number) {
 	const total = Math.floor(ms / 1000);
 	return {
 		days: Math.floor(total / 86400),
@@ -34,7 +34,7 @@ export function Countdown() {
 		);
 	}
 
-	const parts = split(ms);
+	const parts = splitCountdown(ms);
 	const cells = [
 		[parts.days, m.countdown_days()],
 		[parts.hours, m.countdown_hours()],

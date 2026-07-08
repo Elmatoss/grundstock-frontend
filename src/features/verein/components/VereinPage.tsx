@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { MittelgschaftlerDialog } from "#/components/MittelgschaftlerDialog";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
+import { localizeHref } from "#/paraglide/runtime";
 
 function CopyIbanButton() {
 	const [copied, setCopied] = useState(false);
@@ -47,21 +49,21 @@ export function VereinPage() {
 				<p className="mt-3 mb-0 text-moon-dim">{m.verein_mitmachen_text()}</p>
 				<div className="mt-5 flex flex-wrap gap-3">
 					<a
-						href={site.helfertoolUrl}
+						href={localizeHref("/helfen")}
 						target="_blank"
 						rel="noopener noreferrer"
 						className="rounded-full bg-glow px-5 py-2.5 text-sm font-semibold text-night no-underline transition-colors hover:bg-glow-soft hover:text-night"
 					>
 						{m.verein_mitmachen_schicht()}
 					</a>
-					<a
-						href={site.mittelgschaftlerUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="rounded-full border border-moon-dim/40 px-5 py-2.5 text-sm font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
-					>
-						{m.verein_mitmachen_mittel()}
-					</a>
+					<MittelgschaftlerDialog>
+						<button
+							type="button"
+							className="cursor-pointer rounded-full border border-moon-dim/40 px-5 py-2.5 text-sm font-semibold text-moon transition-colors hover:border-glow hover:text-glow"
+						>
+							{m.verein_mitmachen_mittel()}
+						</button>
+					</MittelgschaftlerDialog>
 				</div>
 			</section>
 
@@ -82,7 +84,7 @@ export function VereinPage() {
 					</div>
 				</div>
 				<p className="mt-4 mb-0 text-sm text-moon-dim">
-					{m.verein_spenden_receipt()}
+					{m.verein_spenden_receipt({ email: site.contactEmail })}
 				</p>
 			</section>
 

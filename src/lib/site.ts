@@ -8,8 +8,7 @@ export const site = {
 		"https://eventfrog.de/de/p/festivals/weitere-festivals/grundstock-2026-7440753604112179814.html",
 	helfertoolUrl:
 		"https://airtable.com/appo2wY2SKFOd6ZeL/pagGiBBo6j2Yfpfl2/form",
-	mittelgschaftlerUrl:
-		"https://airtable.com/appo2wY2SKFOd6ZeL/pagay1nyKPcPULWaM/form",
+	mittelgschaftlerEmail: "grundstock2026@neues-brett.de",
 	contactEmail: "info@neues-brett.de",
 	recapYoutubeId: "sACZxjbCPls",
 	donation: {

@@ -97,4 +97,20 @@
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://grundstock-festival.de/festival-policy</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/festival-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/festival-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/festival-policy"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/en/festival-policy</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/festival-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/festival-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/festival-policy"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>

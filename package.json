@@ -1,6 +1,6 @@
 {
   "name": "grundstock-frontend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.9.0",
@@ -18,7 +18,7 @@
     "lint": "biome lint",
     "check": "biome check",
     "check:fix": "biome check --write",
-    "i18n:compile": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide",
+    "i18n:compile": "node scripts/compile-i18n.ts",
     "prepare": "husky && pnpm i18n:compile",
     "deploy": "pnpm run build && wrangler deploy"
   },
@@ -28,7 +28,6 @@
     "@fontsource-variable/instrument-sans": "^5.2.8",
     "@fontsource-variable/shantell-sans": "^5.2.7",
     "@portabletext/react": "^6.2.0",
-    "@sanity/client": "^7.23.0",
     "@sanity/image-url": "^2.1.1",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "^0.10.8",
@@ -42,6 +41,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.577.0",
+    "radix-ui": "^1.6.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwind-merge": "^3.0.2",

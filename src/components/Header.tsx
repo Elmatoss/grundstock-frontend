@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { LanguageSwitcher } from "#/components/LanguageSwitcher";
 import { LogoMark } from "#/components/LogoMark";
 import { SiteMenu } from "#/components/SiteMenu";
 import { m } from "#/paraglide/messages";
@@ -58,7 +59,10 @@ export default function Header() {
 						{m.nav_infos()}
 					</Link>
 				</div>
-				<SiteMenu />
+				<div className="flex items-center gap-3">
+					<LanguageSwitcher />
+					<SiteMenu />
+				</div>
 			</nav>
 		</header>
 	);

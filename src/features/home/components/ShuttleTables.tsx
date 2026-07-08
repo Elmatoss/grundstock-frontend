@@ -1,8 +1,11 @@
-import { shuttles, site } from "#/lib/site";
+import { shuttles } from "#/lib/site";
 import { m } from "#/paraglide/messages";
+import { localizeHref } from "#/paraglide/runtime";
 import { Card } from "./Card";
 
-const dayLabel: Record<string, () => string> = {
+// Keyed by the actual shuttle days so a new entry in site.ts can't render
+// before its label exists
+const dayLabel: Record<(typeof shuttles)[number]["day"], () => string> = {
 	Do: m.day_do,
 	Fr: m.day_fr,
 	So: m.day_so,
@@ -38,7 +41,7 @@ export function ShuttleTables() {
 					))}
 				</ul>
 				<a
-					href={site.ticketUrl}
+					href={localizeHref("/tickets")}
 					target="_blank"
 					rel="noopener noreferrer"
 					className="mt-4 inline-block text-sm font-semibold"

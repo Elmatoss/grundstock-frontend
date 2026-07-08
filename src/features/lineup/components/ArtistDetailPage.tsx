@@ -1,7 +1,7 @@
 import { PortableText } from "@portabletext/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { localized, localizedBlock, sanityCropUrl } from "#/lib/sanity";
+import { localized, localizedBlock, sanityImageProps } from "#/lib/sanity";
 import { m } from "#/paraglide/messages";
 import { artistDetailQueryOptions } from "../api/artists";
 import type { FestivalDay } from "../types";
@@ -47,7 +47,7 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 					{artist.performances && artist.performances.length > 0 && (
 						<ul className="m-0 mt-4 list-none space-y-1 p-0 text-moon-dim">
 							{artist.performances.map((p) => (
-								<li key={`${p.day}-${p.stage?.slug}`}>
+								<li key={`${p.day}-${p.stage?.slug}-${p.time}`}>
 									{DAY_LABELS[p.day]()}
 									{p.stage ? ` · ${p.stage.name}` : ""}
 									{p.time ? ` · ${p.time}` : ""}
@@ -93,9 +93,10 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 				</div>
 				{artist.image && (
 					<img
-						src={sanityCropUrl(artist.image, 900, 900)}
+						{...sanityImageProps(artist.image, 720, 720)}
+						sizes="(min-width: 1024px) 520px, 92vw"
 						alt={artist.image.alt ?? artist.name}
-						className="w-full rounded-2xl border border-border object-cover"
+						className="h-auto w-full rounded-2xl border border-border object-cover"
 					/>
 				)}
 			</div>

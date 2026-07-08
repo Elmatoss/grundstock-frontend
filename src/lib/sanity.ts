@@ -1,17 +1,37 @@
-import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { z } from "zod";
 import { getLocale } from "#/paraglide/runtime";
 
-export const sanityClient = createClient({
-	projectId: "0wrmpf0k",
-	dataset: "production",
-	apiVersion: "2026-07-06",
-	useCdn: true,
-	perspective: "published",
-});
+const projectId = "0wrmpf0k";
+const dataset = "production";
+const apiVersion = "2026-07-06";
 
-const builder = imageUrlBuilder(sanityClient);
+const zQueryResponse = z.object({ result: z.unknown() });
+
+// Read-only GROQ GET against the public CDN endpoint. Replaces @sanity/client
+// (~173 KB in every page's bundle) — this site only ever runs published,
+// tokenless queries, so the full client is dead weight.
+export async function sanityFetch(
+	query: string,
+	params: Record<string, unknown> = {},
+): Promise<unknown> {
+	const url = new URL(
+		`https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}`,
+	);
+	url.searchParams.set("query", query);
+	url.searchParams.set("perspective", "published");
+	for (const [key, value] of Object.entries(params)) {
+		// GROQ params go over the wire JSON-encoded, keyed as $name
+		url.searchParams.set(`$${key}`, JSON.stringify(value));
+	}
+	const response = await fetch(url);
+	if (!response.ok) {
+		throw new Error(`Sanity query failed: ${response.status}`);
+	}
+	return zQueryResponse.parse(await response.json()).result ?? null;
+}
+
+const builder = imageUrlBuilder({ projectId, dataset });
 
 type ImageSource = Parameters<typeof builder.image>[0];
 
@@ -32,6 +52,26 @@ export function sanityCropUrl(
 			.fit("crop")
 			.url()
 	);
+}
+
+// src/srcSet/width/height for an <img> with a fixed display size: DPR-graded
+// candidates (1x/1.5x/2x) so phones don't download desktop crops. Pair with a
+// `sizes` attribute at the call site; width/height reserve layout (no CLS).
+export function sanityImageProps(
+	source: ImageSource,
+	width: number,
+	height: number,
+) {
+	const candidate = (dpr: number) => {
+		const w = Math.round(width * dpr);
+		return `${sanityCropUrl(source, w, Math.round((height / width) * w))} ${w}w`;
+	};
+	return {
+		src: sanityCropUrl(source, width, height),
+		srcSet: [1, 1.5, 2].map(candidate).join(", "),
+		width,
+		height,
+	};
 }
 
 // Mirrors the CMS localeString/localeText objects: de required, en added later

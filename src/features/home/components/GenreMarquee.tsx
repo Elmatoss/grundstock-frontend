@@ -8,7 +8,7 @@ export function GenreMarquee() {
 		<div className="border-y border-border py-5">
 			<p className="sr-only">{items.join(", ")}</p>
 			<div aria-hidden className="overflow-hidden">
-				<div className="flex w-max gap-10 motion-safe:animate-marquee">
+				<div className="flex w-max gap-10 motion-safe:animate-marquee hover:paused">
 					{[...items, ...items].map((genre, i) => (
 						<span
 							// biome-ignore lint/suspicious/noArrayIndexKey: static duplicated list, never reordered

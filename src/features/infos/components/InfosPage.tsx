@@ -53,7 +53,7 @@ export function InfosPage() {
 	return (
 		<main className="page-wrap flex-1 py-16 sm:py-20">
 			<p className="m-0 font-display text-sm font-semibold tracking-[0.2em] text-glow uppercase">
-				FAQ
+				{m.infos_kicker()}
 			</p>
 			<h1 className="mt-2 mb-0 font-display text-4xl font-bold text-moon sm:text-5xl">
 				{m.infos_title()}

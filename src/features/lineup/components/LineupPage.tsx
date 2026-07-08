@@ -57,7 +57,8 @@ export function LineupPage() {
 					{unscheduled.length > 0 && (
 						<section className="mt-12">
 							<h2 className="m-0 font-serif text-2xl font-bold text-glow-soft">
-								✦
+								<span aria-hidden="true">✦</span>
+								<span className="sr-only">{m.lineup_unscheduled()}</span>
 							</h2>
 							<div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 								{unscheduled.map((artist) => (

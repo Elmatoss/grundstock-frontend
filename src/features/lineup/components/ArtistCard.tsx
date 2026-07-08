@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { localized, sanityCropUrl } from "#/lib/sanity";
+import { localized, sanityImageProps } from "#/lib/sanity";
 import type { ArtistCard as ArtistCardData } from "../types";
 
 export function ArtistCard({ artist }: { artist: ArtistCardData }) {
@@ -11,7 +11,8 @@ export function ArtistCard({ artist }: { artist: ArtistCardData }) {
 		>
 			{artist.image ? (
 				<img
-					src={sanityCropUrl(artist.image, 640, 480)}
+					{...sanityImageProps(artist.image, 480, 360)}
+					sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 90vw"
 					alt={artist.image.alt ?? artist.name}
 					loading="lazy"
 					className="aspect-4/3 w-full object-cover opacity-80 transition-opacity group-hover:opacity-100"
