@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
 					"@type": "MusicFestival",
 					name: "Grundstock Festival 2026",
 					url: site.baseUrl,
-					startDate: "2026-08-13",
+					startDate: site.festivalStart,
 					endDate: site.festivalEndDate,
 					eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
 					eventStatus: "https://schema.org/EventScheduled",

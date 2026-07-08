@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { LogoMark } from "#/components/LogoMark";
-import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
+import { localizeHref } from "#/paraglide/runtime";
 
 // Curated: content pages only — legal boilerplate (Impressum, Datenschutz,
 // Ticketbedingungen) stays footer-only
@@ -25,6 +25,7 @@ export function SiteMenu() {
 	const [mounted, setMounted] = useState(false);
 	const closeRef = useRef<HTMLButtonElement>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
+	const overlayRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => setMounted(true), []);
 
@@ -34,6 +35,26 @@ export function SiteMenu() {
 		document.body.style.overflow = "hidden";
 		const onKey = (event: KeyboardEvent) => {
 			if (event.key === "Escape") setOpen(false);
+			// aria-modal promises a focus trap: cycle Tab within the overlay
+			if (event.key === "Tab") {
+				const focusables = overlayRef.current?.querySelectorAll<HTMLElement>(
+					"a[href], button:not([disabled])",
+				);
+				if (!focusables || focusables.length === 0) return;
+				const first = focusables[0];
+				const last = focusables[focusables.length - 1];
+				const active = document.activeElement;
+				if (!overlayRef.current?.contains(active)) {
+					event.preventDefault();
+					first.focus();
+				} else if (event.shiftKey && active === first) {
+					event.preventDefault();
+					last.focus();
+				} else if (!event.shiftKey && active === last) {
+					event.preventDefault();
+					first.focus();
+				}
+			}
 		};
 		window.addEventListener("keydown", onKey);
 		return () => {
@@ -45,6 +66,7 @@ export function SiteMenu() {
 
 	const overlay = (
 		<div
+			ref={overlayRef}
 			role="dialog"
 			aria-modal="true"
 			aria-label={m.menu_open()}
@@ -115,7 +137,7 @@ export function SiteMenu() {
 				}`}
 			>
 				<a
-					href={site.ticketUrl}
+					href={localizeHref("/tickets")}
 					target="_blank"
 					rel="noopener noreferrer"
 					className="rounded-full bg-glow px-6 py-3 font-semibold text-night no-underline shadow-[0_0_32px_rgba(255,181,36,0.35)] transition-colors hover:bg-glow-soft hover:text-night"

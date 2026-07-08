@@ -6,35 +6,14 @@ import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { paraglideCompilerOptions } from "./paraglide.config.ts";
 
 const config = defineConfig({
 	resolve: { tsconfigPaths: true },
 	plugins: [
 		devtools(),
-		paraglideVitePlugin({
-			project: "./project.inlang",
-			outdir: "./src/paraglide",
-			strategy: ["url", "baseLocale"],
-			// Explicit patterns so the localized root is "/en" (not "/en/") —
-			// otherwise the router's trailing-slash normalization and localizeUrl
-			// redirect each other in an infinite 307 loop
-			urlPatterns: [
-				{
-					pattern: "/",
-					localized: [
-						["en", "/en"],
-						["de", "/"],
-					],
-				},
-				{
-					pattern: "/:path(.*)",
-					localized: [
-						["en", "/en/:path(.*)"],
-						["de", "/:path(.*)"],
-					],
-				},
-			],
-		}),
+		// Options shared with scripts/compile-i18n.ts — see paraglide.config.ts
+		paraglideVitePlugin(paraglideCompilerOptions),
 		cloudflare({ viteEnvironment: { name: "ssr" } }),
 		tailwindcss(),
 		tanstackStart(),

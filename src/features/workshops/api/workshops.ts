@@ -1,11 +1,11 @@
 import { queryOptions } from "@tanstack/react-query";
-import { sanityClient } from "#/lib/sanity";
+import { sanityFetch } from "#/lib/sanity";
 import { zWorkshopList } from "../types";
 
 export const workshopListQueryOptions = queryOptions({
 	queryKey: ["workshops", "list"],
 	queryFn: async () => {
-		const result = await sanityClient.fetch(
+		const result = await sanityFetch(
 			`*[_type == "workshop" && defined(slug.current)] | order(day asc, time asc) {
 				title,
 				"slug": slug.current,

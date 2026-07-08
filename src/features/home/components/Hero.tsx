@@ -1,6 +1,6 @@
 import { LogoMark } from "#/components/LogoMark";
-import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
+import { localizeHref } from "#/paraglide/runtime";
 import { Countdown } from "./Countdown";
 
 // Fireflies/stars live in the global NightBackground layer; the hero only
@@ -29,8 +29,10 @@ export function Hero() {
 					<Countdown />
 				</div>
 				<div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+					{/* Plain anchor via the /tickets proxy: the Worker request count is
+					    the ticket-conversion metric (docs/PLAN.md §8) */}
 					<a
-						href={site.ticketUrl}
+						href={localizeHref("/tickets")}
 						target="_blank"
 						rel="noopener noreferrer"
 						className="rounded-full bg-glow px-6 py-3 font-semibold text-night no-underline shadow-[0_0_32px_rgba(255,181,36,0.35)] transition-colors hover:bg-glow-soft hover:text-night"

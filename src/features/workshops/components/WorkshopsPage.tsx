@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { FestivalDay } from "#/features/lineup/types";
-import { localized, sanityCropUrl } from "#/lib/sanity";
+import { localized, sanityImageProps } from "#/lib/sanity";
 import { m } from "#/paraglide/messages";
 import { workshopListQueryOptions } from "../api/workshops";
 
@@ -36,7 +36,8 @@ export function WorkshopsPage() {
 						>
 							{workshop.image && (
 								<img
-									src={sanityCropUrl(workshop.image, 640, 360)}
+									{...sanityImageProps(workshop.image, 480, 270)}
+									sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 90vw"
 									alt={workshop.image.alt ?? workshop.title}
 									loading="lazy"
 									className="aspect-video w-full object-cover opacity-80"

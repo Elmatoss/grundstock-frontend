@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
+import { localizeHref } from "#/paraglide/runtime";
 
 export function TicketsCta() {
 	return (
@@ -16,17 +16,17 @@ export function TicketsCta() {
 					{m.tickets_text()}
 				</p>
 				<a
-					href={site.ticketUrl}
+					href={localizeHref("/tickets")}
 					target="_blank"
 					rel="noopener noreferrer"
 					className="mt-6 inline-block rounded-full bg-glow px-8 py-3.5 font-semibold text-night no-underline shadow-[0_0_40px_rgba(255,181,36,0.4)] transition-colors hover:bg-glow-soft hover:text-night"
 				>
 					{m.cta_tickets()}
 				</a>
-				<p className="mt-4 mb-0 text-xs tracking-widest text-moon-dim/70 uppercase">
+				<p className="mt-4 mb-0 text-xs tracking-widest text-moon-dim/85 uppercase">
 					{m.tickets_note_age()}
 				</p>
-				<p className="mx-auto mt-3 mb-0 max-w-md text-xs text-moon-dim/70">
+				<p className="mx-auto mt-3 mb-0 max-w-md text-xs text-moon-dim/85">
 					{m.tickets_note_terms()}{" "}
 					<Link
 						to="/festival-policy"

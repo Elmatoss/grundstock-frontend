@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { sanityClient } from "#/lib/sanity";
+import { sanityFetch } from "#/lib/sanity";
 import { zArtistDetail, zArtistList } from "../types";
 
 const CARD_PROJECTION = `
@@ -15,7 +15,7 @@ const CARD_PROJECTION = `
 export const artistListQueryOptions = queryOptions({
 	queryKey: ["artists", "list"],
 	queryFn: async () => {
-		const result = await sanityClient.fetch(
+		const result = await sanityFetch(
 			`*[_type == "artist" && defined(slug.current)] | order(name asc) { ${CARD_PROJECTION} }`,
 		);
 		return zArtistList.parse(result);
@@ -26,7 +26,7 @@ export const artistListQueryOptions = queryOptions({
 export const featuredArtistsQueryOptions = queryOptions({
 	queryKey: ["artists", "featured"],
 	queryFn: async () => {
-		const result = await sanityClient.fetch(
+		const result = await sanityFetch(
 			`*[_type == "artist" && featured == true && defined(slug.current)] | order(name asc) [0...8] { ${CARD_PROJECTION} }`,
 		);
 		return zArtistList.parse(result);
@@ -38,7 +38,7 @@ export const artistDetailQueryOptions = (slug: string) =>
 	queryOptions({
 		queryKey: ["artist", slug],
 		queryFn: async () => {
-			const result = await sanityClient.fetch(
+			const result = await sanityFetch(
 				`*[_type == "artist" && slug.current == $slug][0]{ ${CARD_PROJECTION}, bio, links }`,
 				{ slug },
 			);
