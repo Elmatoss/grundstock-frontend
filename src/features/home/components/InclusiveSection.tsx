@@ -16,6 +16,12 @@ export function InclusiveSection() {
 					<p className="m-0">{m.inclusive_drinks_text()}</p>
 				</Card>
 			</div>
+			<p className="m-0 mt-4 rounded-xl border border-glow/40 bg-glow/10 p-5 text-moon">
+				<strong className="font-display text-glow-soft">
+					{m.inclusive_dishes_title()}
+				</strong>{" "}
+				{m.inclusive_dishes_text()}
+			</p>
 		</Section>
 	);
 }

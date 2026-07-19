@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { zFaqItem } from "#/features/infos/types";
+import { zSiteSettings } from "#/features/settings/types";
 import { zWorkshop } from "#/features/workshops/types";
 import { zArtistDetail, zArtistList } from "./types";
 
@@ -22,7 +23,12 @@ const fullArtist = {
 		{
 			day: "sa",
 			time: "23:00",
-			stage: { name: "Bunker", slug: "bunker", order: 3, tagline: null },
+			stage: {
+				name: "Schepperschuppen",
+				slug: "schepperschuppen",
+				order: 3,
+				tagline: null,
+			},
 		},
 	],
 };
@@ -106,5 +112,19 @@ describe("faq schema", () => {
 		expect(
 			zFaqItem.parse({ question: { de: "?" }, answer: { de: "!" } }).category,
 		).toBeUndefined();
+	});
+});
+
+describe("site settings schema", () => {
+	it("accepts a published announcement", () => {
+		const settings = zSiteSettings.parse({
+			announcement: { de: "Earlybird läuft!", en: "Earlybird live!" },
+		});
+		expect(settings?.announcement?.de).toBe("Earlybird läuft!");
+	});
+
+	it("accepts a missing singleton and a cleared announcement", () => {
+		expect(zSiteSettings.parse(null)).toBeNull();
+		expect(zSiteSettings.parse({})?.announcement).toBeUndefined();
 	});
 });

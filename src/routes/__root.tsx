@@ -10,6 +10,8 @@ import Footer from "#/components/Footer";
 import Header from "#/components/Header";
 import { NightBackground } from "#/components/NightBackground";
 import NotFound from "#/components/NotFound";
+import { siteSettingsQueryOptions } from "#/features/settings/api/settings";
+import { AnnouncementBanner } from "#/features/settings/components/AnnouncementBanner";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { getLocale } from "#/paraglide/runtime";
@@ -28,6 +30,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			document.documentElement.setAttribute("lang", getLocale());
 		}
 	},
+
+	loader: ({ context }) =>
+		context.queryClient.prefetchQuery(siteSettingsQueryOptions),
 
 	head: () => ({
 		meta: [
@@ -90,6 +95,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 					>
 						{m.skip_to_content()}
 					</a>
+					<AnnouncementBanner />
 					<Header />
 					<div id="main" tabIndex={-1} className="flex flex-1 flex-col">
 						{children}
