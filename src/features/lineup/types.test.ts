@@ -42,9 +42,22 @@ describe("artist schemas", () => {
 		const detail = zArtistDetail.parse({
 			...fullArtist,
 			bio: { de: [{ _type: "block" }], en: null },
-			links: { instagram: "https://instagram.com/x", spotify: null },
+			links: [
+				{ _key: "ig", title: "Instagram", url: "https://instagram.com/x" },
+				{
+					_key: "sc1",
+					title: "SoundCloud (Camillo)",
+					url: "https://soundcloud.com/a",
+				},
+				{
+					_key: "sc2",
+					title: "SoundCloud (DJ GoodBoy)",
+					url: "https://soundcloud.com/b",
+				},
+			],
 		});
-		expect(detail.links?.instagram).toBe("https://instagram.com/x");
+		expect(detail.links).toHaveLength(3);
+		expect(detail.links?.[0]?.title).toBe("Instagram");
 	});
 
 	it("rejects unknown performance days", () => {
@@ -63,7 +76,7 @@ describe("artist schemas", () => {
 		expect(() =>
 			zArtistDetail.parse({
 				...minimalArtist,
-				links: { spotify: "not a url" },
+				links: [{ title: "Spotify", url: "not a url" }],
 			}),
 		).toThrow();
 	});

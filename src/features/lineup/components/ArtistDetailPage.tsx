@@ -12,13 +12,6 @@ const DAY_LABELS: Record<FestivalDay, () => string> = {
 	sa: m.day_sa,
 };
 
-const LINK_LABELS = {
-	instagram: "Instagram",
-	spotify: "Spotify",
-	soundcloud: "SoundCloud",
-	website: "Website",
-} as const;
-
 export function ArtistDetailPage({ slug }: { slug: string }) {
 	const { data: artist } = useSuspenseQuery(artistDetailQueryOptions(slug));
 	// The loader already 404s on null; this narrows the type for TS
@@ -66,28 +59,19 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 							<PortableText value={bioBlocks as any} />
 						</div>
 					)}
-					{artist.links && (
+					{artist.links && artist.links.length > 0 && (
 						<div className="mt-6 flex flex-wrap gap-3">
-							{(
-								Object.entries(LINK_LABELS) as [
-									keyof typeof LINK_LABELS,
-									string,
-								][]
-							).map(([key, label]) => {
-								const href = artist.links?.[key];
-								if (!href) return null;
-								return (
-									<a
-										key={key}
-										href={href}
-										target="_blank"
-										rel="noopener noreferrer"
-										className="rounded-full border border-moon-dim/40 px-4 py-2 text-sm font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
-									>
-										{label}
-									</a>
-								);
-							})}
+							{artist.links.map((link) => (
+								<a
+									key={link._key ?? link.url}
+									href={link.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="rounded-full border border-moon-dim/40 px-4 py-2 text-sm font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
+								>
+									{link.title}
+								</a>
+							))}
 						</div>
 					)}
 				</div>

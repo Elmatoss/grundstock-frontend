@@ -29,16 +29,15 @@ export const zArtistCard = z.object({
 
 export const zArtistList = z.array(zArtistCard);
 
+export const zArtistLink = z.object({
+	_key: z.string().nullish(),
+	title: z.string(),
+	url: z.url(),
+});
+
 export const zArtistDetail = zArtistCard.extend({
 	bio: zLocaleBlock.nullish(),
-	links: z
-		.object({
-			instagram: z.url().nullish(),
-			spotify: z.url().nullish(),
-			soundcloud: z.url().nullish(),
-			website: z.url().nullish(),
-		})
-		.nullish(),
+	links: z.array(zArtistLink).nullish(),
 });
 
 export type ArtistCard = z.infer<typeof zArtistCard>;
