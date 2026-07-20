@@ -11,14 +11,14 @@ export function ArtistCard({ artist }: { artist: ArtistCardData }) {
 		>
 			{artist.image ? (
 				<img
-					{...sanityImageProps(artist.image, 480, 360)}
+					{...sanityImageProps(artist.image, 480, 640)}
 					sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 90vw"
 					alt={artist.image.alt ?? artist.name}
 					loading="lazy"
-					className="aspect-4/3 w-full object-cover opacity-80 transition-opacity group-hover:opacity-100"
+					className="aspect-3/4 w-full object-cover opacity-80 transition-opacity group-hover:opacity-100"
 				/>
 			) : (
-				<div className="flex aspect-4/3 w-full items-center justify-center bg-night-mist/40 font-display text-4xl text-moon-dim/50">
+				<div className="flex aspect-3/4 w-full items-center justify-center bg-night-mist/40 font-display text-4xl text-moon-dim/50">
 					✦
 				</div>
 			)}

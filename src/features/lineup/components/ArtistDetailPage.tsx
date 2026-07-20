@@ -77,7 +77,7 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 				</div>
 				{artist.image && (
 					<img
-						{...sanityImageProps(artist.image, 720, 720)}
+						{...sanityImageProps(artist.image, 720, 960)}
 						sizes="(min-width: 1024px) 520px, 92vw"
 						alt={artist.image.alt ?? artist.name}
 						className="h-auto w-full rounded-2xl border border-border object-cover"
