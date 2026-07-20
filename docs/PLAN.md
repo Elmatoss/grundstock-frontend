@@ -190,7 +190,7 @@ jungle silhouettes, neon-eye hero photo, NB logo glow).
 
 - **/lineup** — day tabs or stacked day sections (**Do / Fr / Sa** — Sonntag ist Abbau &
   Abreise, kein Programm), per day the artists grouped by stage (Turtle · Mainstage ·
-  Bunker) with stage descriptions ("Bunker — DJs bis in den Morgen"). v1 without exact
+  Schepperschuppen) with stage descriptions ("Schepperschuppen — DJs bis in den Morgen"). v1 without exact
   times; the CMS model supports adding a timetable later.
 - **/artists/$slug** — hero image, name, genre chips, slot (Tag/Stage/Zeit sobald fix), bio
   (portable text), links (Instagram/Spotify/SoundCloud as plain links; embeds only as
@@ -240,7 +240,7 @@ Documents:
 | Type | Fields (core) |
 |---|---|
 | `artist` | name, slug, image(s) (hotspot), genres[], shortBlurb, bio (portable text), links {instagram, spotify, soundcloud, website}, performances[] {day, stage→ref, time?}, featured |
-| `stage` | name (Turtle/Mainstage/Bunker), slug, tagline, description, icon/image, order |
+| `stage` | name (Turtle/Mainstage/Schepperschuppen), slug, tagline, description, icon/image, order |
 | `workshop` | title, slug, host (string or artist→ref), description (portable text), image, day, time, location (string/stage ref), registration note |
 | `faqItem` | question, answer (portable text), category (schichten/essen/anreise/allgemein/…), order |
 | `memory` | image, caption, year — feeds the memories strip/gallery |

@@ -221,8 +221,8 @@ Screen readers announce "black four-pointed star" as a section heading. **Fixed:
 "More acts").
 
 ### L6 · Performance key collision — `src/features/lineup/components/ArtistDetailPage.tsx`
-`key={day-stage.slug}` breaks if an artist plays the same stage twice on one day (two Bunker
-sets). **Fixed:** time appended to the key.
+`key={day-stage.slug}` breaks if an artist plays the same stage twice on one day (two
+Schepperschuppen sets). **Fixed:** time appended to the key.
 
 ### L7 · `dayLabel: Record<string, () => string>` — `src/features/home/components/ShuttleTables.tsx`
 Stringly-typed map: a new shuttle day (`"Sa"`) would compile fine and crash at render

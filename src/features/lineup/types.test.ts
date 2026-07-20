@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { zFaqItem } from "#/features/infos/types";
+import { zSiteSettings } from "#/features/settings/types";
 import { zWorkshop } from "#/features/workshops/types";
 import { zArtistDetail, zArtistList } from "./types";
 
@@ -22,7 +23,12 @@ const fullArtist = {
 		{
 			day: "sa",
 			time: "23:00",
-			stage: { name: "Bunker", slug: "bunker", order: 3, tagline: null },
+			stage: {
+				name: "Schepperschuppen",
+				slug: "schepperschuppen",
+				order: 3,
+				tagline: null,
+			},
 		},
 	],
 };
@@ -36,9 +42,22 @@ describe("artist schemas", () => {
 		const detail = zArtistDetail.parse({
 			...fullArtist,
 			bio: { de: [{ _type: "block" }], en: null },
-			links: { instagram: "https://instagram.com/x", spotify: null },
+			links: [
+				{ _key: "ig", title: "Instagram", url: "https://instagram.com/x" },
+				{
+					_key: "sc1",
+					title: "SoundCloud (Camillo)",
+					url: "https://soundcloud.com/a",
+				},
+				{
+					_key: "sc2",
+					title: "SoundCloud (DJ GoodBoy)",
+					url: "https://soundcloud.com/b",
+				},
+			],
 		});
-		expect(detail.links?.instagram).toBe("https://instagram.com/x");
+		expect(detail.links).toHaveLength(3);
+		expect(detail.links?.[0]?.title).toBe("Instagram");
 	});
 
 	it("rejects unknown performance days", () => {
@@ -57,7 +76,7 @@ describe("artist schemas", () => {
 		expect(() =>
 			zArtistDetail.parse({
 				...minimalArtist,
-				links: { spotify: "not a url" },
+				links: [{ title: "Spotify", url: "not a url" }],
 			}),
 		).toThrow();
 	});
@@ -106,5 +125,19 @@ describe("faq schema", () => {
 		expect(
 			zFaqItem.parse({ question: { de: "?" }, answer: { de: "!" } }).category,
 		).toBeUndefined();
+	});
+});
+
+describe("site settings schema", () => {
+	it("accepts a published announcement", () => {
+		const settings = zSiteSettings.parse({
+			announcement: { de: "Earlybird läuft!", en: "Earlybird live!" },
+		});
+		expect(settings?.announcement?.de).toBe("Earlybird läuft!");
+	});
+
+	it("accepts a missing singleton and a cleared announcement", () => {
+		expect(zSiteSettings.parse(null)).toBeNull();
+		expect(zSiteSettings.parse({})?.announcement).toBeUndefined();
 	});
 });

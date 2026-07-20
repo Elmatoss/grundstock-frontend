@@ -1,4 +1,6 @@
-// Interim constants — become CMS siteSettings in Phase 2 (docs/PLAN.md §6)
+// Deliberately hardcoded — the CMS siteSettings singleton only carries the
+// announcement banner. Ticketing & shift management become part of the site
+// itself next year; these values change by deploy, not by CMS edit.
 export const site = {
 	baseUrl: "https://grundstock-festival.de",
 	// Program starts Thursday; Sunday is teardown & departure only

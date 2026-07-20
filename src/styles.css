@@ -88,7 +88,7 @@
 
   @keyframes marquee {
     to {
-      transform: translateX(-50%);
+      transform: translateX(var(--marquee-shift));
     }
   }
   @keyframes twinkle {
