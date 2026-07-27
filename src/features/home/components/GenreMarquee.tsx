@@ -24,13 +24,16 @@ export function GenreMarquee() {
 							key={copyIndex}
 							className="flex shrink-0 gap-10 pr-10"
 						>
+							{/* Tracked uppercase sans with a hairline separator: reads as a
+							    ticker/setlist strip rather than decoration. The ✦ it replaces
+							    is one of the clearest generated-design tells there is. */}
 							{items.map((genre) => (
 								<span
 									key={genre}
-									className="flex items-center gap-10 font-display text-2xl font-semibold whitespace-nowrap text-moon-dim"
+									className="flex items-center gap-10 text-sm font-semibold tracking-[0.25em] whitespace-nowrap text-moon-dim uppercase"
 								>
 									{genre}
-									<span className="text-glow">✦</span>
+									<span aria-hidden className="h-3 w-px bg-glow/50" />
 								</span>
 							))}
 						</div>

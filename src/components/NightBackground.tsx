@@ -13,19 +13,22 @@ function mulberry32(seed: number) {
 
 const rand = mulberry32(20260813);
 
-const FIREFLIES = Array.from({ length: 36 }, (_, i) => ({
+// Back up to a proper swarm so the layer actually reads. Elegance comes from the
+// timing, not the count: long, desynchronised drift and slow pulses (see
+// firefly-blink in styles.css) instead of the fast strobing of the original.
+const FIREFLIES = Array.from({ length: 32 }, (_, i) => ({
 	id: i,
-	size: rand() * 3.5 + 1.5,
+	size: rand() * 2.5 + 1.5,
 	top: rand() * 100,
 	left: rand() * 100,
-	floatDuration: rand() * 8 + 6,
-	floatDelay: rand() * 6,
-	blinkDuration: rand() * 4 + 3.5,
-	blinkDelay: rand() * 5,
-	fx1: (rand() - 0.5) * 56,
-	fy1: (rand() - 0.5) * 56,
-	fx2: (rand() - 0.5) * 56,
-	fy2: (rand() - 0.5) * 56,
+	floatDuration: rand() * 10 + 12,
+	floatDelay: rand() * 10,
+	blinkDuration: rand() * 4 + 4.5,
+	blinkDelay: rand() * 6,
+	fx1: (rand() - 0.5) * 48,
+	fy1: (rand() - 0.5) * 48,
+	fx2: (rand() - 0.5) * 48,
+	fy2: (rand() - 0.5) * 48,
 }));
 
 export function NightBackground() {
@@ -37,7 +40,7 @@ export function NightBackground() {
 			{FIREFLIES.map((f) => (
 				<span
 					key={f.id}
-					className={`firefly absolute rounded-full ${f.id >= 24 ? "hidden lg:block" : ""}`}
+					className={`firefly absolute rounded-full ${f.id >= 22 ? "hidden lg:block" : ""}`}
 					style={
 						{
 							width: f.size,

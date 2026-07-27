@@ -14,13 +14,13 @@ export function PagePending() {
 export function PageError() {
 	return (
 		<main className="flex flex-1 flex-col items-center justify-center gap-3 px-4 py-24 text-center">
-			<h1 className="m-0 font-display text-2xl font-bold text-moon">
+			<h1 className="m-0 font-display text-2xl text-moon">
 				{m.state_error_title()}
 			</h1>
 			<p className="m-0 text-moon-dim">{m.state_error_text()}</p>
 			<Link
 				to="/"
-				className="mt-3 rounded-full border border-moon-dim/40 px-5 py-2.5 text-sm font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
+				className="mt-3 rounded-xs border border-moon-dim/40 px-5 py-2.5 text-sm font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
 			>
 				{m.notfound_cta()}
 			</Link>

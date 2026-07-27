@@ -24,16 +24,16 @@ export function LineupPage() {
 
 	return (
 		<main className="page-wrap flex-1 py-16 sm:py-20">
-			<p className="m-0 font-display text-sm font-semibold tracking-[0.2em] text-glow uppercase">
+			<p className="m-0 text-xs font-semibold tracking-[0.25em] text-glow uppercase">
 				{m.lineup_kicker()}
 			</p>
-			<h1 className="mt-2 mb-0 font-display text-4xl font-bold text-moon sm:text-5xl">
+			<h1 className="mt-2 mb-0 font-display text-4xl text-moon sm:text-5xl">
 				{m.lineup_title()}
 			</h1>
 			<p className="mt-4 mb-0 max-w-2xl text-moon-dim">{m.lineup_stages()}</p>
 
 			{artists.length === 0 ? (
-				<p className="mt-10 inline-block rounded-full border border-glow/40 bg-glow/10 px-4 py-2 font-display text-sm font-semibold text-glow-soft">
+				<p className="mt-10 inline-block rounded-xs border border-glow/40 bg-glow/10 px-4 py-2 text-xs font-semibold tracking-[0.2em] text-glow-soft uppercase">
 					{m.lineup_soon()}
 				</p>
 			) : (
@@ -43,7 +43,7 @@ export function LineupPage() {
 						if (dayArtists.length === 0) return null;
 						return (
 							<section key={day} className="mt-12">
-								<h2 className="m-0 font-serif text-2xl font-bold text-glow-soft">
+								<h2 className="m-0 font-display text-2xl text-glow-soft">
 									{label()}
 								</h2>
 								<div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -56,9 +56,10 @@ export function LineupPage() {
 					})}
 					{unscheduled.length > 0 && (
 						<section className="mt-12">
-							<h2 className="m-0 font-serif text-2xl font-bold text-glow-soft">
-								<span aria-hidden="true">✦</span>
-								<span className="sr-only">{m.lineup_unscheduled()}</span>
+							{/* Was a decorative ✦ with the real label hidden in sr-only —
+							    the heading now simply states what the group is */}
+							<h2 className="m-0 font-display text-2xl text-glow-soft">
+								{m.lineup_unscheduled()}
 							</h2>
 							<div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 								{unscheduled.map((artist) => (

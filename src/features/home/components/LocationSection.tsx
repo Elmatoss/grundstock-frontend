@@ -11,7 +11,7 @@ export function LocationSection() {
 			title={m.location_title()}
 		>
 			<p className="m-0 max-w-2xl text-moon-dim">{m.location_text()}</p>
-			<h3 className="mt-8 mb-1 font-display text-xl font-bold text-moon">
+			<h3 className="mt-8 mb-1 font-display text-xl text-moon">
 				{m.shuttle_title()}
 			</h3>
 			<p className="m-0 max-w-2xl text-moon-dim">{m.shuttle_text()}</p>
@@ -20,7 +20,7 @@ export function LocationSection() {
 			</div>
 			<Link
 				to="/anreise"
-				className="mt-6 inline-block rounded-full border border-glow/40 bg-glow/10 px-4 py-2 font-display text-sm font-semibold text-glow-soft no-underline transition-colors hover:border-glow hover:text-glow"
+				className="mt-6 inline-block rounded-xs border border-glow/40 bg-glow/10 px-4 py-2 text-xs font-semibold tracking-[0.2em] text-glow-soft uppercase no-underline transition-colors hover:border-glow hover:text-glow"
 			>
 				{m.nav_anreise()} →
 			</Link>

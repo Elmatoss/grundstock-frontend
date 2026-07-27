@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { getLocale } from "#/paraglide/runtime";
 import { LegalLayout } from "./LegalLayout";
@@ -57,11 +58,7 @@ function TermsDe() {
 				Anfragen zur Ticketübertragung kannst du per E-Mail an{" "}
 				<a href="mailto:vorstand@neues-brett.de">vorstand@neues-brett.de</a>,
 				über den Instagram-Account{" "}
-				<a
-					href="https://www.instagram.com/grundstock.neuesbrett/"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
+				<a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">
 					grundstock.neuesbrett
 				</a>{" "}
 				oder durch direkte Kontaktaufnahme mit einem dir bekannten Mitglied des
@@ -113,11 +110,7 @@ function TermsEn() {
 				You can request a ticket transfer by email to{" "}
 				<a href="mailto:vorstand@neues-brett.de">vorstand@neues-brett.de</a>,
 				via the Instagram account{" "}
-				<a
-					href="https://www.instagram.com/grundstock.neuesbrett/"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
+				<a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">
 					grundstock.neuesbrett
 				</a>{" "}
 				or by directly contacting a member of the organising team known to you.

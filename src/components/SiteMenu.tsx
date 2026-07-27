@@ -82,9 +82,9 @@ export function SiteMenu() {
 			</div>
 
 			<div className="page-wrap flex items-center justify-between py-3">
-				<span className="flex items-center gap-2.5 font-display text-lg font-bold tracking-wide text-moon">
+				<span className="flex items-center gap-2.5 text-moon">
 					<LogoMark className="h-6" />
-					<span>
+					<span className="wordmark text-base sm:text-lg">
 						Grundstock <span className="text-glow">2026</span>
 					</span>
 				</span>
@@ -117,7 +117,7 @@ export function SiteMenu() {
 						to={item.to}
 						onClick={() => setOpen(false)}
 						style={{ transitionDelay: open ? `${80 + index * 40}ms` : "0ms" }}
-						className={`w-fit py-1.5 font-display text-3xl font-bold text-moon no-underline transition-[opacity,transform,color] duration-500 hover:text-glow motion-reduce:transform-none motion-reduce:transition-none sm:text-5xl ${
+						className={`w-fit py-1.5 font-display text-3xl text-moon no-underline transition-[opacity,transform,color] duration-500 hover:text-glow motion-reduce:transform-none motion-reduce:transition-none sm:text-5xl ${
 							open
 								? "translate-y-0 opacity-100"
 								: "translate-y-4 opacity-0 motion-reduce:opacity-0"
@@ -140,7 +140,7 @@ export function SiteMenu() {
 					href={localizeHref("/tickets")}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="rounded-full bg-glow px-6 py-3 font-semibold text-night no-underline shadow-[0_0_32px_rgba(255,181,36,0.35)] transition-colors hover:bg-glow-soft hover:text-night"
+					className="btn-primary rounded-xs px-6 py-3 font-semibold no-underline"
 				>
 					{m.cta_tickets()}
 				</a>
@@ -148,7 +148,7 @@ export function SiteMenu() {
 					to="/"
 					hash="helfen"
 					onClick={() => setOpen(false)}
-					className="rounded-full border border-moon-dim/40 px-6 py-3 font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
+					className="rounded-xs border border-moon-dim/40 px-6 py-3 font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
 				>
 					{m.cta_helfen()}
 				</Link>

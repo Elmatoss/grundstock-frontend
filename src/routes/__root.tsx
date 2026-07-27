@@ -91,7 +91,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<div className="flex min-h-svh flex-col">
 					<a
 						href="#main"
-						className="absolute top-3 left-3 z-70 -translate-y-24 rounded-full bg-glow px-4 py-2 font-semibold text-night no-underline opacity-0 focus:translate-y-0 focus:opacity-100"
+						className="absolute top-3 left-3 z-70 -translate-y-24 rounded-xs bg-glow px-4 py-2 font-semibold text-night no-underline opacity-0 focus:translate-y-0 focus:opacity-100"
 					>
 						{m.skip_to_content()}
 					</a>
