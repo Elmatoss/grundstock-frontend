@@ -12,10 +12,10 @@ export default function Header() {
 			<nav className="page-wrap flex items-center justify-between gap-4 py-3">
 				<Link
 					to="/"
-					className="flex items-center gap-2.5 font-display text-lg font-bold tracking-wide text-moon no-underline hover:text-moon"
+					className="flex items-center gap-2.5 text-moon no-underline hover:text-moon"
 				>
 					<LogoMark className="h-6" />
-					<span>
+					<span className="wordmark text-base sm:text-lg">
 						Grundstock <span className="text-glow">2026</span>
 					</span>
 				</Link>

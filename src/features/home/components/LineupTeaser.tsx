@@ -13,7 +13,7 @@ export function LineupTeaser() {
 			<FeaturedArtists />
 			<Link
 				to="/lineup"
-				className="mt-6 inline-block rounded-full border border-glow/40 bg-glow/10 px-4 py-2 font-display text-sm font-semibold text-glow-soft no-underline transition-colors hover:border-glow hover:text-glow"
+				className="mt-6 inline-block btn btn-quiet no-underline"
 			>
 				{m.lineup_cta()} →
 			</Link>

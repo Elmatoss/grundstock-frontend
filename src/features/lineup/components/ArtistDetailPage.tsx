@@ -29,7 +29,7 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 			</Link>
 			<div className="mt-6 grid items-start gap-8 lg:grid-cols-2">
 				<div>
-					<h1 className="m-0 font-display text-4xl font-bold text-moon sm:text-5xl">
+					<h1 className="m-0 font-display text-4xl text-moon sm:text-5xl">
 						{artist.name}
 					</h1>
 					{artist.genres && artist.genres.length > 0 && (
@@ -67,7 +67,7 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 									href={link.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="rounded-full border border-moon-dim/40 px-4 py-2 text-sm font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
+									className="btn btn-secondary btn-sm no-underline"
 								>
 									{link.title}
 								</a>
@@ -80,7 +80,7 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 						{...sanityImageProps(artist.image, 720, 960)}
 						sizes="(min-width: 1024px) 520px, 92vw"
 						alt={artist.image.alt ?? artist.name}
-						className="h-auto w-full rounded-2xl border border-border object-cover"
+						className="h-auto w-full rounded-xs border border-border object-cover"
 					/>
 				)}
 			</div>

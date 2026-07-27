@@ -15,7 +15,7 @@ function CopyIbanButton() {
 				setCopied(true);
 				setTimeout(() => setCopied(false), 2000);
 			}}
-			className="rounded-full border border-glow/40 bg-glow/10 px-4 py-1.5 text-sm font-semibold text-glow-soft transition-colors hover:border-glow hover:text-glow"
+			className="btn btn-quiet"
 		>
 			{copied ? m.verein_iban_copied() : m.verein_iban_copy()}
 		</button>
@@ -25,10 +25,10 @@ function CopyIbanButton() {
 export function VereinPage() {
 	return (
 		<main className="page-wrap flex-1 py-16 sm:py-20">
-			<p className="m-0 font-display text-sm font-semibold tracking-[0.2em] text-glow uppercase">
+			<p className="m-0 text-xs font-semibold tracking-[0.25em] text-glow uppercase">
 				Neues Brett e.V.
 			</p>
-			<h1 className="mt-2 mb-0 font-display text-4xl font-bold text-moon sm:text-5xl">
+			<h1 className="mt-2 mb-0 font-display text-4xl text-moon sm:text-5xl">
 				{m.verein_title()}
 			</h1>
 			<p className="mt-4 mb-0 max-w-2xl text-lg text-moon-dim">
@@ -36,14 +36,14 @@ export function VereinPage() {
 			</p>
 
 			<section className="mt-12 max-w-2xl">
-				<h2 className="m-0 font-display text-2xl font-bold text-moon">
+				<h2 className="m-0 font-display text-2xl text-moon">
 					{m.verein_values_title()}
 				</h2>
 				<p className="mt-3 mb-0 text-moon-dim">{m.verein_values_text()}</p>
 			</section>
 
 			<section className="mt-12 max-w-2xl">
-				<h2 className="m-0 font-display text-2xl font-bold text-moon">
+				<h2 className="m-0 font-display text-2xl text-moon">
 					{m.verein_mitmachen_title()}
 				</h2>
 				<p className="mt-3 mb-0 text-moon-dim">{m.verein_mitmachen_text()}</p>
@@ -52,15 +52,12 @@ export function VereinPage() {
 						href={localizeHref("/helfen")}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="rounded-full bg-glow px-5 py-2.5 text-sm font-semibold text-night no-underline transition-colors hover:bg-glow-soft hover:text-night"
+						className="btn btn-primary no-underline"
 					>
 						{m.verein_mitmachen_schicht()}
 					</a>
 					<MittelgschaftlerDialog>
-						<button
-							type="button"
-							className="cursor-pointer rounded-full border border-moon-dim/40 px-5 py-2.5 text-sm font-semibold text-moon transition-colors hover:border-glow hover:text-glow"
-						>
+						<button type="button" className="btn btn-secondary">
 							{m.verein_mitmachen_mittel()}
 						</button>
 					</MittelgschaftlerDialog>
@@ -68,11 +65,11 @@ export function VereinPage() {
 			</section>
 
 			<section id="spenden" className="mt-12 max-w-2xl scroll-mt-24">
-				<h2 className="m-0 font-display text-2xl font-bold text-moon">
+				<h2 className="m-0 font-display text-2xl text-moon">
 					{m.verein_spenden_title()}
 				</h2>
 				<p className="mt-3 mb-0 text-moon-dim">{m.verein_spenden_text()}</p>
-				<div className="mt-5 rounded-xl border border-border bg-night-soft/50 p-5">
+				<div className="mt-5 rounded-xs border border-border bg-night-soft/50 p-5">
 					<p className="m-0 font-semibold text-moon">
 						{site.donation.accountHolder}
 					</p>
@@ -89,7 +86,7 @@ export function VereinPage() {
 			</section>
 
 			<section className="mt-12 max-w-2xl">
-				<h2 className="m-0 font-display text-2xl font-bold text-moon">
+				<h2 className="m-0 font-display text-2xl text-moon">
 					{m.verein_kontakt_title()}
 				</h2>
 				<p className="mt-3 mb-0 text-moon-dim">

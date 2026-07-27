@@ -28,7 +28,7 @@ export function Countdown() {
 
 	if (ms === 0) {
 		return (
-			<p className="m-0 font-display text-2xl font-bold text-glow">
+			<p className="m-0 font-display text-2xl text-glow">
 				{m.countdown_live()}
 			</p>
 		);
@@ -47,9 +47,12 @@ export function Countdown() {
 			{cells.map(([value, label]) => (
 				<div key={label} className="flex w-16 flex-col items-center sm:w-20">
 					{/* seconds differ between server render and hydration — expected */}
+					{/* Sans, not the display serif: Instrument Serif has no tabular-figure
+					    feature, so tabular-nums would no-op there and the ticking seconds
+					    would shift the layout every second */}
 					<span
 						suppressHydrationWarning
-						className="font-display text-3xl font-bold text-moon tabular-nums sm:text-4xl"
+						className="text-3xl font-semibold text-moon tabular-nums sm:text-4xl"
 					>
 						{String(value).padStart(2, "0")}
 					</span>

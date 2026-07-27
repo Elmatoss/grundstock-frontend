@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { InstagramIcon } from "lucide-react";
 import { LogoMark } from "#/components/LogoMark";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
@@ -10,6 +11,17 @@ export default function Footer() {
 		<footer className="border-t border-border">
 			<div className="page-wrap flex flex-col items-center gap-4 py-8 text-center text-sm text-moon-dim">
 				<LogoMark className="h-8" />
+				{/* The festival's main social channel — PLAN.md §4.12 puts it in the
+				    footer, but until now it only existed in the ticket small print */}
+				<a
+					href={site.instagramUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					className="inline-flex items-center gap-2 text-moon-dim no-underline transition-colors hover:text-glow"
+				>
+					<InstagramIcon className="size-4" aria-hidden="true" />
+					<span>@{site.instagramHandle}</span>
+				</a>
 				<nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
 					<Link to="/verein" className="text-moon-dim hover:text-moon">
 						{m.nav_verein()}

@@ -16,7 +16,7 @@ export function MittelgschaftlerDialog({ children }: { children: ReactNode }) {
 			<DialogTrigger asChild>{children}</DialogTrigger>
 			<DialogContent className="border-border bg-night-soft">
 				<DialogHeader>
-					<DialogTitle className="font-display text-2xl font-bold text-moon">
+					<DialogTitle className="font-display text-2xl text-moon">
 						{m.mittel_dialog_title()}
 					</DialogTitle>
 					<DialogDescription className="text-base text-moon-dim">
@@ -28,7 +28,7 @@ export function MittelgschaftlerDialog({ children }: { children: ReactNode }) {
 				</p>
 				<a
 					href={`mailto:${site.mittelgschaftlerEmail}?subject=${encodeURIComponent(m.mittel_mail_subject())}`}
-					className="mt-1 justify-self-start rounded-full bg-glow px-5 py-2.5 text-sm font-semibold text-night no-underline transition-colors hover:bg-glow-soft hover:text-night"
+					className="mt-1 justify-self-start btn btn-primary no-underline"
 				>
 					{m.mittel_dialog_cta()}
 				</a>

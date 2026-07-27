@@ -1,5 +1,4 @@
-@import '@fontsource-variable/shantell-sans';
-@import '@fontsource-variable/fraunces';
+@import '@fontsource/instrument-serif';
 @import '@fontsource-variable/instrument-sans';
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
@@ -10,14 +9,16 @@
   /* Dark-only night-jungle theme (docs/PLAN.md §3) — no light mode by design */
   color-scheme: dark;
 
-  --night: #120826;
-  --night-soft: #1e1035;
-  --night-mist: #2b1653;
-  --glow: #ffb524;
-  --glow-soft: #fcd34d;
-  --neon: #7dd3fc;
-  --moon: #f5f0e8;
-  --moon-dim: #b8a8d8;
+  /* Deep dark purple: enough violet that the night reads as a colour rather
+     than an absence of one, but dark and low-chroma enough to stay serious.
+     Amber stays the single accent, so it always means "act here" (PLAN.md §3). */
+  --night: #0d0919;
+  --night-soft: #141029;
+  --night-mist: #1d1738;
+  --glow: #f0a93c;
+  --glow-soft: #f7c874;
+  --moon: #f2ede5;
+  --moon-dim: #b0a4c4;
 
   --background: var(--night);
   --foreground: var(--moon);
@@ -38,20 +39,23 @@
   --border: color-mix(in oklab, var(--moon-dim) 18%, transparent);
   --input: color-mix(in oklab, var(--moon-dim) 26%, transparent);
   --ring: var(--glow);
-  --radius: 0.75rem;
+  --radius: 0.25rem;
 }
 
 @theme inline {
+  /* Instrument Serif + Instrument Sans are one superfamily — pairing them reads
+     as art-directed rather than assembled. Display is deliberately reserved for
+     the wordmark and section headings; labels/kickers use tracked uppercase
+     sans, and that contrast *is* the editorial look. */
   --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Shantell Sans Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Fraunces Variable', Georgia, serif;
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
 
   --color-night: var(--night);
   --color-night-soft: var(--night-soft);
   --color-night-mist: var(--night-mist);
   --color-glow: var(--glow);
   --color-glow-soft: var(--glow-soft);
-  --color-neon: var(--neon);
   --color-moon: var(--moon);
   --color-moon-dim: var(--moon-dim);
 
@@ -74,48 +78,51 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* Explicit, not calc(--radius ± Npx): the old chain subtracted 4px, so any
+     --radius below 0.25rem computes --radius-sm to a negative (invalid) length.
+     Sharp corners + hairline borders read architectural rather than default. */
+  --radius-sm: 0px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 4px;
+
 }
 
 @theme {
-  --animate-marquee: marquee 40s linear infinite;
-  --animate-twinkle: twinkle 3.5s ease-in-out infinite;
-  --animate-float: float 7s ease-in-out infinite;
-  --animate-bounce-soft: bounce-soft 2.4s ease-in-out infinite;
+  /* One cycle moves the track by exactly one copy, so scroll speed scales with
+     how many genres are in the list. 40s suited the old 8 entries; at 17 the
+     same duration would run roughly twice as fast to read. Adjust this if the
+     genre list in site.ts grows or shrinks noticeably. */
+  --animate-marquee: marquee 85s linear infinite;
+  --animate-accordion-down: accordion-down 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  --animate-accordion-up: accordion-up 0.25s cubic-bezier(0.32, 0.72, 0, 1);
 
   @keyframes marquee {
     to {
       transform: translateX(var(--marquee-shift));
     }
   }
-  @keyframes twinkle {
-    0%,
-    100% {
-      opacity: 0.2;
+
+  /* Radix publishes the measured panel height as a custom property, so the
+     panel can animate from 0 to its real height without a hardcoded max-height */
+  @keyframes accordion-down {
+    from {
+      height: 0;
+      opacity: 0;
     }
-    50% {
+    to {
+      height: var(--radix-accordion-content-height);
       opacity: 1;
     }
   }
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+      opacity: 1;
     }
-    50% {
-      transform: translateY(-14px);
-    }
-  }
-  @keyframes bounce-soft {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(8px);
+    to {
+      height: 0;
+      opacity: 0;
     }
   }
 }
@@ -126,18 +133,39 @@ body,
   min-height: 100%;
 }
 
+/* One directional gradient, ~4% lightness delta. The previous pair of centred
+   radial "glow blobs" is the most recognisable generated-landing-page
+   background there is — a gradient you *notice* is a gradient that looks
+   generated. This one only has to keep the page from reading as flat black. */
 body {
   margin: 0;
   color: var(--foreground);
   font-family: var(--font-sans);
   background-color: var(--night);
-  background-image:
-    radial-gradient(1100px 700px at 50% -12%, var(--night-mist) 0%, transparent 60%),
-    linear-gradient(180deg, var(--night-soft) 0%, var(--night) 55%);
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--night-soft) 70%, var(--night)) 0%,
+    var(--night) 42%
+  );
   background-repeat: no-repeat;
+  background-attachment: fixed;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Film grain. Does more for "printed poster, not generated webpage" than any
+   amount of gradient work, and it's static — nothing to gate behind
+   prefers-reduced-motion. pointer-events:none so it never eats a click. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 ::selection {
@@ -191,6 +219,240 @@ body {
   margin-inline: auto;
 }
 
+/* Light *inside* the panel instead of a halo around it: a soft amber wash
+   falling from the top edge inward, plus a lit rim where the light catches the
+   top border. Both are painted as background-image and inset shadow, so they
+   sit above the panel's background colour but under its content — no extra
+   element, no stacking-context juggling.
+   An outer box-shadow glow reads as a sticker floating on the page; an interior
+   source reads as a lamp in the room, which is the whole night-jungle idea. */
+.inner-glow {
+  background-image: radial-gradient(
+    135% 75% at 50% 0%,
+    color-mix(in oklab, var(--glow) 13%, transparent) 0%,
+    transparent 62%
+  );
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in oklab, var(--glow) 32%, transparent),
+    inset 0 30px 60px -42px color-mix(in oklab, var(--glow) 65%, transparent);
+}
+
+/* The neutral, quieter sibling: just a lit top edge, so ordinary cards read as
+   material catching ambient light rather than as flat rectangles. */
+.inner-edge {
+  box-shadow: inset 0 1px 0 0 color-mix(in oklab, var(--moon) 9%, transparent);
+}
+
+/* ==========================================================================
+   Buttons — one system for every variant: the Gulden.
+
+   You already mint a festival currency, so every button is a struck token.
+   That answers the original complaint about the flat amber slab: it is still
+   bright, but it is *metal* rather than paint — banded specular highlights, a
+   milled rim, and lettering pressed into the surface instead of printed on it.
+
+   Hierarchy is how freshly the coin is struck, not a different object each
+   time: bright metal (primary) -> tarnished (secondary) -> rim only (quiet) ->
+   nothing until hover (ghost).
+
+   Pills throughout, deliberately against the sharp-cornered cards and panels:
+   the one round family on the page is the family you can click.
+   ========================================================================== */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: 999px;
+  background-color: transparent;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--glow-soft);
+  transition:
+    filter 0.25s ease,
+    transform 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.3s ease;
+}
+
+/* The milled rim. A conic gradient radiates from the centre, so its bands meet
+   the edge roughly perpendicular the whole way round — which is what knurling
+   on a coin actually looks like. Masked to the padding ring so only the rim
+   shows, never the face. */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 3px;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(90, 50, 0, 0.28) 0deg 1.6deg,
+    rgba(255, 240, 205, 0.3) 1.6deg 3.2deg
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  opacity: 0.9;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--glow-soft);
+  outline-offset: 4px;
+}
+
+/* --- tier 1: freshly struck --------------------------------------------- */
+.btn-primary {
+  /* Off-axis banding is what separates metal from a gradient: light and dark
+     bands alternate rather than ramping evenly from one end to the other. */
+  background-image: linear-gradient(
+    150deg,
+    #fbd98c 0%,
+    #e8a93a 18%,
+    #ffe6ae 34%,
+    #dc9a2c 52%,
+    #f7c874 70%,
+    #cf8c22 86%,
+    #f8d492 100%
+  );
+  color: #3a2405;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 250, 235, 0.75),
+    inset 0 -2px 3px rgba(90, 50, 0, 0.4),
+    0 2px 6px rgba(5, 2, 12, 0.5);
+  /* light catching the top of a pressed letter */
+  text-shadow: 0 1px 0 rgba(255, 240, 205, 0.65);
+}
+.btn-primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  color: #3a2405;
+}
+
+/* --- tier 2: tarnished --------------------------------------------------- */
+.btn-secondary {
+  background-image: linear-gradient(
+    150deg,
+    #2c2440 0%,
+    #1d1830 30%,
+    #342b46 52%,
+    #1a1528 74%,
+    #2c2440 100%
+  );
+  color: var(--glow-soft);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 230, 190, 0.14),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.5),
+    0 2px 6px rgba(5, 2, 12, 0.4);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+}
+.btn-secondary::before {
+  opacity: 0.45;
+}
+.btn-secondary:hover {
+  color: #ffe0a4;
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+.btn-secondary:hover::before {
+  opacity: 0.8;
+}
+
+/* --- tier 3: rim only ---------------------------------------------------- */
+.btn-quiet {
+  padding: 0.5625rem 1.25rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  color: var(--glow-soft);
+}
+.btn-quiet::before {
+  padding: 2px;
+  opacity: 0.32;
+}
+.btn-quiet:hover {
+  color: var(--glow);
+}
+.btn-quiet:hover::before {
+  opacity: 0.65;
+}
+
+/* --- tier 4: ghost (icon triggers) --------------------------------------- */
+.btn-ghost {
+  padding: 0.375rem;
+  color: var(--glow);
+}
+.btn-ghost::before {
+  opacity: 0;
+}
+.btn-ghost:hover {
+  color: var(--glow-soft);
+}
+.btn-ghost:hover::before {
+  opacity: 0.35;
+}
+
+/* --- sizes --------------------------------------------------------------- */
+.btn-sm {
+  padding: 0.5625rem 1.25rem;
+  font-size: 0.6875rem;
+}
+.btn-lg {
+  padding: 0.875rem 2.125rem;
+  font-size: 0.8125rem;
+}
+
+.btn-destructive {
+  background-image: none;
+  background-color: color-mix(in oklab, var(--destructive) 30%, var(--night));
+  color: color-mix(in oklab, var(--destructive) 45%, var(--moon));
+  text-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn::before {
+    transition: none;
+  }
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
+  }
+}
+/* Non-interactive status pill. Visually related to .btn-quiet but flat and
+   without a contour, because these are <p> elements — before this they were
+   styled exactly like the clickable pill links, which made plain text look
+   pressable. */
+.badge {
+  display: inline-block;
+  border-radius: 999px;
+  background-color: color-mix(in oklab, var(--glow) 10%, transparent);
+  padding: 0.5rem 1.125rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--glow-soft);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -226,24 +488,20 @@ body {
   }
 }
 
+/* Pulse, don't blink. The original flashed 0 → 1 → 0, which reads as a strobing
+   particle effect; easing between a resting ember and a full glow reads like
+   something alive. They never fully vanish, so the layer stays visible. */
 @keyframes firefly-blink {
   0%,
-  25% {
-    opacity: 0;
-    box-shadow: 0 0 2px var(--glow-soft);
+  100% {
+    opacity: 0.25;
+    box-shadow: 0 0 4px color-mix(in oklab, var(--glow-soft) 45%, transparent);
   }
-  35%,
-  65% {
+  50% {
     opacity: 1;
     box-shadow:
-      0 0 6px var(--glow-soft),
-      0 0 14px var(--glow-soft),
-      0 0 22px rgba(255, 181, 36, 0.5);
-  }
-  75%,
-  100% {
-    opacity: 0;
-    box-shadow: 0 0 2px var(--glow-soft);
+      0 0 7px var(--glow-soft),
+      0 0 18px color-mix(in oklab, var(--glow) 65%, transparent);
   }
 }
 
@@ -258,7 +516,33 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .firefly {
     animation: none;
-    opacity: 0.55;
-    box-shadow: 0 0 6px var(--glow-soft);
+    opacity: 0.75;
+    box-shadow:
+      0 0 6px var(--glow-soft),
+      0 0 16px color-mix(in oklab, var(--glow) 55%, transparent);
   }
+}
+
+/* Micro-typography. Large display caps want tighter tracking; the small tracked
+   uppercase labels set their own via utilities. */
+h1,
+h2 {
+  letter-spacing: -0.015em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* The site's one expressive gesture, used only on the wordmark: optical sizing
+   plus wide tracking so GRUNDSTOCK reads monumental instead of merely large. */
+.wordmark {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  /* uppercase has no descenders — trim the leading so the block sits tight */
+  line-height: 0.86;
+  /* the tracking adds a trailing gap on the last letter; pull it back so the
+     wordmark stays optically centred */
+  text-indent: 0.08em;
 }

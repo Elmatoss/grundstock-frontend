@@ -9,7 +9,7 @@ export function AnnouncementBanner() {
 
 	return (
 		<div className="border-b border-glow/30 bg-glow/10">
-			<p className="page-wrap m-0 py-2 text-center font-display text-sm font-semibold text-glow-soft">
+			<p className="page-wrap m-0 py-2 text-center text-sm font-medium text-glow-soft">
 				{text}
 			</p>
 		</div>

@@ -16,7 +16,7 @@ export function HelfenSection() {
 						href={localizeHref("/helfen")}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="mt-4 inline-block rounded-full bg-glow px-5 py-2.5 text-sm font-semibold text-night no-underline transition-colors hover:bg-glow-soft hover:text-night"
+						className="mt-4 inline-block btn btn-primary no-underline"
 					>
 						{m.helfen_shift_cta()}
 					</a>
@@ -26,7 +26,7 @@ export function HelfenSection() {
 					<MittelgschaftlerDialog>
 						<button
 							type="button"
-							className="mt-4 inline-block cursor-pointer rounded-full border border-glow/50 px-5 py-2.5 text-sm font-semibold text-glow-soft transition-colors hover:border-glow hover:text-glow"
+							className="mt-4 inline-block btn btn-secondary"
 						>
 							{m.helfen_mittel_cta()}
 						</button>

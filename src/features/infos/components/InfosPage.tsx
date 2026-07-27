@@ -1,4 +1,10 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "#/components/ui/accordion";
 import { localized } from "#/lib/sanity";
 import { m } from "#/paraglide/messages";
 import { faqListQueryOptions } from "../api/faq";
@@ -14,25 +20,14 @@ const CATEGORY_ORDER: { category: FaqCategory; label: () => string }[] = [
 
 function FaqAccordion({ items }: { items: [string, string][] }) {
 	return (
-		<div className="max-w-2xl space-y-3">
+		<Accordion type="single" collapsible className="max-w-2xl space-y-3">
 			{items.map(([question, answer]) => (
-				<details
-					key={question}
-					className="group rounded-xl border border-border bg-night-soft/50 px-5 py-4"
-				>
-					<summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-moon">
-						{question}
-						<span
-							aria-hidden
-							className="text-xl text-glow transition-transform group-open:rotate-45"
-						>
-							+
-						</span>
-					</summary>
-					<p className="mt-3 mb-0 text-moon-dim">{answer}</p>
-				</details>
+				<AccordionItem key={question} value={question}>
+					<AccordionTrigger>{question}</AccordionTrigger>
+					<AccordionContent>{answer}</AccordionContent>
+				</AccordionItem>
 			))}
-		</div>
+		</Accordion>
 	);
 }
 
@@ -52,10 +47,10 @@ export function InfosPage() {
 
 	return (
 		<main className="page-wrap flex-1 py-16 sm:py-20">
-			<p className="m-0 font-display text-sm font-semibold tracking-[0.2em] text-glow uppercase">
+			<p className="m-0 text-xs font-semibold tracking-[0.25em] text-glow uppercase">
 				{m.infos_kicker()}
 			</p>
-			<h1 className="mt-2 mb-0 font-display text-4xl font-bold text-moon sm:text-5xl">
+			<h1 className="mt-2 mb-0 font-display text-4xl text-moon sm:text-5xl">
 				{m.infos_title()}
 			</h1>
 			<p className="mt-4 mb-10 max-w-2xl text-lg text-moon-dim">
@@ -72,7 +67,7 @@ export function InfosPage() {
 					if (items.length === 0) return null;
 					return (
 						<section key={category} className="mt-10 first:mt-0">
-							<h2 className="m-0 mb-4 font-serif text-2xl font-bold text-glow-soft">
+							<h2 className="m-0 mb-4 font-display text-2xl text-glow-soft">
 								{label()}
 							</h2>
 							<FaqAccordion

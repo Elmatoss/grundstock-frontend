@@ -8,7 +8,7 @@ export function LanguageSwitcher() {
 	return (
 		<nav
 			aria-label={m.lang_switch()}
-			className="flex items-center font-display text-sm font-semibold"
+			className="flex items-center text-sm font-semibold"
 		>
 			{locales.map((locale, index) => (
 				<span key={locale} className="flex items-center">

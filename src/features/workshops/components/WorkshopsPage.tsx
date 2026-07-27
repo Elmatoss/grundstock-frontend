@@ -15,24 +15,22 @@ export function WorkshopsPage() {
 
 	return (
 		<main className="page-wrap flex-1 py-16 sm:py-20">
-			<p className="m-0 font-display text-sm font-semibold tracking-[0.2em] text-glow uppercase">
+			<p className="m-0 text-xs font-semibold tracking-[0.25em] text-glow uppercase">
 				{m.workshops_kicker()}
 			</p>
-			<h1 className="mt-2 mb-0 font-display text-4xl font-bold text-moon sm:text-5xl">
+			<h1 className="mt-2 mb-0 font-display text-4xl text-moon sm:text-5xl">
 				{m.workshops_title()}
 			</h1>
 			<p className="mt-4 mb-0 max-w-2xl text-moon-dim">{m.workshops_text()}</p>
 
 			{workshops.length === 0 ? (
-				<p className="mt-10 inline-block rounded-full border border-glow/40 bg-glow/10 px-4 py-2 font-display text-sm font-semibold text-glow-soft">
-					{m.workshops_soon()}
-				</p>
+				<p className="mt-10 inline-block badge">{m.workshops_soon()}</p>
 			) : (
 				<div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{workshops.map((workshop) => (
 						<article
 							key={workshop.slug}
-							className="overflow-hidden rounded-xl border border-border bg-night-soft/50"
+							className="overflow-hidden rounded-xs border border-border bg-night-soft/50"
 						>
 							{workshop.image && (
 								<img
@@ -44,7 +42,7 @@ export function WorkshopsPage() {
 								/>
 							)}
 							<div className="p-5">
-								<h2 className="m-0 font-display text-lg font-bold text-moon">
+								<h2 className="m-0 font-display text-lg text-moon">
 									{workshop.title}
 								</h2>
 								<p className="mt-1 mb-0 text-sm text-glow-soft">
