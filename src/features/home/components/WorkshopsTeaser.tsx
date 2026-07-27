@@ -10,10 +10,7 @@ export function WorkshopsTeaser() {
 			title={m.workshops_title()}
 		>
 			<p className="m-0 max-w-2xl text-moon-dim">{m.workshops_text()}</p>
-			<Link
-				to="/workshops"
-				className="mt-6 inline-block btn btn-quiet no-underline"
-			>
+			<Link to="/workshops" className="mt-6 btn btn-quiet no-underline">
 				{m.workshops_cta()} →
 			</Link>
 		</Section>

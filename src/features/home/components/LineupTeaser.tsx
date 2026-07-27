@@ -11,10 +11,7 @@ export function LineupTeaser() {
 				<p className="m-0">{m.lineup_stages()}</p>
 			</div>
 			<FeaturedArtists />
-			<Link
-				to="/lineup"
-				className="mt-6 inline-block btn btn-quiet no-underline"
-			>
+			<Link to="/lineup" className="mt-6 btn btn-quiet no-underline">
 				{m.lineup_cta()} →
 			</Link>
 		</Section>

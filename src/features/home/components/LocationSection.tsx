@@ -18,10 +18,7 @@ export function LocationSection() {
 			<div className="mt-5">
 				<ShuttleTables />
 			</div>
-			<Link
-				to="/anreise"
-				className="mt-6 inline-block btn btn-quiet no-underline"
-			>
+			<Link to="/anreise" className="mt-6 btn btn-quiet no-underline">
 				{m.nav_anreise()} →
 			</Link>
 		</Section>

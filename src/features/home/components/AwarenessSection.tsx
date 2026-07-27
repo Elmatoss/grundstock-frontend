@@ -8,10 +8,7 @@ export function AwarenessSection() {
 			<p className="m-0 max-w-2xl text-lg text-moon-dim">
 				{m.awareness_text()}
 			</p>
-			<Link
-				to="/festival-policy"
-				className="mt-6 inline-block btn btn-quiet no-underline"
-			>
+			<Link to="/festival-policy" className="mt-6 btn btn-quiet no-underline">
 				{m.awareness_more()} →
 			</Link>
 		</Section>

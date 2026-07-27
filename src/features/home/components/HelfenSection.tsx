@@ -16,7 +16,7 @@ export function HelfenSection() {
 						href={localizeHref("/helfen")}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="mt-4 inline-block btn btn-primary no-underline"
+						className="mt-4 btn btn-primary no-underline"
 					>
 						{m.helfen_shift_cta()}
 					</a>
@@ -24,10 +24,7 @@ export function HelfenSection() {
 				<Card title={m.helfen_mittel_title()}>
 					<p className="m-0">{m.helfen_mittel_text()}</p>
 					<MittelgschaftlerDialog>
-						<button
-							type="button"
-							className="mt-4 inline-block btn btn-secondary"
-						>
+						<button type="button" className="mt-4 btn btn-secondary">
 							{m.helfen_mittel_cta()}
 						</button>
 					</MittelgschaftlerDialog>

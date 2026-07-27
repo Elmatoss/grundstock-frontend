@@ -27,10 +27,7 @@ export function FaqSection() {
 					</AccordionItem>
 				))}
 			</Accordion>
-			<Link
-				to="/infos"
-				className="mt-6 inline-block btn btn-quiet no-underline"
-			>
+			<Link to="/infos" className="mt-6 btn btn-quiet no-underline">
 				{m.faq_more()} →
 			</Link>
 		</Section>
