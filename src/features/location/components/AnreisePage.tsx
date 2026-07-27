@@ -4,8 +4,7 @@ import { m } from "#/paraglide/messages";
 
 const a = site.anreise;
 
-const externalLink =
-	"mt-4 inline-block rounded-xs border border-glow/40 bg-glow/10 px-4 py-2 text-xs font-semibold tracking-[0.2em] text-glow-soft uppercase no-underline transition-colors hover:border-glow hover:text-glow";
+const externalLink = "mt-4 inline-block btn btn-quiet no-underline";
 
 // Numbered options mirror the An-/Abreise briefing, so someone holding the PDF
 // and someone reading the site are looking at the same four routes in the same
@@ -47,7 +46,7 @@ export function AnreisePage() {
 				href={a.mapsUrl}
 				target="_blank"
 				rel="noopener noreferrer"
-				className="mt-5 inline-block rounded-xs border border-moon-dim/40 px-5 py-2.5 text-sm font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
+				className="mt-5 inline-block btn btn-secondary no-underline"
 			>
 				{m.anreise_map_cta()} →
 			</a>

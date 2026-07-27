@@ -28,7 +28,7 @@ export function MittelgschaftlerDialog({ children }: { children: ReactNode }) {
 				</p>
 				<a
 					href={`mailto:${site.mittelgschaftlerEmail}?subject=${encodeURIComponent(m.mittel_mail_subject())}`}
-					className="mt-1 justify-self-start btn-primary rounded-xs px-5 py-2.5 text-sm font-semibold no-underline"
+					className="mt-1 justify-self-start btn btn-primary no-underline"
 				>
 					{m.mittel_dialog_cta()}
 				</a>

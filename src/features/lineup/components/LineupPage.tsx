@@ -33,9 +33,7 @@ export function LineupPage() {
 			<p className="mt-4 mb-0 max-w-2xl text-moon-dim">{m.lineup_stages()}</p>
 
 			{artists.length === 0 ? (
-				<p className="mt-10 inline-block rounded-xs border border-glow/40 bg-glow/10 px-4 py-2 text-xs font-semibold tracking-[0.2em] text-glow-soft uppercase">
-					{m.lineup_soon()}
-				</p>
+				<p className="mt-10 inline-block badge">{m.lineup_soon()}</p>
 			) : (
 				<>
 					{DAYS.map(({ day, label }) => {

@@ -24,9 +24,7 @@ export function WorkshopsPage() {
 			<p className="mt-4 mb-0 max-w-2xl text-moon-dim">{m.workshops_text()}</p>
 
 			{workshops.length === 0 ? (
-				<p className="mt-10 inline-block rounded-xs border border-glow/40 bg-glow/10 px-4 py-2 text-xs font-semibold tracking-[0.2em] text-glow-soft uppercase">
-					{m.workshops_soon()}
-				</p>
+				<p className="mt-10 inline-block badge">{m.workshops_soon()}</p>
 			) : (
 				<div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{workshops.map((workshop) => (

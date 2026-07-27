@@ -22,7 +22,7 @@ export function TicketsCta() {
 					href={localizeHref("/tickets")}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="mt-6 inline-block btn-primary rounded-xs px-8 py-3.5 text-sm font-semibold tracking-[0.12em] uppercase no-underline"
+					className="mt-6 inline-block btn btn-primary btn-lg no-underline"
 				>
 					{m.cta_tickets()}
 				</a>

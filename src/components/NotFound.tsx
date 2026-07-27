@@ -11,10 +11,7 @@ export default function NotFound() {
 				{m.notfound_title()}
 			</h1>
 			<p className="m-0 text-moon-dim">{m.notfound_text()}</p>
-			<Link
-				to="/"
-				className="mt-4 btn-primary rounded-xs px-6 py-3 font-semibold no-underline"
-			>
+			<Link to="/" className="mt-4 btn btn-primary btn-lg no-underline">
 				{m.notfound_cta()}
 			</Link>
 		</main>

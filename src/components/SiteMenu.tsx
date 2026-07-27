@@ -93,7 +93,7 @@ export function SiteMenu() {
 					type="button"
 					onClick={() => setOpen(false)}
 					aria-label={m.menu_close()}
-					className="p-1.5 text-glow transition-colors hover:text-glow-soft"
+					className="btn btn-ghost"
 				>
 					<svg
 						aria-hidden="true"
@@ -140,7 +140,7 @@ export function SiteMenu() {
 					href={localizeHref("/tickets")}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="btn-primary rounded-xs px-6 py-3 font-semibold no-underline"
+					className="btn btn-primary btn-lg no-underline"
 				>
 					{m.cta_tickets()}
 				</a>
@@ -148,7 +148,7 @@ export function SiteMenu() {
 					to="/"
 					hash="helfen"
 					onClick={() => setOpen(false)}
-					className="rounded-xs border border-moon-dim/40 px-6 py-3 font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
+					className="btn btn-secondary btn-lg no-underline"
 				>
 					{m.cta_helfen()}
 				</Link>
@@ -163,7 +163,7 @@ export function SiteMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label={m.menu_open()}
-				className="p-1.5 text-glow transition-colors hover:text-glow-soft"
+				className="btn btn-ghost"
 			>
 				<svg
 					aria-hidden="true"

@@ -15,7 +15,7 @@ function CopyIbanButton() {
 				setCopied(true);
 				setTimeout(() => setCopied(false), 2000);
 			}}
-			className="rounded-xs border border-glow/40 bg-glow/10 px-4 py-1.5 text-sm font-semibold text-glow-soft transition-colors hover:border-glow hover:text-glow"
+			className="btn btn-quiet"
 		>
 			{copied ? m.verein_iban_copied() : m.verein_iban_copy()}
 		</button>
@@ -52,15 +52,12 @@ export function VereinPage() {
 						href={localizeHref("/helfen")}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="btn-primary rounded-xs px-5 py-2.5 text-sm font-semibold no-underline"
+						className="btn btn-primary no-underline"
 					>
 						{m.verein_mitmachen_schicht()}
 					</a>
 					<MittelgschaftlerDialog>
-						<button
-							type="button"
-							className="cursor-pointer rounded-xs border border-moon-dim/40 px-5 py-2.5 text-sm font-semibold text-moon transition-colors hover:border-glow hover:text-glow"
-						>
+						<button type="button" className="btn btn-secondary">
 							{m.verein_mitmachen_mittel()}
 						</button>
 					</MittelgschaftlerDialog>

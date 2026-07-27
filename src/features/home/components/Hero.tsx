@@ -29,14 +29,11 @@ export function Hero() {
 						href={localizeHref("/tickets")}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="btn-primary rounded-xs px-7 py-3 text-sm font-semibold tracking-[0.12em] uppercase no-underline"
+						className="btn btn-primary btn-lg no-underline"
 					>
 						{m.cta_tickets()}
 					</a>
-					<a
-						href="#helfen"
-						className="rounded-xs border border-moon-dim/40 px-7 py-3 text-sm font-semibold tracking-[0.12em] text-moon uppercase no-underline transition-colors hover:border-glow hover:text-glow"
-					>
+					<a href="#helfen" className="btn btn-secondary btn-lg no-underline">
 						{m.cta_helfen()}
 					</a>
 				</div>

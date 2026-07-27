@@ -67,7 +67,7 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 									href={link.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="rounded-xs border border-moon-dim/40 px-4 py-2 text-sm font-semibold text-moon no-underline transition-colors hover:border-glow hover:text-glow"
+									className="btn btn-secondary btn-sm no-underline"
 								>
 									{link.title}
 								</a>
