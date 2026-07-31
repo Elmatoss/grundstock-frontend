@@ -133,39 +133,43 @@ body,
   min-height: 100%;
 }
 
-/* One directional gradient, ~4% lightness delta. The previous pair of centred
-   radial "glow blobs" is the most recognisable generated-landing-page
-   background there is — a gradient you *notice* is a gradient that looks
-   generated. This one only has to keep the page from reading as flat black. */
 body {
   margin: 0;
   color: var(--foreground);
   font-family: var(--font-sans);
   background-color: var(--night);
-  background-image: linear-gradient(
-    180deg,
-    color-mix(in oklab, var(--night-soft) 70%, var(--night)) 0%,
-    var(--night) 42%
-  );
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Film grain. Does more for "printed poster, not generated webpage" than any
-   amount of gradient work, and it's static — nothing to gate behind
-   prefers-reduced-motion. pointer-events:none so it never eats a click. */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.04;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* The page's atmosphere — top gradient + film grain — painted onto the single
+   fixed, GPU-composited layer that also hosts the fireflies (NightBackground).
+
+   Both used to live on <body>: the gradient via `background-attachment: fixed`
+   and the grain via a `position:fixed` `body::after` with `mix-blend-mode`.
+   Each of those independently forces a full-viewport repaint on every scroll
+   frame — a fixed attachment defeats the compositor's scroll fast path, and a
+   full-viewport blend mode makes the browser re-rasterise everything beneath it
+   in order to blend. Together they made scrolling repaint the whole screen at
+   120 Hz. As a real fixed layer behind the content, the same pixels are
+   rasterised once and then just re-used.
+
+   The grain sits under the content rather than over it now. At 4% opacity that
+   is not a difference you can see, and it costs nothing.
+
+   One directional gradient, ~4% lightness delta. The previous pair of centred
+   radial "glow blobs" is the most recognisable generated-landing-page
+   background there is — a gradient you *notice* is a gradient that looks
+   generated. This one only has to keep the page from reading as flat black. */
+.night-backdrop {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--night-soft) 70%, var(--night)) 0%,
+      var(--night) 42%
+    );
+  background-repeat: repeat, no-repeat;
 }
 
 ::selection {
@@ -500,22 +504,28 @@ body::after {
 
 /* Pulse, don't blink. The original flashed 0 → 1 → 0, which reads as a strobing
    particle effect; easing between a resting ember and a full glow reads like
-   something alive. They never fully vanish, so the layer stays visible. */
+   something alive. They never fully vanish, so the layer stays visible.
+
+   Opacity only. This used to animate box-shadow between a small dim glow and a
+   large bright one, but box-shadow is a paint property — it cannot run on the
+   compositor, so 32 fireflies meant 32 elements repainting on the main thread
+   continuously, even with the page idle. The glow is now a fixed shadow and
+   only opacity animates; opacity fades the shadow along with the dot, so the
+   ember-to-glow read survives and the whole layer runs on the GPU. */
 @keyframes firefly-blink {
   0%,
   100% {
     opacity: 0.25;
-    box-shadow: 0 0 4px color-mix(in oklab, var(--glow-soft) 45%, transparent);
   }
   50% {
     opacity: 1;
-    box-shadow:
-      0 0 7px var(--glow-soft),
-      0 0 18px color-mix(in oklab, var(--glow) 65%, transparent);
   }
 }
 
 .firefly {
+  box-shadow:
+    0 0 7px var(--glow-soft),
+    0 0 18px color-mix(in oklab, var(--glow) 65%, transparent);
   animation:
     firefly-float var(--float-duration, 10s) ease-in-out var(--float-delay, 0s)
       infinite,
@@ -527,9 +537,6 @@ body::after {
   .firefly {
     animation: none;
     opacity: 0.75;
-    box-shadow:
-      0 0 6px var(--glow-soft),
-      0 0 16px color-mix(in oklab, var(--glow) 55%, transparent);
   }
 }
 

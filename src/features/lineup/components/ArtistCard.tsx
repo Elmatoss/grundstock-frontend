@@ -27,7 +27,7 @@ export function ArtistCard({ artist }: { artist: ArtistCardData }) {
 					sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 90vw"
 					alt={artist.image.alt ?? artist.name}
 					loading="lazy"
-					className="aspect-3/4 w-full object-cover grayscale transition-[filter] duration-500 group-hover:grayscale-0"
+					className="aspect-3/4 w-full object-cover"
 				/>
 			) : (
 				<div className="flex aspect-3/4 w-full items-center justify-center bg-night-mist/40 font-display text-5xl tracking-widest text-moon-dim/45">
