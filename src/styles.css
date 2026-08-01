@@ -163,6 +163,16 @@ body {
    background there is — a gradient you *notice* is a gradient that looks
    generated. This one only has to keep the page from reading as flat black. */
 .night-backdrop {
+  /* Pinned to the *largest* viewport height rather than stretched with
+     inset-0. Mobile browsers resize the viewport when the URL bar retracts, and
+     every firefly is positioned in %, so a viewport-tracking height re-resolves
+     all 32 of them mid-scroll and the swarm visibly jumps. lvh is the
+     chrome-retracted height, so the layer keeps one size for the life of the
+     page and the extra strip below the fold simply stays clipped. 100vh first
+     as the pre-lvh fallback — on mobile it already resolves to the same
+     chrome-retracted height. */
+  height: 100vh;
+  height: 100lvh;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
     linear-gradient(
       180deg,

@@ -35,7 +35,7 @@ export function NightBackground() {
 	return (
 		<div
 			aria-hidden="true"
-			className="night-backdrop pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+			className="night-backdrop pointer-events-none fixed inset-x-0 top-0 -z-10 overflow-hidden"
 		>
 			{FIREFLIES.map((f) => (
 				<span
