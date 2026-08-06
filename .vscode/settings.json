@@ -31,5 +31,41 @@
 	},
 	"editor.codeActionsOnSave": {
 		"source.organizeImports.biome": "explicit"
+	},
+
+	"window.title": "GRUNDSTOCK FRONTEND",
+
+	// With the new modern UI the bars that we color are forced to be transparent, so we disable it for now
+	"workbench.experimental.modernUI": false,
+
+	// Olive — the backend is violet, so the pair is easy to tell apart
+	"workbench.colorCustomizations": {
+		// Top: title bar
+		"titleBar.activeBackground": "#77992e",
+		"titleBar.activeForeground": "#ffffff",
+		"titleBar.inactiveBackground": "#4f661e",
+		"titleBar.inactiveForeground": "#e7ffb2",
+		"titleBar.border": "#96bd42",
+
+		// Top: command centre
+		"commandCenter.background": "#96bd4266",
+		"commandCenter.foreground": "#ffffff",
+		"commandCenter.border": "#d8ff85",
+		"commandCenter.activeBackground": "#96bd42",
+		"commandCenter.activeBorder": "#d8ff85",
+
+		// Left: activity bar
+		"activityBar.background": "#4f661e",
+		"activityBar.foreground": "#ffffff",
+		"activityBar.inactiveForeground": "#d8ff85b3",
+		"activityBar.activeBorder": "#d8ff85",
+		"activityBarBadge.background": "#d8ff85",
+		"activityBarBadge.foreground": "#252f0e",
+
+		// Bottom: status bar
+		"statusBar.background": "#77992e",
+		"statusBar.foreground": "#ffffff",
+		"statusBar.border": "#96bd42",
+		"statusBarItem.hoverBackground": "#96bd42"
 	}
 }
