@@ -1,12 +1,12 @@
+import { FestivalLive } from "#/features/timetable/components/FestivalLive";
 import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
-import { Countdown } from "./Countdown";
 
 // Type-only hero: the typographic GRUNDSTOCK *is* the brand here, so the
 // eye-mark stays in the header/footer rather than competing with it. Atmosphere
 // comes from the global gradient + grain (styles.css) and the sparse fireflies
 // in NightBackground — no radial glow blobs, no wavy divider, no drop glow.
-export function Hero() {
+export function Hero({ previewNow }: { previewNow?: number | null }) {
 	return (
 		<section className="relative flex min-h-svh flex-col items-center justify-center px-4 text-center">
 			<div className="flex flex-col items-center gap-6 pt-16 pb-28">
@@ -19,8 +19,10 @@ export function Hero() {
 				<p className="m-0 max-w-md text-balance text-moon-dim">
 					{m.hero_tagline()}
 				</p>
-				<div className="mt-2">
-					<Countdown />
+				{/* Counts down before the festival, then becomes the live programme —
+				    see FestivalLive */}
+				<div className="mt-2 flex w-full justify-center">
+					<FestivalLive previewNow={previewNow} />
 				</div>
 				<div className="mt-4 flex flex-wrap items-center justify-center gap-3">
 					{/* Plain anchor via the /tickets proxy: the Worker request count is

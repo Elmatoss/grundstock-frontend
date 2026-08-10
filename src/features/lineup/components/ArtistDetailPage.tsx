@@ -39,11 +39,15 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 					)}
 					{artist.performances && artist.performances.length > 0 && (
 						<ul className="m-0 mt-4 list-none space-y-1 p-0 text-moon-dim">
-							{artist.performances.map((p) => (
-								<li key={`${p.day}-${p.stage?.slug}-${p.time}`}>
+							{artist.performances.map((p, index) => (
+								// biome-ignore lint/suspicious/noArrayIndexKey: performances have no id and an act can play the same stage twice
+								<li key={`${p.day}-${p.stage?.slug}-${index}`}>
 									{DAY_LABELS[p.day]()}
 									{p.stage ? ` · ${p.stage.name}` : ""}
-									{p.time ? ` · ${p.time}` : ""}
+									{/* wall-clock strings straight from the CMS — festival time,
+									    not the viewer's */}
+									{p.start ? ` · ${p.start}` : ""}
+									{p.start && p.end ? `–${p.end} Uhr` : ""}
 								</li>
 							))}
 						</ul>

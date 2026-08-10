@@ -4,9 +4,20 @@ import { zLocaleBlock, zLocaleString, zSanityImage } from "#/lib/sanity";
 export const zFestivalDay = z.enum(["do", "fr", "sa"]);
 export type FestivalDay = z.infer<typeof zFestivalDay>;
 
+// Wall-clock "HH:MM" on the festival `day`, not an absolute datetime — see
+// #/features/timetable/lib/schedule for how the two resolve to an instant.
+const zClockTime = z
+	.string()
+	.regex(/^([01]\d|2[0-3]):[0-5]\d$/)
+	// A malformed time must not take the whole lineup page down with it: the act
+	// then simply reads as "time to be announced".
+	.nullish()
+	.catch(null);
+
 export const zPerformance = z.object({
 	day: zFestivalDay,
-	time: z.string().nullish(),
+	start: zClockTime,
+	end: zClockTime,
 	stage: z
 		.object({
 			name: z.string(),

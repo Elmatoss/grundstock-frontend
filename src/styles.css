@@ -40,6 +40,11 @@
   --input: color-mix(in oklab, var(--moon-dim) 26%, transparent);
   --ring: var(--glow);
   --radius: 0.25rem;
+
+  /* Authoritative header height: the sticky site header is pinned to exactly
+     this, so anything else that sticks (the timetable's day headers) or scrolls
+     to an anchor can offset by it instead of guessing. */
+  --header-height: 4rem;
 }
 
 @theme inline {
@@ -498,47 +503,77 @@ body {
   }
 }
 
-/* Night background: drifting/blinking fireflies */
+/* Night background: drifting, blinking fireflies.
+
+   Every delay these animations get is *negative* — see NightBackground. A positive
+   delay parks the element at its un-animated style until the delay elapses and
+   then snaps it onto the first keyframe, so the swarm used to hang motionless at
+   full brightness for several seconds after load and then jump. A negative delay
+   starts the animation already that far into its cycle instead, which means the
+   whole swarm is desynchronised and mid-flight on the very first frame. */
 @keyframes firefly-float {
-  0%,
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(var(--fx1), var(--fy1));
+  }
+  40% {
+    transform: translate(var(--fx2), var(--fy2));
+  }
+  60% {
+    transform: translate(var(--fx3), var(--fy3));
+  }
+  80% {
+    transform: translate(var(--fx4), var(--fy4));
+  }
   100% {
     transform: translate(0, 0);
   }
-  33% {
-    transform: translate(var(--fx1), var(--fy1));
-  }
-  66% {
-    transform: translate(var(--fx2), var(--fy2));
-  }
 }
 
-/* Pulse, don't blink. The original flashed 0 → 1 → 0, which reads as a strobing
-   particle effect; easing between a resting ember and a full glow reads like
-   something alive. They never fully vanish, so the layer stays visible.
+/* Real fireflies go dark, so this runs all the way to 0 and holds there for about
+   a third of the cycle before swelling back to full. Five legs of randomly sized
+   travel plus a hold at each end of the glow is what makes it read as something
+   signalling rather than a dimmer being wobbled.
 
-   Opacity only. This used to animate box-shadow between a small dim glow and a
-   large bright one, but box-shadow is a paint property — it cannot run on the
-   compositor, so 32 fireflies meant 32 elements repainting on the main thread
-   continuously, even with the page idle. The glow is now a fixed shadow and
-   only opacity animates; opacity fades the shadow along with the dot, so the
-   ember-to-glow read survives and the whole layer runs on the GPU. */
+   Opacity only, never box-shadow. box-shadow is a paint property — it cannot run
+   on the compositor, so animating it put every firefly back on the main thread
+   repainting continuously even with the page idle. Fading the dot fades its glow
+   along with it, so the ember-to-lantern read survives on the GPU. */
 @keyframes firefly-blink {
   0%,
-  100% {
-    opacity: 0.25;
+  9% {
+    opacity: 0;
   }
-  50% {
+  30%,
+  52% {
     opacity: 1;
+  }
+  76%,
+  100% {
+    opacity: 0;
   }
 }
 
 .firefly {
+  /* A warm near-white core inside an amber halo, which is what a small light source
+     actually looks like — a flat amber dot reads as a dab of paint. Declared twice
+     on purpose: if a browser cannot parse color-mix it drops the second line and
+     keeps the first, where an inline color-mix that failed would leave the dot with
+     no background at all and make the whole swarm invisible. */
+  background-color: var(--glow-soft);
+  background-color: color-mix(in oklab, var(--glow-soft) 72%, var(--moon));
+  /* The glow scales with the dot, so a bigger firefly reads as nearer rather than
+     merely wider. The constant term keeps the smallest ones from becoming
+     invisible specks. Static, for the reason above. */
   box-shadow:
-    0 0 7px var(--glow-soft),
-    0 0 18px color-mix(in oklab, var(--glow) 65%, transparent);
+    0 0 calc(2px + var(--fly-size) * 1.8) var(--glow-soft),
+    0 0 calc(6px + var(--fly-size) * 4)
+      color-mix(in oklab, var(--glow) 70%, transparent);
   animation:
-    firefly-float var(--float-duration, 10s) ease-in-out var(--float-delay, 0s)
-      infinite,
+    firefly-float var(--float-duration, 12s) var(--float-ease, ease-in-out)
+      var(--float-delay, 0s) infinite,
     firefly-blink var(--blink-duration, 5s) ease-in-out var(--blink-delay, 0s)
       infinite;
 }
@@ -547,6 +582,242 @@ body {
   .firefly {
     animation: none;
     opacity: 0.75;
+  }
+}
+
+/* ==========================================================================
+   Live timetable
+
+   The 2026 programme runs strictly in sequence — the Mainstage hands over to the
+   Schepperschuppen rather than three stages playing at once — so the timetable is
+   one vertical river per day instead of a three-column grid that would be
+   two-thirds empty. A hairline rail carries the night from the first live set to
+   the last DJ, stage changes read as scene changes in the flow, and row height
+   scales with set length so the shape of the night is visible at a glance.
+   ========================================================================== */
+
+.tt-day {
+  /* Shared by the rows and by anything positioned onto the rail, so the two can
+     never drift apart. */
+  --tt-time-col: 3.25rem;
+  --tt-rail-col: 1.5rem;
+}
+
+@media (width >= 40rem) {
+  .tt-day {
+    --tt-time-col: 4rem;
+    --tt-rail-col: 2rem;
+  }
+}
+
+.tt-row {
+  display: grid;
+  grid-template-columns: var(--tt-time-col) var(--tt-rail-col) 1fr;
+}
+
+/* Horizontal centre of the rail — for the drifting light and the "now" marker */
+.tt-rail-x {
+  left: calc(var(--tt-time-col) + var(--tt-rail-col) / 2);
+}
+
+/* The continuous hairline. Drawn per row rather than as one absolutely
+   positioned element: adjacent rows make it continuous for free, and it then
+   cannot fall out of sync with the row heights. */
+.tt-rail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: color-mix(in oklab, var(--moon-dim) 22%, transparent);
+}
+
+/* Sets that have already happened keep a faint ember in the rail, so the part of
+   the night that is behind you is legible as such at a glance. The row itself
+   keeps full opacity and loses its amber accents instead — greyed-out type reads
+   as "unavailable", and at 02:00 the most common question is still who played
+   earlier. */
+.tt-rail-past::before {
+  background: color-mix(in oklab, var(--glow) 20%, transparent);
+}
+
+/* A slow ember travelling down the rail — the one gesture that makes the night
+   read as flowing rather than tabulated. Transform and opacity only, so it runs
+   on the compositor like the fireflies do. */
+@keyframes rail-drift {
+  0% {
+    transform: translate(-50%, -12rem);
+    opacity: 0;
+  }
+  12%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, calc(100% + 12rem));
+    opacity: 0;
+  }
+}
+
+.tt-drift {
+  width: 1px;
+  height: 9rem;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in oklab, var(--glow) 55%, transparent),
+    transparent
+  );
+  animation: rail-drift 22s linear infinite;
+}
+
+/* The "now" marker: a lit line across the row plus a dot on the rail. Only the
+   dot's opacity animates — the glow is a static shadow, so nothing repaints
+   (same reasoning as .firefly). `top` is transitioned because the clock only
+   ticks every 15s and the marker should glide between positions, not jump. */
+.tt-now {
+  transition: top 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes now-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.tt-now-dot {
+  box-shadow:
+    0 0 6px var(--glow),
+    0 0 16px color-mix(in oklab, var(--glow) 65%, transparent);
+  animation: now-pulse 2.6s ease-in-out infinite;
+}
+
+/* Sets fade up as they scroll into view.
+
+   Scroll-driven CSS rather than an IntersectionObserver, and that choice is load
+   bearing: an observer would have to hide the rows first, so the SSR'd HTML — the
+   thing search engines and a visitor with no JS see — would arrive invisible, and
+   rows already on screen at hydration would flash out and back in. A view()
+   timeline has neither problem. Where it is unsupported the @supports block never
+   applies and every set is simply visible, which is the correct fallback. */
+@keyframes tt-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tt-reveal {
+      animation: tt-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 20%;
+    }
+  }
+}
+
+/* The wheel.
+
+   Rows tilt away from you at the top and bottom of the viewport and come flat in
+   the middle, so the rail reads as a surface curving past rather than a flat list
+   scrolling. It is the depth cue of an iOS picker without the size distortion —
+   the only scaling is what perspective does to a 22px translateZ, about 2%, which
+   is what keeps it from competing with the proportional row heights that already
+   encode set length.
+
+   This *replaces* the flat reveal rather than adding to it: two animations on one
+   element both setting `transform` do not compose, the later one simply wins. So
+   the wheel keyframes start from the reveal's own faded, offset state and the
+   entrance comes for free. Only animation-name and -range are overridden here,
+   and this block must stay after the .tt-reveal rule for source order to pick it.
+
+   Desktop only: on a phone there are too few rows on screen at once for a curve to
+   read as anything but a wobble. */
+@keyframes tt-wheel {
+  0% {
+    opacity: 0;
+    transform: perspective(1400px) rotateX(7deg) translateZ(-22px);
+  }
+  18% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+    transform: perspective(1400px) rotateX(0deg) translateZ(0);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.45;
+    transform: perspective(1400px) rotateX(-7deg) translateZ(-22px);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (width >= 48rem) {
+    .tt-reveal {
+      animation-name: tt-wheel;
+      animation-range: cover 0% cover 100%;
+      /* perspective() inside the transform rather than on an ancestor: a
+         `perspective` property on the day section would make it a containing
+         block and put the sticky day header at risk, and each row curving about
+         its own centre is what a wheel does anyway. */
+      transform-origin: center center;
+      backface-visibility: hidden;
+    }
+  }
+}
+
+/* The live panel genuinely mounts on the client (the server never renders "now"),
+   so a plain entrance animation is exactly right here. */
+@keyframes tt-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tt-panel-in {
+  animation: tt-panel-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* scaleX, not width: a width transition relayouts the bar every frame. */
+.tt-progress-fill {
+  transform-origin: left;
+  transform: scaleX(var(--tt-progress, 0));
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-drift {
+    animation: none;
+    opacity: 0;
+  }
+  .tt-now-dot {
+    animation: none;
+  }
+  .tt-now,
+  .tt-progress-fill {
+    transition: none;
+  }
+  .tt-panel-in {
+    animation: none;
   }
 }
 

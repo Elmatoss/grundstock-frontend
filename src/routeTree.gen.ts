@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkshopsRouteImport } from './routes/workshops'
 import { Route as VereinRouteImport } from './routes/verein'
+import { Route as TimetableRouteImport } from './routes/timetable'
 import { Route as TicketsRouteImport } from './routes/tickets'
 import { Route as TicketbedingungenRouteImport } from './routes/ticketbedingungen'
 import { Route as MittelgschaftlerRouteImport } from './routes/mittelgschaftler'
@@ -32,6 +33,11 @@ const WorkshopsRoute = WorkshopsRouteImport.update({
 const VereinRoute = VereinRouteImport.update({
   id: '/verein',
   path: '/verein',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TimetableRoute = TimetableRouteImport.update({
+  id: '/timetable',
+  path: '/timetable',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TicketsRoute = TicketsRouteImport.update({
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/mittelgschaftler': typeof MittelgschaftlerRoute
   '/ticketbedingungen': typeof TicketbedingungenRoute
   '/tickets': typeof TicketsRoute
+  '/timetable': typeof TimetableRoute
   '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
   '/artists/$slug': typeof ArtistsSlugRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/mittelgschaftler': typeof MittelgschaftlerRoute
   '/ticketbedingungen': typeof TicketbedingungenRoute
   '/tickets': typeof TicketsRoute
+  '/timetable': typeof TimetableRoute
   '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
   '/artists/$slug': typeof ArtistsSlugRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/mittelgschaftler': typeof MittelgschaftlerRoute
   '/ticketbedingungen': typeof TicketbedingungenRoute
   '/tickets': typeof TicketsRoute
+  '/timetable': typeof TimetableRoute
   '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
   '/artists/$slug': typeof ArtistsSlugRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/mittelgschaftler'
     | '/ticketbedingungen'
     | '/tickets'
+    | '/timetable'
     | '/verein'
     | '/workshops'
     | '/artists/$slug'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/mittelgschaftler'
     | '/ticketbedingungen'
     | '/tickets'
+    | '/timetable'
     | '/verein'
     | '/workshops'
     | '/artists/$slug'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/mittelgschaftler'
     | '/ticketbedingungen'
     | '/tickets'
+    | '/timetable'
     | '/verein'
     | '/workshops'
     | '/artists/$slug'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   MittelgschaftlerRoute: typeof MittelgschaftlerRoute
   TicketbedingungenRoute: typeof TicketbedingungenRoute
   TicketsRoute: typeof TicketsRoute
+  TimetableRoute: typeof TimetableRoute
   VereinRoute: typeof VereinRoute
   WorkshopsRoute: typeof WorkshopsRoute
   ArtistsSlugRoute: typeof ArtistsSlugRoute
@@ -226,6 +239,13 @@ declare module '@tanstack/react-router' {
       path: '/verein'
       fullPath: '/verein'
       preLoaderRoute: typeof VereinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/timetable': {
+      id: '/timetable'
+      path: '/timetable'
+      fullPath: '/timetable'
+      preLoaderRoute: typeof TimetableRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tickets': {
@@ -327,6 +347,7 @@ const rootRouteChildren: RootRouteChildren = {
   MittelgschaftlerRoute: MittelgschaftlerRoute,
   TicketbedingungenRoute: TicketbedingungenRoute,
   TicketsRoute: TicketsRoute,
+  TimetableRoute: TimetableRoute,
   VereinRoute: VereinRoute,
   WorkshopsRoute: WorkshopsRoute,
   ArtistsSlugRoute: ArtistsSlugRoute,

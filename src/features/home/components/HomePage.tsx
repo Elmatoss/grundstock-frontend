@@ -1,3 +1,5 @@
+import { getRouteApi } from "@tanstack/react-router";
+import { parsePreviewInstant } from "#/features/timetable/lib/schedule";
 import { AwarenessSection } from "./AwarenessSection";
 import { FaqSection } from "./FaqSection";
 import { GenreMarquee } from "./GenreMarquee";
@@ -11,10 +13,17 @@ import { StorySection } from "./StorySection";
 import { TicketsCta } from "./TicketsCta";
 import { WorkshopsTeaser } from "./WorkshopsTeaser";
 
+// getRouteApi rather than importing the route, which already imports this
+const route = getRouteApi("/");
+
 export function HomePage() {
+	// `/?t=2026-08-14T22:45` pins the hero's clock, so the countdown → live
+	// programme swap can be reviewed before the festival actually starts
+	const { t } = route.useSearch();
+
 	return (
 		<main>
-			<Hero />
+			<Hero previewNow={parsePreviewInstant(t)} />
 			<IntroSection />
 			<GenreMarquee />
 			<LineupTeaser />

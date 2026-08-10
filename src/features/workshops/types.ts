@@ -1,16 +1,22 @@
 import { z } from "zod";
 import { zFestivalDay } from "#/features/lineup/types";
-import { zLocaleString, zSanityImage } from "#/lib/sanity";
+import { zLocaleString } from "#/lib/sanity";
 
+// No host, image or location: they were empty on every workshop and the venue is
+// always the Workshop-Zelt. No end time either — the programme only publishes when
+// a workshop starts.
 export const zWorkshop = z.object({
 	title: z.string(),
 	slug: z.string(),
-	host: z.string().nullish(),
 	description: zLocaleString.nullish(),
-	image: zSanityImage.nullish(),
 	day: zFestivalDay.nullish(),
-	time: z.string().nullish(),
-	location: z.string().nullish(),
+	start: z
+		.string()
+		.regex(/^([01]\d|2[0-3]):[0-5]\d$/)
+		// One editor typo must not take the page down — the workshop then simply
+		// reads as "time to be announced"
+		.nullish()
+		.catch(null),
 });
 
 export const zWorkshopList = z.array(zWorkshop);

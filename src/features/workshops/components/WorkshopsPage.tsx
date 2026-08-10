@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { FestivalDay } from "#/features/lineup/types";
-import { localized, sanityImageProps } from "#/lib/sanity";
+import { localized } from "#/lib/sanity";
 import { m } from "#/paraglide/messages";
 import { workshopListQueryOptions } from "../api/workshops";
 
@@ -30,41 +30,27 @@ export function WorkshopsPage() {
 					{workshops.map((workshop) => (
 						<article
 							key={workshop.slug}
-							className="overflow-hidden rounded-xs border border-border bg-night-soft/50"
+							className="inner-edge rounded-xs border border-border bg-night-soft/50 p-5"
 						>
-							{workshop.image && (
-								<img
-									{...sanityImageProps(workshop.image, 480, 270)}
-									sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 90vw"
-									alt={workshop.image.alt ?? workshop.title}
-									loading="lazy"
-									className="aspect-video w-full object-cover opacity-80"
-								/>
-							)}
-							<div className="p-5">
-								<h2 className="m-0 font-display text-lg text-moon">
-									{workshop.title}
-								</h2>
-								<p className="mt-1 mb-0 text-sm text-glow-soft">
-									{[
-										workshop.day ? DAY_LABELS[workshop.day]() : null,
-										workshop.time,
-										workshop.location,
-									]
-										.filter(Boolean)
-										.join(" · ")}
+							<h2 className="m-0 font-display text-lg text-moon">
+								{workshop.title}
+							</h2>
+							<p className="mt-1 mb-0 text-sm text-glow-soft">
+								{[
+									workshop.day ? DAY_LABELS[workshop.day]() : null,
+									// no end time is published — workshops run until they run out
+									workshop.start
+										? m.timetable_open_start({ time: workshop.start })
+										: null,
+								]
+									.filter(Boolean)
+									.join(" · ")}
+							</p>
+							{workshop.description && (
+								<p className="mt-3 mb-0 text-sm text-moon-dim">
+									{localized(workshop.description)}
 								</p>
-								{workshop.host && (
-									<p className="mt-1 mb-0 text-sm text-moon-dim">
-										{workshop.host}
-									</p>
-								)}
-								{workshop.description && (
-									<p className="mt-3 mb-0 text-sm text-moon-dim">
-										{localized(workshop.description)}
-									</p>
-								)}
-							</div>
+							)}
 						</article>
 					))}
 				</div>

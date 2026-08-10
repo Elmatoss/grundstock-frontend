@@ -22,7 +22,8 @@ const fullArtist = {
 	performances: [
 		{
 			day: "sa",
-			time: "23:00",
+			start: "23:00",
+			end: "00:30",
 			stage: {
 				name: "Schepperschuppen",
 				slug: "schepperschuppen",
@@ -64,6 +65,14 @@ describe("artist schemas", () => {
 		expect(() =>
 			zArtistList.parse([{ ...minimalArtist, performances: [{ day: "so" }] }]),
 		).toThrow();
+	});
+
+	it("degrades a malformed set time to 'not announced' instead of throwing", () => {
+		// One editor typo must not take the whole lineup page down with it
+		const [artist] = zArtistList.parse([
+			{ ...minimalArtist, performances: [{ day: "sa", start: "23 Uhr" }] },
+		]);
+		expect(artist.performances?.[0]?.start).toBeNull();
 	});
 
 	it("rejects locale strings without the required German value", () => {

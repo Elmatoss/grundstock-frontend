@@ -8,8 +8,11 @@ export default function Header() {
 	const anchors = [["helfen", m.nav_helfen()]] as const;
 
 	return (
-		<header className="sticky top-0 z-50 border-b border-border bg-night/70 backdrop-blur-md">
-			<nav className="page-wrap flex items-center justify-between gap-4 py-3">
+		// Height is pinned to --header-height (rather than left to the tallest
+		// child) so the timetable's sticky day headers can offset by exactly the
+		// same value instead of approximating it
+		<header className="sticky top-0 z-50 box-border h-(--header-height) border-b border-border bg-night/70 backdrop-blur-md">
+			<nav className="page-wrap flex h-full items-center justify-between gap-4">
 				<Link
 					to="/"
 					className="flex items-center gap-2.5 text-moon no-underline hover:text-moon"
@@ -26,6 +29,13 @@ export default function Header() {
 						activeProps={{ className: "text-moon" }}
 					>
 						{m.nav_lineup()}
+					</Link>
+					<Link
+						to="/timetable"
+						className="text-sm font-semibold text-moon-dim no-underline transition-colors hover:text-moon"
+						activeProps={{ className: "text-moon" }}
+					>
+						{m.nav_timetable()}
 					</Link>
 					<Link
 						to="/workshops"
