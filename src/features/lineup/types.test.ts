@@ -18,7 +18,6 @@ const fullArtist = {
 		asset: { _ref: "image-abc-1200x900-jpg", _type: "reference" },
 		alt: "Live 2025",
 	},
-	featured: true,
 	performances: [
 		{
 			day: "sa",
