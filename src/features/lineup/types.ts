@@ -34,7 +34,6 @@ export const zArtistCard = z.object({
 	genres: z.array(z.string()).nullish(),
 	shortBlurb: zLocaleString.nullish(),
 	image: zSanityImage.nullish(),
-	featured: z.boolean().nullish(),
 	performances: z.array(zPerformance).nullish(),
 });
 

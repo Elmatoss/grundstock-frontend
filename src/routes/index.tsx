@@ -1,14 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { HomePage } from "#/features/home/components/HomePage";
-import {
-	artistListQueryOptions,
-	featuredArtistsQueryOptions,
-} from "#/features/lineup/api/artists";
-import {
-	isFestivalMode,
-	parsePreviewInstant,
-} from "#/features/timetable/lib/schedule";
+import { artistListQueryOptions } from "#/features/lineup/api/artists";
+import { randomSeed } from "#/lib/random";
 import { seo } from "#/lib/seo";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
@@ -18,22 +12,18 @@ export const Route = createFileRoute("/")({
 	validateSearch: z.object({
 		t: z.string().optional().catch(undefined),
 	}),
-	loaderDeps: ({ search }) => ({ t: search.t }),
-	// prefetchQuery (not ensureQueryData): the homepage renders fine without
-	// the carousel and must never fail because Sanity is unreachable
-	loader: ({ context, deps }) => {
-		// The hero's live card needs every act's set times, but only while the
-		// festival is actually on — outside that window the hero is a countdown and
-		// this second query would be pure waste. A `?t=` preview counts as on, so the
-		// preview renders server-side exactly as the real thing will.
-		const preview = parsePreviewInstant(deps.t);
-		const live = isFestivalMode(preview ?? Date.now());
-		return Promise.all([
-			context.queryClient.prefetchQuery(featuredArtistsQueryOptions),
-			live
-				? context.queryClient.prefetchQuery(artistListQueryOptions)
-				: undefined,
-		]);
+	// One artist query for the whole site now that the teaser draws its ten from the
+	// full lineup — the same cache entry the hero's live card and /lineup use, so a
+	// visitor who clicks through fetches nothing again.
+	//
+	// prefetchQuery (not ensureQueryData): the homepage renders fine without the
+	// carousel and must never fail because Sanity is unreachable.
+	loader: async ({ context }) => {
+		await context.queryClient.prefetchQuery(artistListQueryOptions);
+		// Rolled here rather than in the component: a loader runs once per page load
+		// and its return value is serialised into the SSR payload, so the client
+		// hydrates with the server's number instead of drawing a different ten.
+		return { teaserSeed: randomSeed() };
 	},
 	head: () => ({
 		...seo({

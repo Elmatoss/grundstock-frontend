@@ -1,16 +1,9 @@
-// Deterministic PRNG (mulberry32): positions must be identical on server and
-// client or hydration mismatches flicker the whole layer
-function mulberry32(seed: number) {
-	let a = seed;
-	return () => {
-		a |= 0;
-		a = (a + 0x6d2b79f5) | 0;
-		let t = Math.imul(a ^ (a >>> 15), 1 | a);
-		t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-		return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-	};
-}
+import { mulberry32 } from "#/lib/random";
 
+// A fixed seed, not Math.random(): every position and delay below has to come out
+// identical on the server and on the client, or hydration mismatches flicker the
+// whole layer. The swarm looks scattered because the PRNG is, not because it is
+// re-rolled per visit.
 const rand = mulberry32(20260813);
 
 // Three drift characters, cycled by index: how a firefly accelerates out of a
@@ -22,24 +15,27 @@ const EASES = [
 	"cubic-bezier(0.65, 0, 0.35, 1)",
 ];
 
-const COUNT = 40;
-/** Beyond this index a firefly is desktop-only — a phone gets the first 24. */
-const MOBILE_COUNT = 24;
+const COUNT = 35;
+/** Beyond this index a firefly is desktop-only — a phone gets the first 23. */
+const MOBILE_COUNT = 23;
 
 const FIREFLIES = Array.from({ length: COUNT }, (_, i) => {
-	// 1.4–5px. The spread matters more than the range: a swarm of identical dots
-	// reads as a particle effect, a swarm with near and far members reads as depth.
-	const size = rand() * 3.6 + 1.4;
-	const floatDuration = rand() * 10 + 8;
-	const blinkDuration = rand() * 5 + 3.5;
+	// 1–4px. The spread matters more than the range: a swarm of identical dots reads
+	// as a particle effect, a swarm with near and far members reads as depth.
+	const size = rand() * 3 + 1;
+	// The floor on each duration is what keeps the swarm calm — the ceiling was never
+	// the problem. A short cycle over four waypoints is a lot of ground covered per
+	// second, and a handful of fireflies darting made the whole layer read as busy.
+	const floatDuration = rand() * 9 + 11;
+	const blinkDuration = rand() * 5 + 4;
 
 	// Four waypoints rather than two, each an independent random distance away, so
 	// the dot covers different ground in every leg of the loop and therefore appears
 	// to speed up, slow down and change its mind. Two waypoints read as an orbit.
 	const waypoints: Record<string, string> = {};
 	for (let leg = 1; leg <= 4; leg++) {
-		waypoints[`--fx${leg}`] = `${((rand() - 0.5) * 84).toFixed(1)}px`;
-		waypoints[`--fy${leg}`] = `${((rand() - 0.5) * 84).toFixed(1)}px`;
+		waypoints[`--fx${leg}`] = `${((rand() - 0.5) * 68).toFixed(1)}px`;
+		waypoints[`--fy${leg}`] = `${((rand() - 0.5) * 68).toFixed(1)}px`;
 	}
 
 	return {

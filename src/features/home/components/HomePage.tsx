@@ -20,13 +20,16 @@ export function HomePage() {
 	// `/?t=2026-08-14T22:45` pins the hero's clock, so the countdown → live
 	// programme swap can be reviewed before the festival actually starts
 	const { t } = route.useSearch();
+	// Rolled server-side once per page load and carried over in the SSR payload, so
+	// the teaser's random ten are the same ten the client hydrates with
+	const { teaserSeed } = route.useLoaderData();
 
 	return (
 		<main>
 			<Hero previewNow={parsePreviewInstant(t)} />
 			<IntroSection />
 			<GenreMarquee />
-			<LineupTeaser />
+			<LineupTeaser teaserSeed={teaserSeed} />
 			<WorkshopsTeaser />
 			<InclusiveSection />
 			<HelfenSection />
