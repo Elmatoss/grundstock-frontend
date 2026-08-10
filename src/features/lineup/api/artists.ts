@@ -9,7 +9,7 @@ const CARD_PROJECTION = `
 	shortBlurb,
 	image,
 	featured,
-	performances[]{ day, time, stage->{ name, "slug": slug.current, order, tagline } }
+	performances[]{ day, start, end, stage->{ name, "slug": slug.current, order, tagline } }
 `;
 
 export const artistListQueryOptions = queryOptions({

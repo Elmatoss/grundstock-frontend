@@ -6,15 +6,12 @@ export const workshopListQueryOptions = queryOptions({
 	queryKey: ["workshops", "list"],
 	queryFn: async () => {
 		const result = await sanityFetch(
-			`*[_type == "workshop" && defined(slug.current)] | order(day asc, time asc) {
+			`*[_type == "workshop" && defined(slug.current)] | order(day asc, start asc) {
 				title,
 				"slug": slug.current,
-				host,
 				description,
-				image,
 				day,
-				time,
-				location
+				start
 			}`,
 		);
 		return zWorkshopList.parse(result);

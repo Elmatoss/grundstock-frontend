@@ -10,6 +10,7 @@ import { localizeHref } from "#/paraglide/runtime";
 const MENU_ITEMS = [
 	{ to: "/", label: () => m.menu_home() },
 	{ to: "/lineup", label: () => m.nav_lineup() },
+	{ to: "/timetable", label: () => m.nav_timetable() },
 	{ to: "/workshops", label: () => m.nav_workshops() },
 	{ to: "/anreise", label: () => m.nav_anreise() },
 	{ to: "/infos", label: () => m.nav_infos() },
