@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
-
-const TARGET = new Date(site.festivalStart).getTime();
-
-function remaining() {
-	return Math.max(0, TARGET - Date.now());
-}
 
 export function splitCountdown(ms: number) {
 	const total = Math.floor(ms / 1000);
@@ -18,13 +11,32 @@ export function splitCountdown(ms: number) {
 	};
 }
 
-export function Countdown() {
-	const [ms, setMs] = useState(remaining);
+/**
+ * @param target instant the festival opens, from the edition's `from`
+ * @param pinnedNow freezes the clock for the `?t=` preview, so a review of the
+ *   countdown out of season shows real digits instead of a run-down zero
+ */
+export function Countdown({
+	target,
+	pinnedNow,
+}: {
+	target: number;
+	pinnedNow?: number | null;
+}) {
+	const [ms, setMs] = useState(() =>
+		Math.max(0, target - (pinnedNow ?? Date.now())),
+	);
 
 	useEffect(() => {
-		const id = setInterval(() => setMs(remaining()), 1000);
+		if (pinnedNow != null) {
+			setMs(Math.max(0, target - pinnedNow));
+			return;
+		}
+		const tick = () => setMs(Math.max(0, target - Date.now()));
+		tick();
+		const id = setInterval(tick, 1000);
 		return () => clearInterval(id);
-	}, []);
+	}, [target, pinnedNow]);
 
 	if (ms === 0) {
 		return (

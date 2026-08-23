@@ -1,6 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useMemo } from "react";
+import {
+	FestivalOver,
+	FestivalTba,
+} from "#/features/festival/components/FestivalOver";
+import { useFestival } from "#/features/festival/hooks/useFestival";
+import { editionPhase } from "#/features/festival/lib/festival";
 import { Countdown } from "#/features/home/components/Countdown";
 import { artistListQueryOptions } from "#/features/lineup/api/artists";
 import { m } from "#/paraglide/messages";
@@ -8,7 +14,6 @@ import { useNow } from "../hooks/useNow";
 import { spanLabel } from "../lib/format";
 import {
 	buildSchedule,
-	isFestivalMode,
 	liveState,
 	minutesLeft,
 	minutesUntil,
@@ -16,34 +21,51 @@ import {
 } from "../lib/schedule";
 
 /**
- * What sits in the hero: a countdown before the festival, the live programme once
- * it starts.
+ * What sits in the hero, across the whole life of an edition: a countdown before
+ * the festival, the live programme while it runs, a thank-you once it is over.
  *
- * The countdown is the pre-mount and no-JS state, which is the right default —
- * it needs no data, and during the festival it has already run down to "it's
- * happening", so the swap always upgrades rather than contradicts. The live card
- * then replaces it in an effect (see `useNow` for why the server must not decide
- * this) and uses `useQuery`, not the suspense variant: the hero must never block
- * or fail on Sanity being slow.
+ * The countdown is the pre-mount and no-JS state whenever there *is* something to
+ * count down to, which is the right default — it needs no clock, and during the
+ * festival it has already run down to "it's happening", so the swap to the live
+ * card always upgrades rather than contradicts. The live card then replaces it in
+ * an effect (see `useNow` for why the server must not decide this) and uses
+ * `useQuery`, not the suspense variant: the hero must never block or fail on
+ * Sanity being slow.
+ *
+ * The farewell, by contrast, needs no clock at all — it follows from there being
+ * no upcoming edition — so it renders on the server and is what a visitor without
+ * JS sees too.
  */
 export function FestivalLive({ previewNow }: { previewNow?: number | null }) {
 	const now = useNow(15_000, previewNow);
-	const festivalMode = now !== null && isFestivalMode(now);
+	const { upcoming, featured, isOver } = useFestival(previewNow);
+
+	// Only the running festival needs the programme; before and after, the hero is
+	// copy and a clock
+	const isLive =
+		upcoming !== null && now !== null && editionPhase(upcoming, now) === "live";
 
 	const { data: artists } = useQuery({
-		...artistListQueryOptions,
-		enabled: festivalMode,
+		...artistListQueryOptions(featured?.year ?? 0),
+		enabled: isLive && featured !== null,
 	});
 
 	const state = useMemo(
 		() =>
-			now === null || !artists ? null : liveState(buildSchedule(artists), now),
-		[artists, now],
+			now === null || !artists || !featured
+				? null
+				: liveState(buildSchedule(artists, [], featured), now),
+		[artists, now, featured],
 	);
 
-	if (!festivalMode || now === null) return <Countdown />;
-	// programme loading, or the festival is running but nothing is scheduled yet
-	if (!state) return <Countdown />;
+	if (featured === null) return <FestivalTba />;
+	if (isOver) return <FestivalOver edition={featured} />;
+	// `upcoming` is non-null here: featured falls back to an ended edition only
+	// when isOver, which returned above
+	if (!isLive || !state)
+		return (
+			<Countdown target={Date.parse(featured.from)} pinnedNow={previewNow} />
+		);
 
 	const current = state.current[0];
 	const next = state.next[0];
@@ -90,7 +112,7 @@ export function FestivalLive({ previewNow }: { previewNow?: number | null }) {
 			) : (
 				<p className="m-0 font-display text-2xl text-glow">
 					{state.phase === "after"
-						? m.timetable_after_title()
+						? m.timetable_after_title({ year: featured.year })
 						: m.timetable_break_title()}
 				</p>
 			)}

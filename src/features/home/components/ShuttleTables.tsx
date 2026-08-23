@@ -1,3 +1,4 @@
+import { useFestival } from "#/features/festival/hooks/useFestival";
 import { shuttles } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
@@ -12,6 +13,7 @@ const dayLabel: Record<(typeof shuttles)[number]["day"], () => string> = {
 };
 
 export function ShuttleTables() {
+	const { isOver } = useFestival();
 	const outbound = shuttles.filter((s) => s.direction === "hin");
 	const inbound = shuttles.filter((s) => s.direction === "zurueck");
 
@@ -40,14 +42,18 @@ export function ShuttleTables() {
 						</li>
 					))}
 				</ul>
-				<a
-					href={localizeHref("/tickets")}
-					target="_blank"
-					rel="noopener noreferrer"
-					className="mt-4 inline-block text-sm font-semibold"
-				>
-					{m.cta_tickets()} →
-				</a>
+				{/* Shuttle tickets are sold in the festival's shop, so this link is
+				    only meaningful while there is a festival to buy for — see Hero */}
+				{!isOver && (
+					<a
+						href={localizeHref("/tickets")}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="mt-4 inline-block text-sm font-semibold"
+					>
+						{m.cta_tickets()} →
+					</a>
+				)}
 			</Card>
 		</div>
 	);

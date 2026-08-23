@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { LogoMark } from "#/components/LogoMark";
+import { useFestival } from "#/features/festival/hooks/useFestival";
 import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
 
@@ -19,6 +20,7 @@ const MENU_ITEMS = [
 ] as const;
 
 export function SiteMenu() {
+	const { featured, isOver } = useFestival();
 	const [open, setOpen] = useState(false);
 	// The overlay is portaled to <body>: the sticky header's backdrop-blur
 	// creates a containing block, which would trap fixed positioning inside
@@ -86,7 +88,7 @@ export function SiteMenu() {
 				<span className="flex items-center gap-2.5 text-moon">
 					<LogoMark className="h-6" />
 					<span className="wordmark text-base sm:text-lg">
-						Grundstock <span className="text-glow">2026</span>
+						Grundstock <span className="text-glow">{featured?.year ?? ""}</span>
 					</span>
 				</span>
 				<button
@@ -137,14 +139,17 @@ export function SiteMenu() {
 					open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
 				}`}
 			>
-				<a
-					href={localizeHref("/tickets")}
-					target="_blank"
-					rel="noopener noreferrer"
-					className="btn btn-primary btn-lg no-underline"
-				>
-					{m.cta_tickets()}
-				</a>
+				{/* see Hero: no ticket link to a festival that is over */}
+				{!isOver && (
+					<a
+						href={localizeHref("/tickets")}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="btn btn-primary btn-lg no-underline"
+					>
+						{m.cta_tickets()}
+					</a>
+				)}
 				<Link
 					to="/"
 					hash="helfen"

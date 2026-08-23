@@ -1,11 +1,10 @@
-// Deliberately hardcoded — the CMS siteSettings singleton only carries the
-// announcement banner. Ticketing & shift management become part of the site
-// itself next year; these values change by deploy, not by CMS edit.
+// Deliberately hardcoded. The festival's dates, its recap text and its
+// aftermovie live in the CMS, because the countdown and the archive have to
+// follow them without a deploy — everything below changes once a year at most,
+// and a reviewed commit is a better place for an IBAN than a text field.
+// See docs/MULTI-YEAR.md.
 export const site = {
 	baseUrl: "https://grundstock-festival.de",
-	// Program starts Thursday; Sunday is teardown & departure only
-	festivalStart: "2026-08-13T14:00:00+02:00",
-	festivalEndDate: "2026-08-16",
 	ticketUrl:
 		"https://eventfrog.de/de/p/festivals/weitere-festivals/grundstock-2026-7440753604112179814.html",
 	helfertoolUrl:
@@ -14,7 +13,6 @@ export const site = {
 	contactEmail: "info@neues-brett.de",
 	instagramUrl: "https://www.instagram.com/grundstock.neuesbrett",
 	instagramHandle: "grundstock.neuesbrett",
-	recapYoutubeId: "sACZxjbCPls",
 	// Travel logistics (An-/Abreise PDF 2026). The three WhatsApp groups are the
 	// organisers' own channels for the bike tour, carpooling and the parking
 	// shuttle — each one belongs to exactly one travel option below.

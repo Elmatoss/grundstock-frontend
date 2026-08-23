@@ -1,19 +1,23 @@
 import { PortableText } from "@portabletext/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import { programmeDate } from "#/features/festival/lib/festival";
+import type { Edition } from "#/features/festival/types";
+import { dayLabel } from "#/features/timetable/lib/format";
 import { localized, localizedBlock, sanityImageProps } from "#/lib/sanity";
 import { m } from "#/paraglide/messages";
 import { artistDetailQueryOptions } from "../api/artists";
-import type { FestivalDay } from "../types";
 
-const DAY_LABELS: Record<FestivalDay, () => string> = {
-	do: m.day_do,
-	fr: m.day_fr,
-	sa: m.day_sa,
-};
-
-export function ArtistDetailPage({ slug }: { slug: string }) {
-	const { data: artist } = useSuspenseQuery(artistDetailQueryOptions(slug));
+export function ArtistDetailPage({
+	edition,
+	slug,
+}: {
+	edition: Edition;
+	slug: string;
+}) {
+	const { data: artist } = useSuspenseQuery(
+		artistDetailQueryOptions(edition.year, slug),
+	);
 	// The loader already 404s on null; this narrows the type for TS
 	if (!artist) return null;
 
@@ -39,17 +43,20 @@ export function ArtistDetailPage({ slug }: { slug: string }) {
 					)}
 					{artist.performances && artist.performances.length > 0 && (
 						<ul className="m-0 mt-4 list-none space-y-1 p-0 text-moon-dim">
-							{artist.performances.map((p, index) => (
-								// biome-ignore lint/suspicious/noArrayIndexKey: performances have no id and an act can play the same stage twice
-								<li key={`${p.day}-${p.stage?.slug}-${index}`}>
-									{DAY_LABELS[p.day]()}
-									{p.stage ? ` · ${p.stage.name}` : ""}
-									{/* wall-clock strings straight from the CMS — festival time,
+							{artist.performances.map((p, index) => {
+								const date = programmeDate(edition, p.dayIndex);
+								return (
+									// biome-ignore lint/suspicious/noArrayIndexKey: performances have no id and an act can play the same stage twice
+									<li key={`${p.dayIndex}-${p.stage?.slug}-${index}`}>
+										{date ? dayLabel(date) : `${p.dayIndex}.`}
+										{p.stage ? ` · ${p.stage.name}` : ""}
+										{/* wall-clock strings straight from the CMS — festival time,
 									    not the viewer's */}
-									{p.start ? ` · ${p.start}` : ""}
-									{p.start && p.end ? `–${p.end} Uhr` : ""}
-								</li>
-							))}
+										{p.start ? ` · ${p.start}` : ""}
+										{p.start && p.end ? `–${p.end} Uhr` : ""}
+									</li>
+								);
+							})}
 						</ul>
 					)}
 					{artist.shortBlurb && (

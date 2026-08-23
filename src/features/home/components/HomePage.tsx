@@ -1,4 +1,5 @@
 import { getRouteApi } from "@tanstack/react-router";
+import { useFestival } from "#/features/festival/hooks/useFestival";
 import { parsePreviewInstant } from "#/features/timetable/lib/schedule";
 import { AwarenessSection } from "./AwarenessSection";
 import { FaqSection } from "./FaqSection";
@@ -23,20 +24,25 @@ export function HomePage() {
 	// Rolled server-side once per page load and carried over in the SSR payload, so
 	// the teaser's random ten are the same ten the client hydrates with
 	const { teaserSeed } = route.useLoaderData();
+	const previewNow = parsePreviewInstant(t);
+	const { featured, isOver } = useFestival(previewNow);
 
 	return (
 		<main>
-			<Hero previewNow={parsePreviewInstant(t)} />
+			<Hero previewNow={previewNow} />
 			<IntroSection />
 			<GenreMarquee />
-			<LineupTeaser teaserSeed={teaserSeed} />
+			{featured && (
+				<LineupTeaser year={featured.year} teaserSeed={teaserSeed} />
+			)}
 			<WorkshopsTeaser />
 			<InclusiveSection />
 			<HelfenSection />
 			<LocationSection />
 			<StorySection />
 			<AwarenessSection />
-			<TicketsCta />
+			{/* Nothing to sell once the festival is over — see Hero */}
+			{!isOver && <TicketsCta />}
 			<FaqSection />
 		</main>
 	);

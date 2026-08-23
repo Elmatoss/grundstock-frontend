@@ -1,10 +1,15 @@
 import { z } from "zod";
 import { zLocaleBlock, zLocaleString, zSanityImage } from "#/lib/sanity";
 
-export const zFestivalDay = z.enum(["do", "fr", "sa"]);
-export type FestivalDay = z.infer<typeof zFestivalDay>;
+/**
+ * Which programme day, counted from the edition's start date: 1 is the opening
+ * day. Not a weekday — the weekday is derived from the edition, so an edition
+ * that runs Friday–Sunday needs no change here. See
+ * #/features/festival/lib/festival.
+ */
+export const zDayIndex = z.number().int().min(1).max(7);
 
-// Wall-clock "HH:MM" on the festival `day`, not an absolute datetime — see
+// Wall-clock "HH:MM" on the programme day, not an absolute datetime — see
 // #/features/timetable/lib/schedule for how the two resolve to an instant.
 const zClockTime = z
 	.string()
@@ -15,7 +20,7 @@ const zClockTime = z
 	.catch(null);
 
 export const zPerformance = z.object({
-	day: zFestivalDay,
+	dayIndex: zDayIndex,
 	start: zClockTime,
 	end: zClockTime,
 	stage: z

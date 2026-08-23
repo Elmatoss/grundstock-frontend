@@ -28,8 +28,14 @@ function fillForLoop(artists: ArtistCardData[], min: number) {
 // rolls once per page load and the SSR payload carries to the client. The draw
 // cannot happen here from Math.random(): the server and hydration would disagree
 // and React would swap the whole belt out from under the visitor.
-export function FeaturedArtists({ seed }: { seed: number }) {
-	const { data: allArtists } = useQuery(artistListQueryOptions);
+export function FeaturedArtists({
+	year,
+	seed,
+}: {
+	year: number;
+	seed: number;
+}) {
+	const { data: allArtists } = useQuery(artistListQueryOptions(year));
 	const artists = useMemo(
 		() => (allArtists ? pickRandom(allArtists, TEASER_COUNT, seed) : undefined),
 		[allArtists, seed],

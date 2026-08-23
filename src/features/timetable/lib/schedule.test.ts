@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { ArtistCard, FestivalDay } from "#/features/lineup/types";
+import type { Edition } from "#/features/festival/types";
+import type { ArtistCard } from "#/features/lineup/types";
+import type { Workshop } from "#/features/workshops/types";
 import {
 	buildSchedule,
-	FESTIVAL_MODE,
 	focusSlot,
-	isFestivalMode,
 	liveState,
 	minutesLeft,
 	minutesUntil,
@@ -15,10 +15,37 @@ import {
 /** Berlin wall clock → instant, for writing expectations readably. */
 const at = (iso: string) => Date.parse(`${iso}+02:00`);
 
+// The 2026 edition, so the expectations below can stay in real dates. A day is
+// stored as an offset now, but the fixtures still name the weekday — the mapping
+// lives here so the tests read the way the programme is actually written down.
+const EDITION: Edition = {
+	year: 2026,
+	from: "2026-08-13T14:00:00+02:00",
+	to: "2026-08-16T12:00:00+02:00",
+	programmeDays: 3,
+};
+
+const DAY_INDEX = { do: 1, fr: 2, sa: 3 } as const;
+type TestDay = keyof typeof DAY_INDEX;
+
+const schedule = (artists: ArtistCard[], workshops: Workshop[] = []) =>
+	buildSchedule(artists, workshops, EDITION);
+
+const workshop = (
+	title: string,
+	day: TestDay,
+	start: string | null,
+): Workshop => ({
+	title,
+	slug: title.toLowerCase().replaceAll(" ", "-").replaceAll("&", "und"),
+	dayIndex: DAY_INDEX[day],
+	start,
+});
+
 function artist(
 	name: string,
 	performances: {
-		day: FestivalDay;
+		day: TestDay;
 		start?: string | null;
 		end?: string | null;
 		stage?: string;
@@ -29,7 +56,7 @@ function artist(
 		name,
 		slug: name.toLowerCase().replaceAll(" ", "-"),
 		performances: performances.map((p) => ({
-			day: p.day,
+			dayIndex: DAY_INDEX[p.day],
 			start: p.start ?? null,
 			end: p.end ?? null,
 			stage: p.stage
@@ -41,7 +68,7 @@ function artist(
 
 describe("buildSchedule", () => {
 	it("resolves a wall clock time on its festival day to an instant", () => {
-		const [thursday] = buildSchedule([
+		const [thursday] = schedule([
 			artist("Sylvenklang", [
 				{ day: "do", start: "18:30", end: "19:30", stage: "Mainstage" },
 			]),
@@ -54,7 +81,7 @@ describe("buildSchedule", () => {
 	it("puts an after-midnight set on the next calendar day, still under its own festival day", () => {
 		// 01:10 "Donnerstag" is really Friday morning — the rule that makes the
 		// whole day+wall-clock model work
-		const [thursday] = buildSchedule([
+		const [thursday] = schedule([
 			artist("Afroskater", [
 				{ day: "do", start: "01:10", end: "03:00", stage: "Schepperschuppen" },
 			]),
@@ -65,7 +92,7 @@ describe("buildSchedule", () => {
 	});
 
 	it("carries a set that runs through midnight into the next day", () => {
-		const [thursday] = buildSchedule([
+		const [thursday] = schedule([
 			artist("Lugiae", [
 				{ day: "do", start: "23:20", end: "01:10", stage: "Schepperschuppen" },
 			]),
@@ -76,7 +103,7 @@ describe("buildSchedule", () => {
 	});
 
 	it("treats an end of 00:00 as midnight *after* the set, not before it", () => {
-		const [, friday] = buildSchedule([
+		const [, friday] = schedule([
 			artist("Roadmansteves", [
 				{ day: "fr", start: "22:30", end: "00:00", stage: "Mainstage" },
 			]),
@@ -86,7 +113,7 @@ describe("buildSchedule", () => {
 	});
 
 	it("orders a day chronologically across stages and keeps the day's real end", () => {
-		const [, friday] = buildSchedule([
+		const [, friday] = schedule([
 			// deliberately out of order, and the last set to start is not the last
 			// one to finish
 			artist("Berthold", [
@@ -122,7 +149,7 @@ describe("buildSchedule", () => {
 	});
 
 	it("orders simultaneous sets by stage, then name, so the page never reshuffles", () => {
-		const [thursday] = buildSchedule([
+		const [thursday] = schedule([
 			artist("Zed", [
 				{ day: "do", start: "20:00", end: "21:00", stage: "Turtle", order: 1 },
 			]),
@@ -141,7 +168,7 @@ describe("buildSchedule", () => {
 	});
 
 	it("collects acts whose time is not fixed yet instead of dropping them", () => {
-		const [thursday] = buildSchedule([
+		const [thursday] = schedule([
 			artist("Noch offen", [{ day: "do", stage: "Mainstage" }]),
 			artist("Halb offen", [{ day: "do", start: "20:00", stage: "Mainstage" }]),
 		]);
@@ -153,13 +180,13 @@ describe("buildSchedule", () => {
 	});
 
 	it("always returns all three days, even with no programme at all", () => {
-		expect(buildSchedule([]).map((day) => day.day)).toEqual(["do", "fr", "sa"]);
+		expect(schedule([]).map((day) => day.dayIndex)).toEqual([1, 2, 3]);
 	});
 
 	it("resolves times identically whatever timezone the viewer is in", () => {
 		// The instant is absolute because the offset is baked in — this is the whole
 		// reason times are not formatted with toLocaleTimeString anywhere
-		const [thursday] = buildSchedule([
+		const [thursday] = schedule([
 			artist("Nunataq", [
 				{ day: "do", start: "22:00", end: "23:20", stage: "Schepper" },
 			]),
@@ -172,7 +199,7 @@ describe("buildSchedule", () => {
 
 describe("workshops on the rail", () => {
 	const programme = () =>
-		buildSchedule(
+		schedule(
 			[
 				artist("Turtle DJ", [
 					{
@@ -185,13 +212,8 @@ describe("workshops on the rail", () => {
 				]),
 			],
 			[
-				{ title: "Cyanotypie", slug: "cyanotypie", day: "fr", start: "12:00" },
-				{
-					title: "Ton & Takt",
-					slug: "ton-und-takt",
-					day: "fr",
-					start: "13:00",
-				},
+				workshop("Cyanotypie", "fr", "12:00"),
+				workshop("Ton & Takt", "fr", "13:00"),
 			],
 		);
 
@@ -248,10 +270,7 @@ describe("workshops on the rail", () => {
 	});
 
 	it("falls back to a workshop when nothing else is on", () => {
-		const days = buildSchedule(
-			[],
-			[{ title: "Bier Yoga", slug: "bier-yoga", day: "sa", start: "14:00" }],
-		);
+		const days = schedule([], [workshop("Bier Yoga", "sa", "14:00")]);
 		const state = liveState(days, at("2026-08-15T14:10:00"));
 		expect(focusSlot(state)?.title).toBe("Bier Yoga");
 	});
@@ -266,10 +285,7 @@ describe("workshops on the rail", () => {
 	});
 
 	it("collects a workshop with no time yet, unlinked", () => {
-		const [, friday] = buildSchedule(
-			[],
-			[{ title: "Noch offen", slug: "noch-offen", day: "fr", start: null }],
-		);
+		const [, friday] = schedule([], [workshop("Noch offen", "fr", null)]);
 		expect(friday.pending).toEqual([
 			{ key: "workshop-noch-offen", title: "Noch offen", artistSlug: null },
 		]);
@@ -277,7 +293,7 @@ describe("workshops on the rail", () => {
 });
 
 describe("liveState", () => {
-	const days = buildSchedule([
+	const days = schedule([
 		artist("Opener", [
 			{ day: "do", start: "17:30", end: "18:15", stage: "Mainstage" },
 		]),
@@ -302,7 +318,7 @@ describe("liveState", () => {
 		expect(state.phase).toBe("during");
 		expect(state.current.map((slot) => slot.title)).toEqual(["Opener"]);
 		expect(state.next.map((slot) => slot.title)).toEqual(["Headliner"]);
-		expect(state.activeDay?.day).toBe("do");
+		expect(state.activeDay?.dayIndex).toBe(1);
 	});
 
 	it("reports a changeover as 'during' with nothing playing", () => {
@@ -334,7 +350,7 @@ describe("liveState", () => {
 	});
 
 	it("groups acts that open simultaneously into one 'next' rather than a queue", () => {
-		const parallel = buildSchedule([
+		const parallel = schedule([
 			artist("A", [
 				{ day: "do", start: "20:00", end: "21:00", stage: "M", order: 0 },
 			]),
@@ -350,7 +366,7 @@ describe("liveState", () => {
 	});
 
 	it("survives an empty programme", () => {
-		const state = liveState(buildSchedule([]), at("2026-08-13T20:00:00"));
+		const state = liveState(schedule([]), at("2026-08-13T20:00:00"));
 		expect(state).toEqual({
 			phase: "before",
 			current: [],
@@ -360,22 +376,8 @@ describe("liveState", () => {
 	});
 });
 
-describe("festival mode", () => {
-	it("opens when the gates do and closes after the last night", () => {
-		expect(isFestivalMode(at("2026-08-13T13:59:00"))).toBe(false);
-		expect(isFestivalMode(at("2026-08-13T14:00:00"))).toBe(true);
-		// Saturday night's programme ends at 05:00 on Sunday
-		expect(isFestivalMode(at("2026-08-16T04:00:00"))).toBe(true);
-		expect(isFestivalMode(at("2026-08-16T06:00:00"))).toBe(false);
-	});
-
-	it("closes an hour past the last possible set", () => {
-		expect(FESTIVAL_MODE.end).toBe(at("2026-08-16T06:00:00"));
-	});
-});
-
 describe("progress helpers", () => {
-	const [thursday] = buildSchedule([
+	const [thursday] = schedule([
 		artist("Act", [{ day: "do", start: "20:00", end: "21:00", stage: "M" }]),
 	]);
 	const slot = thursday.slots[0];

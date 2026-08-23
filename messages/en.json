@@ -1,8 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "meta_title": "Grundstock Festival 2026 · August 13–16, Vilswörth",
-  "meta_description": "Three days of festival from friends for friends near Regensburg. Live music, workshops and food included. August 13–16, 2026 in Vilswörth.",
-
+  "meta_title": "Grundstock Festival {year} · {dates}, Vilswörth",
+  "meta_description": "Three days of festival from friends for friends near Regensburg. Live music, workshops and food included. {dates} {year} in Vilswörth.",
   "nav_lineup": "Lineup",
   "nav_workshops": "Workshops",
   "nav_helfen": "Get involved",
@@ -13,18 +12,22 @@
   "menu_home": "Home",
   "skip_to_content": "Skip to content",
   "dialog_close": "Close",
-
-  "hero_date_location": "August 13–16, 2026 · Vilswörth",
+  "hero_date_location": "{dates} · Vilswörth",
   "hero_tagline": "A festival from friends for friends. From Regensburg, for Regensburg.",
   "cta_tickets": "Get tickets",
   "cta_helfen": "Get involved",
-
   "countdown_days": "days",
   "countdown_hours": "hours",
   "countdown_minutes": "minutes",
   "countdown_seconds": "seconds",
   "countdown_live": "It's happening!",
-
+  "page_title": "{page} — Grundstock Festival {year}",
+  "festival_over_kicker": "Until next time",
+  "festival_over_title": "Grundstock {year} is over",
+  "festival_over_text": "It was wonderful. Thank you for being part of it.",
+  "festival_over_next": "The date for the next Grundstock isn't set yet — as soon as it is, the countdown runs here.",
+  "festival_tba_title": "More soon",
+  "festival_tba_text": "As soon as the next Grundstock is set, you'll find everything about it here.",
   "nav_timetable": "Timetable",
   "timetable_kicker": "Live timetable",
   "timetable_title": "Who plays when",
@@ -56,15 +59,12 @@
   "timetable_before_text": "The first set starts on {day} at {time}.",
   "timetable_break_title": "Short break",
   "timetable_break_text": "Catch your breath — back on at {time}.",
-  "timetable_after_title": "That was Grundstock 2026",
+  "timetable_after_title": "That was Grundstock {year}",
   "timetable_after_text": "Thank you to everyone who danced, cooked, built and cleaned up with us. See you next time!",
-
   "intro_kicker": "What is Grundstock?",
   "intro_title": "Homemade, honest, together",
   "intro_text": "Grundstock is three days of music, workshops and togetherness in the countryside near Vilswörth, organised by the non-profit association Neues Brett from Regensburg. No commerce, no sponsor walls. Everything here exists because people care. And since everyone pitches in, the whole thing works like a scout camp: build together, celebrate together, clean up together!",
-
   "genres_more": "and more",
-
   "lineup_kicker": "Lineup",
   "lineup_title": "Familiar faces, new sounds",
   "lineup_text": "This year old friends meet fresh acts: hip-hop, indie, Latin, DnB, rock, disco and techno. The full lineup lands here as soon as it's set.",
@@ -74,7 +74,7 @@
   "lineup_featured_label": "Featured artists",
   "lineup_cta": "See the lineup",
   "artist_back": "Back to lineup",
-  "artist_meta_description": "{name} live at Grundstock Festival 2026, August 13–16 in Vilswörth near Regensburg.",
+  "artist_meta_description": "{name} live at Grundstock Festival {year} in Vilswörth near Regensburg.",
   "workshops_soon": "The workshop programme lands here as soon as it's set.",
   "state_loading": "Loading …",
   "state_error_title": "Something went wrong.",
@@ -98,7 +98,6 @@
   "verein_kontakt_text": "Questions, ideas, want to join? Write us:",
   "anreise_intro": "The festival takes place in Vilswörth near Rieden, in the countryside west of Regensburg. There are four ways to reach us. The most relaxed one is the shuttle.",
   "anreise_map_cta": "View on the map",
-
   "anreise_option_label": "Option",
   "anreise_shuttle_title": "By shuttle bus",
   "anreise_shuttle_text": "Take our festival shuttle from {stop} straight to the festival grounds. A ticket costs €{price} and is available in the same shop as the festival tickets.",
@@ -119,14 +118,12 @@
   "anreise_auto_shuttle_cta": "Parking shuttle info",
   "anreise_warning_title": "Important: no footpath to the grounds",
   "anreise_warning_text": "There is no footpath to the festival grounds from Vilshofen or from the car parks. Walking along the main road is not permitted, and we were not granted any other pedestrian access. So please plan firmly with the bus or the shuttle!",
-
   "abreise_title": "Departure",
   "abreise_text": "All four options work in reverse too. Just check the relevant timetables.",
   "abreise_night_title": "Leaving on foot at night",
   "abreise_night_text": "If you want to leave the grounds on foot at night, outside service hours, you can take the emergency route across the Vils towards {route}.",
   "abreise_abbau_title": "Sunday: teardown",
   "abreise_abbau_text": "We start taking everything down on Sunday morning and every helping hand is very welcome! If you have the time and the energy, please stick around. Whoever works hard and lasts long enough might even make it to the legendary afterparty.",
-
   "anreise_camping_title": "Camping",
   "anreise_camping_text": "Everyone sleeps in tents right on the grounds. So pack your tent, sleeping bag and mat! More details to follow.",
   "infos_kicker": "FAQ",
@@ -138,12 +135,10 @@
   "faq_cat_essen": "Food & drinks",
   "faq_cat_anreise": "Getting there & camping",
   "faq_cat_tickets": "Tickets",
-
   "workshops_kicker": "Workshops",
   "workshops_title": "Try things, hang out, get inspired",
   "workshops_text": "Mornings and daytimes are full of workshops of all kinds. This year with a new workshop tent, new artists and the people you already love. Just drop by and join in!",
   "workshops_cta": "See the workshops",
-
   "inclusive_kicker": "All included",
   "inclusive_title": "Food included, drinks cheap",
   "inclusive_food_title": "Three meals a day",
@@ -154,7 +149,6 @@
   "inclusive_drinks_text": "Drinks at fair prices, from soda to espresso martini. You really don't need much money here.",
   "inclusive_dishes_title": "Bring a plate & cutlery!",
   "inclusive_dishes_text": "For the environment's sake there's no disposable tableware again this year. So pack a deep plate, a fork and a spoon! Washing up happens at the newly built washing stations. It's going to be delicious!",
-
   "helfen_kicker": "Join in",
   "helfen_title": "The festival that only works with you",
   "helfen_text": "Grundstock is a family affair and it only works if everyone pitches in. That's why everyone takes exactly one shift: kitchen, bar, cleanup or whatever suits you.",
@@ -170,7 +164,6 @@
   "mittel_dialog_cta": "Send a short email",
   "mittel_mail_subject": "Mittelgschaftler Grundstock 2026",
   "helfen_donate_text": "You can also support the association with a donation: {accountHolder}, IBAN {iban}. For a donation receipt (from €100) write to {email}.",
-
   "location_kicker": "Getting there",
   "location_title": "Vilswörth near Rieden",
   "location_text": "The festival takes place on a meadow near Vilswörth (municipality of Rieden), in the middle of the Upper Palatinate countryside.",
@@ -182,25 +175,21 @@
   "day_fr": "Friday",
   "day_sa": "Saturday",
   "day_so": "Sunday",
-
   "story_kicker": "Our story",
   "story_title": "How it all began",
   "story_text": "What started as a small gathering of friends has grown into a festival full of music, art and community. The idea is still the same: homemade, honest and with heart. By people from Regensburg, for everyone who wants to belong.",
-  "recap_title": "Recap 2025",
+  "recap_title": "Recap {year}",
   "recap_play": "Play video",
   "recap_consent": "Playing loads the video from YouTube. Data may be transferred to Google.",
-
   "tickets_kicker": "Tickets",
   "tickets_title": "Get your ticket",
   "tickets_text": "Food is included and drinks are cheap. All you need is your ticket and a good mood! Mittelgschaftler even pay only half.",
   "tickets_note_age": "18+ only",
   "tickets_note_terms": "By buying a ticket you accept our",
-
   "awareness_kicker": "Awareness",
   "awareness_title": "Respect is non-negotiable",
   "awareness_text": "Grundstock should be a place where everyone feels comfortable, safe and welcome. No matter who you are or who you love. There is no room for discrimination or abusive behaviour here. And if you ever feel uncomfortable, our awareness team is there for you.",
   "awareness_more": "Our festival policy",
-
   "faq_kicker": "Good to know",
   "faq_title": "Frequent questions",
   "faq_q1": "Do I really have to take a shift?",
@@ -213,18 +202,15 @@
   "faq_a4": "18+ only, and don't forget your ID! There is one exception: minors accompanied by their parents may join the festival. The responsibility then lies with the parents.",
   "faq_q5": "What is a Mittelgschaftler?",
   "faq_a5": "Anyone who takes a longer shift (8 hours) and a bit more responsibility pays only half the ticket price. Anyone can apply.",
-
   "footer_credit": "Grundstock is a project by Neues Brett e.V., a registered non-profit.",
   "footer_impressum": "Legal notice",
   "footer_datenschutz": "Privacy policy",
   "footer_policy": "Festival policy",
   "footer_ticketbedingungen": "Ticket terms",
   "footer_kontakt": "Contact",
-
   "notfound_title": "Nothing but darkness here.",
   "notfound_text": "This page doesn't exist (anymore). Back into the light?",
   "notfound_cta": "Back to home",
-
   "legal_impressum_title": "Impressum",
   "legal_datenschutz_title": "Privacy policy",
   "legal_policy_title": "Festival policy",

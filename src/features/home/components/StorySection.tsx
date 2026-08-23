@@ -1,16 +1,27 @@
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { site } from "#/lib/site";
+import { editionListQueryOptions } from "#/features/festival/api/editions";
+import { latestAftermovie } from "#/features/festival/lib/festival";
+import { sanityCropUrl } from "#/lib/sanity";
 import { m } from "#/paraglide/messages";
 import { Section } from "./Section";
 
-function RecapVideo() {
+/**
+ * The most recent aftermovie there is.
+ *
+ * Used to be a hardcoded YouTube id for 2025. It now follows the CMS, so the year
+ * after a festival the new aftermovie simply appears here — and the poster comes
+ * from the edition too, falling back to the static image for the years that have
+ * none.
+ */
+function RecapVideo({ year, videoId, poster }: RecapProps) {
 	const [playing, setPlaying] = useState(false);
 
 	if (playing) {
 		return (
 			<iframe
-				src={`https://www.youtube-nocookie.com/embed/${site.recapYoutubeId}?autoplay=1`}
-				title={m.recap_title()}
+				src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
+				title={m.recap_title({ year })}
 				allow="autoplay; encrypted-media; fullscreen"
 				allowFullScreen
 				className="aspect-video w-full rounded-xs border border-border"
@@ -25,8 +36,8 @@ function RecapVideo() {
 			className="group relative block aspect-video w-full cursor-pointer overflow-hidden rounded-xs border border-border p-0 text-left"
 		>
 			<img
-				src="/recap-poster.jpg"
-				alt={m.recap_title()}
+				src={poster ?? "/recap-poster.jpg"}
+				alt={m.recap_title({ year })}
 				loading="lazy"
 				className="absolute inset-0 h-full w-full object-cover opacity-60 transition-opacity group-hover:opacity-80"
 			/>
@@ -49,19 +60,37 @@ function RecapVideo() {
 	);
 }
 
+type RecapProps = { year: number; videoId: string; poster: string | null };
+
 export function StorySection() {
+	// useQuery, not the suspense variant: the story is copy and must render even
+	// if the editions never arrive — then there is simply no video beside it
+	const { data: editions } = useQuery(editionListQueryOptions);
+	const recap = editions ? latestAftermovie(editions) : null;
+	const videoId = recap?.aftermovieYoutubeId;
+
 	return (
 		<Section kicker={m.story_kicker()} title={m.story_title()}>
 			<div className="grid items-start gap-8 lg:grid-cols-2">
 				<p className="m-0 max-w-2xl text-lg leading-relaxed text-moon-dim">
 					{m.story_text()}
 				</p>
-				<div>
-					<h3 className="mt-0 mb-3 font-display text-xl text-moon">
-						{m.recap_title()}
-					</h3>
-					<RecapVideo />
-				</div>
+				{recap && videoId && (
+					<div>
+						<h3 className="mt-0 mb-3 font-display text-xl text-moon">
+							{m.recap_title({ year: recap.year })}
+						</h3>
+						<RecapVideo
+							year={recap.year}
+							videoId={videoId}
+							poster={
+								recap.aftermoviePoster
+									? sanityCropUrl(recap.aftermoviePoster, 960, 540)
+									: null
+							}
+						/>
+					</div>
+				)}
 			</div>
 		</Section>
 	);
