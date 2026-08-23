@@ -21,7 +21,6 @@ export function FestivalOver({ edition }: { edition: Edition }) {
 				{m.festival_over_title({ year: edition.year })}
 			</p>
 			<p className="m-0 text-balance text-moon-dim">{m.festival_over_text()}</p>
-			<p className="m-0 text-sm text-moon-dim/80">{m.festival_over_next()}</p>
 		</div>
 	);
 }
