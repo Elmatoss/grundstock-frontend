@@ -23,7 +23,10 @@ import { Route as FestivalPolicyRouteImport } from './routes/festival-policy'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as AnreiseRouteImport } from './routes/anreise'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArchivIndexRouteImport } from './routes/archiv.index'
 import { Route as ArtistsSlugRouteImport } from './routes/artists.$slug'
+import { Route as ArchivYearIndexRouteImport } from './routes/archiv.$year.index'
+import { Route as ArchivYearArtistsSlugRouteImport } from './routes/archiv.$year.artists.$slug'
 
 const WorkshopsRoute = WorkshopsRouteImport.update({
   id: '/workshops',
@@ -95,9 +98,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArchivIndexRoute = ArchivIndexRouteImport.update({
+  id: '/archiv/',
+  path: '/archiv/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArtistsSlugRoute = ArtistsSlugRouteImport.update({
   id: '/artists/$slug',
   path: '/artists/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArchivYearIndexRoute = ArchivYearIndexRouteImport.update({
+  id: '/archiv/$year/',
+  path: '/archiv/$year/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArchivYearArtistsSlugRoute = ArchivYearArtistsSlugRouteImport.update({
+  id: '/archiv/$year/artists/$slug',
+  path: '/archiv/$year/artists/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -117,6 +135,9 @@ export interface FileRoutesByFullPath {
   '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
   '/artists/$slug': typeof ArtistsSlugRoute
+  '/archiv/': typeof ArchivIndexRoute
+  '/archiv/$year/': typeof ArchivYearIndexRoute
+  '/archiv/$year/artists/$slug': typeof ArchivYearArtistsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -134,6 +155,9 @@ export interface FileRoutesByTo {
   '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
   '/artists/$slug': typeof ArtistsSlugRoute
+  '/archiv': typeof ArchivIndexRoute
+  '/archiv/$year': typeof ArchivYearIndexRoute
+  '/archiv/$year/artists/$slug': typeof ArchivYearArtistsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -152,6 +176,9 @@ export interface FileRoutesById {
   '/verein': typeof VereinRoute
   '/workshops': typeof WorkshopsRoute
   '/artists/$slug': typeof ArtistsSlugRoute
+  '/archiv/': typeof ArchivIndexRoute
+  '/archiv/$year/': typeof ArchivYearIndexRoute
+  '/archiv/$year/artists/$slug': typeof ArchivYearArtistsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -171,6 +198,9 @@ export interface FileRouteTypes {
     | '/verein'
     | '/workshops'
     | '/artists/$slug'
+    | '/archiv/'
+    | '/archiv/$year/'
+    | '/archiv/$year/artists/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -188,6 +218,9 @@ export interface FileRouteTypes {
     | '/verein'
     | '/workshops'
     | '/artists/$slug'
+    | '/archiv'
+    | '/archiv/$year'
+    | '/archiv/$year/artists/$slug'
   id:
     | '__root__'
     | '/'
@@ -205,6 +238,9 @@ export interface FileRouteTypes {
     | '/verein'
     | '/workshops'
     | '/artists/$slug'
+    | '/archiv/'
+    | '/archiv/$year/'
+    | '/archiv/$year/artists/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -223,6 +259,9 @@ export interface RootRouteChildren {
   VereinRoute: typeof VereinRoute
   WorkshopsRoute: typeof WorkshopsRoute
   ArtistsSlugRoute: typeof ArtistsSlugRoute
+  ArchivIndexRoute: typeof ArchivIndexRoute
+  ArchivYearIndexRoute: typeof ArchivYearIndexRoute
+  ArchivYearArtistsSlugRoute: typeof ArchivYearArtistsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -325,11 +364,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/archiv/': {
+      id: '/archiv/'
+      path: '/archiv'
+      fullPath: '/archiv/'
+      preLoaderRoute: typeof ArchivIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/artists/$slug': {
       id: '/artists/$slug'
       path: '/artists/$slug'
       fullPath: '/artists/$slug'
       preLoaderRoute: typeof ArtistsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/archiv/$year/': {
+      id: '/archiv/$year/'
+      path: '/archiv/$year'
+      fullPath: '/archiv/$year/'
+      preLoaderRoute: typeof ArchivYearIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/archiv/$year/artists/$slug': {
+      id: '/archiv/$year/artists/$slug'
+      path: '/archiv/$year/artists/$slug'
+      fullPath: '/archiv/$year/artists/$slug'
+      preLoaderRoute: typeof ArchivYearArtistsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -351,6 +411,9 @@ const rootRouteChildren: RootRouteChildren = {
   VereinRoute: VereinRoute,
   WorkshopsRoute: WorkshopsRoute,
   ArtistsSlugRoute: ArtistsSlugRoute,
+  ArchivIndexRoute: ArchivIndexRoute,
+  ArchivYearIndexRoute: ArchivYearIndexRoute,
+  ArchivYearArtistsSlugRoute: ArchivYearArtistsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

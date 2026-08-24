@@ -2,9 +2,11 @@ import { Link } from "@tanstack/react-router";
 import { LanguageSwitcher } from "#/components/LanguageSwitcher";
 import { LogoMark } from "#/components/LogoMark";
 import { SiteMenu } from "#/components/SiteMenu";
+import { useFestival } from "#/features/festival/hooks/useFestival";
 import { m } from "#/paraglide/messages";
 
 export default function Header() {
+	const { featured } = useFestival();
 	const anchors = [["helfen", m.nav_helfen()]] as const;
 
 	return (
@@ -19,7 +21,7 @@ export default function Header() {
 				>
 					<LogoMark className="h-6" />
 					<span className="wordmark text-base sm:text-lg">
-						Grundstock <span className="text-glow">2026</span>
+						Grundstock <span className="text-glow">{featured?.year ?? ""}</span>
 					</span>
 				</Link>
 				<div className="hidden items-center gap-6 md:flex">

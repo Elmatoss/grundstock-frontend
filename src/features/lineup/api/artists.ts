@@ -1,4 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
+import { z } from "zod";
 import { sanityFetch } from "#/lib/sanity";
 import { zArtistDetail, zArtistList } from "../types";
 
@@ -38,6 +39,27 @@ export const artistDetailQueryOptions = (year: number, slug: string) =>
 			);
 			// null = unknown slug for this year; the route loader turns this into a 404
 			return result === null ? null : zArtistDetail.parse(result);
+		},
+		staleTime: 5 * 60 * 1000,
+	});
+
+/**
+ * Which editions contain an artist with this slug, newest first.
+ *
+ * Only used to rescue a URL: `/artists/<slug>` keeps working after that act has
+ * moved into the archive, by redirecting to the year it belongs to. Every link
+ * shared while a festival was on therefore stays alive indefinitely.
+ */
+export const artistEditionYearsQueryOptions = (slug: string) =>
+	queryOptions({
+		queryKey: ["artist", slug, "years"],
+		queryFn: async () => {
+			const result = await sanityFetch(
+				`*[_type == "artist" && slug.current == $slug && defined(edition)]
+					| order(edition->year desc).edition->year`,
+				{ slug },
+			);
+			return z.array(z.number().int()).catch([]).parse(result);
 		},
 		staleTime: 5 * 60 * 1000,
 	});

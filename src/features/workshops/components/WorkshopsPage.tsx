@@ -3,9 +3,9 @@ import { useFestival } from "#/features/festival/hooks/useFestival";
 import { programmeDate } from "#/features/festival/lib/festival";
 import type { Edition } from "#/features/festival/types";
 import { dayLabel } from "#/features/timetable/lib/format";
-import { localized } from "#/lib/sanity";
 import { m } from "#/paraglide/messages";
 import { workshopListQueryOptions } from "../api/workshops";
+import { WorkshopCard } from "./WorkshopCard";
 
 export function WorkshopsPage() {
 	const { featured } = useFestival();
@@ -47,30 +47,12 @@ function Workshops({ edition }: { edition: Edition }) {
 					? programmeDate(edition, workshop.dayIndex)
 					: null;
 				return (
-					<article
+					<WorkshopCard
 						key={workshop.slug}
-						className="inner-edge rounded-xs border border-border bg-night-soft/50 p-5"
-					>
-						<h2 className="m-0 font-display text-lg text-moon">
-							{workshop.title}
-						</h2>
-						<p className="mt-1 mb-0 text-sm text-glow-soft">
-							{[
-								date ? dayLabel(date) : null,
-								// no end time is published — workshops run until they run out
-								workshop.start
-									? m.timetable_open_start({ time: workshop.start })
-									: null,
-							]
-								.filter(Boolean)
-								.join(" · ")}
-						</p>
-						{workshop.description && (
-							<p className="mt-3 mb-0 text-sm text-moon-dim">
-								{localized(workshop.description)}
-							</p>
-						)}
-					</article>
+						workshop={workshop}
+						dayLabel={date ? dayLabel(date) : null}
+						headingLevel="h2"
+					/>
 				);
 			})}
 		</div>

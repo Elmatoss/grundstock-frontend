@@ -1,6 +1,6 @@
 # Multi-year plan: editions, archive, and what comes after
 
-Status: Phases 0 and 1 complete, 2026-08-23 (the week after Grundstock 2026).
+Status: Phases 0–2 complete, 2026-08-23 (the week after Grundstock 2026).
 
 ## Why
 
@@ -183,33 +183,74 @@ therefore only for a CMS with no editions at all.
   oversight; the old `day` was optional, and the programme does list workshops
   before their slot is fixed. Performances still require one.
 
-## Phase 2 — The archive
+## Phase 2 — The archive — **done**
 
-**Step 9 — `/archiv` and `/archiv/$year`.** *(L)*
-New feature `src/features/archive/`. The index is a grid of year cards (dates,
-aftermovie poster, act count). The year page is one scrolling overview:
-header with dates + `recap` text, aftermovie, lineup grid (reusing
-`ArtistCard`), workshops list, and the running order (reusing `TimetableDay`
-with the live layer switched off — a past timetable has no "now"). `$year` is
-validated as a 4-digit number; an unknown or not-yet-ended year 404s.
+**Step 9 — `/archiv` and `/archiv/$year`.** New feature `src/features/archive/`.
+The index lists ended editions with a poster (or the year set large as a
+placeholder) and, instead of counts, **which sections the page actually has** —
+"1 Acts" would need plural variants in two languages, and knowing an
+aftermovie-only year *is* aftermovie-only is the more useful thing before
+clicking. `editionSummaryListQueryOptions` gets the whole listing in one request.
 
-**Step 10 — Memories gallery.** *(M)*
-Consent-gated (`consentChecked == true`) masonry of images and clips with a
-lightbox, on the year page. Images through the existing `sanityImageProps`
-DPR-graded helper; clips as click-to-load YouTube embeds, same
-`youtube-nocookie` + consent-notice pattern as `StorySection`.
+The reachability rule matters and differs from the index rule:
 
-**Step 11 — Archive artist pages and legacy URLs.** *(M)*
-`/archiv/$year/artists/$slug` reuses `ArtistDetailPage`. `/artists/$slug` keeps
-working for past acts: when the slug is not in the current edition, look it up
-across editions and `throw redirect` to the archive URL — every link shared
-during 2026 stays alive. Extend the sitemap accordingly.
+- **`/archiv` lists** ended editions *except* the featured one, so nothing inside
+  the site points at a second copy of the live lineup.
+- **`/archiv/<year>` serves** *any* ended edition, featured included. A link to
+  `/archiv/2026` has to work the day the festival ends, not only once a new year
+  is announced — and Step 11's redirect needs a valid target. While that edition
+  is still featured the page is `noindex`, so it does not compete with `/lineup`.
 
-**Step 12 — Navigation and i18n.** *(S)*
-*Archiv* into `SiteMenu` and the footer. New keys in **both** `messages/de.json`
-and `messages/en.json` (`archive_*`); the
-hardcoded `Grundstock 2026` strings in `SiteMenu` and the `seo()` titles become
-the current edition's year.
+A year still to come 404s rather than leaking an unannounced lineup through a
+guessed URL.
+
+**Step 10 — Memories gallery.** Consent-gated **in GROQ**, not in the component:
+an unapproved photo is never sent to a browser at all, not even to be hidden.
+CSS-columns masonry so portrait and landscape photos keep their own aspect ratio,
+one tile shape for images and clips alike (a clip's tile is its poster), and a
+dialog to open one large. Nothing reaches YouTube until somebody presses play.
+
+**Step 11 — Archive artist pages and legacy URLs.**
+`/archiv/$year/artists/$slug` reuses `ArtistDetailPage`. `/artists/<slug>` now
+rescues itself: if the slug is not in the featured edition, `pickArchiveYear`
+finds the most recent *archived* year that has it and redirects there, so every
+link shared during a festival stays alive. Unannounced editions are excluded by
+construction, since `archive` only ever holds ended ones. Six unit tests cover
+that function, because the branch is unreachable until a 2027 exists.
+
+**Step 12 — Navigation and i18n.** *Archiv* added to the overlay menu and the
+footer — matching where `verein` and `festival-policy` already live, since the
+desktop bar is at capacity. 13 new message keys in both locales. The header's
+hardcoded `Grundstock 2026` (a Phase 1 miss) and the `— Grundstock Festival 2026`
+titles on `/verein`, `/anreise` and `/infos` now come from the edition.
+
+Verified in **workerd against the live dataset**: 14 routes 200, bad and future
+years 404, `/archiv/2026` renders the full lineup with `Freitag · Berthold Auge ·
+00:00–01:15 · Schepperschuppen`, and all 20 page titles are year-driven. 113 tests.
+
+### Deviations
+
+- **No running-order rail on archive pages.** The timetable's whole design is
+  about what is on *now* — proportional rows, live states, scroll-to-now — and
+  stripped of that it is a long duplicate of the lineup. Set times moved onto the
+  archive's artist cards instead, which is the part people come back for. Adding
+  the rail later is a component-reuse job, not a rethink.
+- **`WorkshopCard` and `VideoEmbed` extracted** rather than duplicated;
+  `WorkshopCard` takes its heading level from the caller because it sits under an
+  `h1` on `/workshops` and under an `h2` in the archive.
+- **`selectFestivalMode` is now generic** in the edition type, so the archive
+  index gets its counts back instead of a bare `Edition`.
+- **`sitemap.xml` is still hand-maintained.** `/archiv` and `/archiv/2025` were
+  added; `/archiv/2026` deliberately was not, since it is `noindex` while
+  featured. This goes stale every year — see the checklist below, and consider a
+  generated sitemap route if it ever gets missed.
+
+### Known staleness, not fixed here
+
+The legal pages (`FestivalPolicy`, `Ticketbedingungen`) hardcode "Grundstock
+2026" in their German and English body text. That is legal wording, so it is a
+deliberate human edit rather than something to interpolate — but it *will* be
+wrong next year. It belongs in the new-year checklist.
 
 ## Phase 3 — Cleanup
 
@@ -223,10 +264,19 @@ frontend is deployed, since nothing reads `day` any more. Update `CLAUDE.md` and
 ## Phase 4 — Prove it
 
 **Step 14.** *(S)* Create a 2027 draft in the CMS and walk it: countdown
-restarts, `/lineup` shows the placeholder, 2026 appears under `/archiv`, old
-`/artists/*` links redirect. Write `docs/NEW-YEAR.md` — the checklist for
-opening an edition (create the document, add stages, add artists, update the
-five logistics values in `site.ts`, publish).
+restarts, 2026 moves out of the main pages and into `/archiv`, `/artists/<slug>`
+redirects into `/archiv/2026/artists/<slug>`. This is the first time the redirect
+branch and the archive-listing transition run for real.
+
+Then write `docs/NEW-YEAR.md` — the checklist for opening an edition:
+
+1. Create and publish the `festivalEdition` document (year, from, to, days).
+2. Add stages, then artists and workshops inside that year's folder.
+3. Update the five logistics values in `src/lib/site.ts` (ticket URL, helper-tool
+   URL, Mittelgschaftler mail, shuttle times, and re-check `site.genres` against
+   the new lineup — it is curated by hand and goes stale immediately).
+4. Update the year in the legal pages' body text.
+5. Add the previous year to `public/sitemap.xml`.
 
 ## Risks worth naming
 

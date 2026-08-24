@@ -12,13 +12,17 @@ export function editionPhase(edition: Edition, now: number): Phase {
 	return "past";
 }
 
-export type FestivalMode = {
+/**
+ * Generic in the edition type so callers that fetch a richer shape — the archive
+ * index adds per-year counts — get that shape back rather than a bare Edition.
+ */
+export type FestivalMode<T extends Edition = Edition> = {
 	/**
 	 * The next festival: not started, or running right now. Null once the last
 	 * edition has ended and no new one has been published — which is what makes
 	 * the countdown restart the moment a new year goes live in the CMS.
 	 */
-	upcoming: Edition | null;
+	upcoming: T | null;
 	/**
 	 * The edition the main pages are about — lineup, timetable, workshops, the
 	 * homepage. Normally `upcoming`; while no new year is announced it stays on the
@@ -26,11 +30,11 @@ export type FestivalMode = {
 	 * programme rather than a set of empty placeholders. Null only when the CMS
 	 * holds no editions at all.
 	 */
-	featured: Edition | null;
+	featured: T | null;
 	/** The featured edition has already happened: the site says thank you. */
 	isOver: boolean;
 	/** Ended editions other than the featured one, newest first — the archive. */
-	archive: Edition[];
+	archive: T[];
 };
 
 const byYearDesc = (a: Edition, b: Edition) => b.year - a.year;
@@ -51,12 +55,12 @@ const byStartAsc = (a: Edition, b: Edition) =>
  *  - The archive is therefore "ended, and not the one on display": 2026 only
  *    moves into it once a new year is published.
  */
-export function selectFestivalMode(
-	editions: Edition[],
+export function selectFestivalMode<T extends Edition>(
+	editions: T[],
 	now: number,
-): FestivalMode {
-	const ended: Edition[] = [];
-	const ahead: Edition[] = [];
+): FestivalMode<T> {
+	const ended: T[] = [];
+	const ahead: T[] = [];
 	for (const edition of editions) {
 		(editionPhase(edition, now) === "past" ? ended : ahead).push(edition);
 	}

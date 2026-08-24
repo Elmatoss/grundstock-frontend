@@ -13,6 +13,7 @@ const MENU_ITEMS = [
 	{ to: "/lineup", label: () => m.nav_lineup() },
 	{ to: "/timetable", label: () => m.nav_timetable() },
 	{ to: "/workshops", label: () => m.nav_workshops() },
+	{ to: "/archiv", label: () => m.nav_archive() },
 	{ to: "/anreise", label: () => m.nav_anreise() },
 	{ to: "/infos", label: () => m.nav_infos() },
 	{ to: "/verein", label: () => m.nav_verein() },

@@ -113,4 +113,36 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>https://grundstock-festival.de/archiv</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/archiv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/archiv"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/archiv"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/en/archiv</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/archiv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/archiv"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/archiv"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/archiv/2025</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/archiv/2025"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/archiv/2025"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/archiv/2025"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://grundstock-festival.de/en/archiv/2025</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://grundstock-festival.de/archiv/2025"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://grundstock-festival.de/en/archiv/2025"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grundstock-festival.de/archiv/2025"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
 </urlset>
