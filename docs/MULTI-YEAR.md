@@ -1,6 +1,6 @@
 # Multi-year plan: editions, archive, and what comes after
 
-Status: Phases 0–2 complete, 2026-08-23 (the week after Grundstock 2026).
+Status: Phases 0–3 complete, 2026-08-24 (the week after Grundstock 2026).
 
 ## Why
 
@@ -252,14 +252,21 @@ The legal pages (`FestivalPolicy`, `Ticketbedingungen`) hardcode "Grundstock
 deliberate human edit rather than something to interpolate — but it *will* be
 wrong next year. It belongs in the new-year checklist.
 
-## Phase 3 — Cleanup
+## Phase 3 — Cleanup — **done**
 
-**Step 13.** *(S)* `migrations/drop-day.ts` unsets the old `day` field in Sanity
-and removes it from the schema. This is now the *only* thing left in this phase —
-the frontend cleanup happened in Phase 1 — and it is safe as soon as the Phase 1
-frontend is deployed, since nothing reads `day` any more. Update `CLAUDE.md` and
-`docs/PLAN.md` (whose §"Singleton siteSettings" still describes
-`festivalStart`/`festivalEnd`) to the edition model.
+**Step 13.** `migrations/drop-day.ts` unset the old `day` on 40 performances and
+9 workshops, and the field is gone from both schemas. Run only after confirming
+the deployed frontend derives its weekdays from the edition — until then `day`
+was the rollback path.
+
+The migration refuses to clear a `day` that has no `dayIndex` beside it and
+reports it instead: if the two ever disagreed, unsetting `day` would destroy the
+only record of when that act played. Nothing hit that case. Verified afterwards
+against the published CDN — 0 documents carry `day`, all 49 carry `dayIndex`, and
+the live site was unaffected because it never read the old field.
+
+`docs/PLAN.md` is now marked historical with a pointer here; `CLAUDE.md` gained a
+"Festival editions" section describing the year-scoped model as a working rule.
 
 ## Phase 4 — Prove it
 

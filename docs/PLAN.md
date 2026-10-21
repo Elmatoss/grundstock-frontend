@@ -1,5 +1,13 @@
 # Grundstock 2026 — Website Plan
 
+> **Historical.** This is the plan the 2026 site was built from, kept as a record
+> of why things are the way they are. The CMS and data model have since moved to a
+> per-year **festival edition** model — see `docs/MULTI-YEAR.md`, which supersedes
+> the `siteSettings` singleton described in §"Sanity schema" below (dates, recap
+> video and aftermovie now live on the edition; ticket URL, shuttle times and
+> contact details are hardcoded in `src/lib/site.ts`), and replaces the
+> `do`/`fr`/`sa` programme day with a 1-based `dayIndex`.
+
 Promo website for the Grundstock Festival (13.–16. August 2026, Rieden/Vilswörth), run by the
 gemeinnütziger Verein **Neues Brett e.V.** — a festival from friends for friends, from Regensburg
 for Regensburg. Everyone pitches in (one mandatory shift), food is included, drinks are cheap,
@@ -219,15 +227,14 @@ jungle silhouettes, neon-eye hero photo, NB logo glow).
   *Neues Brett e.V. · vertreten durch den Vorstand (§ 26 BGB): Vinzenz Abt und Max Pindl ·
   Vereinsregister: VR 201964, Amtsgericht Regensburg · Kontakt: info@neues-brett.de.*
   Birth dates and home towns from the register stay **off** the website — only names are
-  required. Still missing: a **ladungsfähige Anschrift** (§ 5 DDG requires a street
-  address; a Postfach is not sufficient) — typical fix for a Verein: the Vereinssitz
-  address or a c/o address of a Vorstand member (§11).
+  required. **Ladungsfähige Anschrift** (§ 5 DDG requires a street address; a Postfach
+  is not sufficient): Bischof-Konrad-Str. 23, 93051 Regensburg.
   Include the § 36 VSBG note (nicht zur Verbraucherschlichtung bereit/verpflichtet); do
   **not** include the old EU-ODR-platform link — that platform was shut down in July 2025.
   **Datenschutz** covers: Hosting (Cloudflare Workers, Server-Logs), Cloudflare Web
   Analytics (cookieless, keine personenbezogenen Profile, kein Banner nötig), Sanity CDN
   als Bild-Host, YouTube-Embed als Zwei-Klick-Lösung, externe Links (Eventfrog, Airtable).
-  Verantwortlicher = der Verein (needs the same Anschrift). These are careful template
+  Verantwortlicher = der Verein (same Anschrift). These are careful template
   drafts, not legal advice — worth a quick read-over by someone from the Verein before
   launch.
 
