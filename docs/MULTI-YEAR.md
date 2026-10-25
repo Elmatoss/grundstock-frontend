@@ -306,35 +306,24 @@ Then write `docs/NEW-YEAR.md` — the checklist for opening an edition:
 
 # After the content refactor
 
-The four items below are a different class of work: they need a **backend, real
-user accounts and money handling**, none of which the current stack has — the
-site is a static-rendered Worker reading a public read-only CMS.
+Accounts, shift management, tickets and a merch shop are a different class of
+work: they need a **backend, real user accounts and money handling**, none of
+which this site has. The questions this section used to leave open are settled
+in [`grundstock-backend/docs/PLAN.md`](../../grundstock-backend/docs/PLAN.md)
+(2026-10-21):
 
-Before any of it starts, one question has to be settled: `../grundstock-backend`
-and `../grundstock-app` already exist in the workspace, alongside
-`../common-auth0-config`. Whether tickets and shifts belong *in this repo*, in
-that backend, or in a fresh service is the decision that shapes everything
-after, and I don't know what those two repos are for yet. Worth an hour of
-reading before committing to a shape.
+- **Where they live:** in a fresh NestJS API, `grundstock-backend`, at
+  `api.grundstock-festival.de`. The account and admin areas stay in this repo as
+  role-gated, client-rendered routes (`/konto`, `/admin`), so there's no second
+  frontend to host.
+- **Accounts:** built in-house (server-side sessions, magic links, passwords).
+  No Auth0 or other hosted auth.
+- **Tickets:** a go, with Mollie for payments, live before presale in January
+  2027. Eventfrog stays the fallback until the first real payout.
+- **Shift management:** replaces the Airtable Helfertool after presale opens.
+  Every ticket comes with one shift.
+- **Merch shop:** in the backend's backlog, after tickets and shifts.
 
-Suggested order, cheapest-and-most-useful first:
-
-1. **Accounts (`user management`).** Everything else depends on identity. Auth0
-   is already in the workspace's toolbox. Adds the first authenticated surface to
-   the site: `_protected` pathless layout routes with `beforeLoad` guards, per
-   the pattern in `CLAUDE.md`. Deliverable on its own: log in, see your profile.
-2. **Shift management.** The highest-value replacement — it currently lives in an
-   Airtable form (`site.helfertoolUrl`). Needs: shift definitions per edition
-   (fits the model built above), sign-up with capacity, and an organiser view.
-   Money-free, so no payment provider, no tax questions. Good second step.
-3. **Tickets.** The hard one: payment provider, VAT, refunds, QR codes,
-   check-in at the gate, GDPR on attendee data. Eventfrog currently absorbs all
-   of that. Only worth building if the fee saving genuinely beats the liability —
-   worth an explicit go/no-go rather than drifting into it.
-4. **Merch shop.** Independent of the rest and can ship any time after accounts;
-   inventory + shipping is the real work, not the storefront. Consider a hosted
-   store first and revisit.
-
-Each of these deserves its own plan document when it comes up. The point of the
-work above is that by then the content side is boring: a new year is a document,
-not a deploy.
+The backend owns people, money, tickets and shifts; Sanity keeps owning content,
+and the two link by edition year. That's why the content side above had to
+become boring first: a new year is a document, not a deploy.
