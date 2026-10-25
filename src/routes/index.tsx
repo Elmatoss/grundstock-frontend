@@ -87,11 +87,14 @@ export const Route = createFileRoute("/")({
 									name: "Neues Brett e.V.",
 									email: site.contactEmail,
 								},
-								offers: {
-									"@type": "Offer",
-									url: site.ticketUrl,
-									availability: "https://schema.org/InStock",
-								},
+								// An Offer needs somewhere to buy — none until presale opens
+								...(site.ticketUrl && {
+									offers: {
+										"@type": "Offer",
+										url: site.ticketUrl,
+										availability: "https://schema.org/InStock",
+									},
+								}),
 							}),
 						},
 					]

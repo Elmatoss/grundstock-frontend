@@ -5,11 +5,13 @@
 // See docs/MULTI-YEAR.md.
 export const site = {
 	baseUrl: "https://grundstock-festival.de",
-	ticketUrl:
-		"https://eventfrog.de/de/p/festivals/weitere-festivals/grundstock-2026-7440753604112179814.html",
-	helfertoolUrl:
-		"https://airtable.com/appo2wY2SKFOd6ZeL/pagGiBBo6j2Yfpfl2/form",
-	mittelgschaftlerEmail: "grundstock2026@neues-brett.de",
+	// Null until 2027's presale and shift sign-up exist — the in-house shop and
+	// shift picker are due in January (grundstock-backend/docs/PLAN.md). Every
+	// link to one of these renders "Infos folgen bald" instead, and the short
+	// URLs /tickets and /helfen land on the homepage section that says so.
+	ticketUrl: null as string | null,
+	helfertoolUrl: null as string | null,
+	mittelgschaftlerEmail: null as string | null,
 	contactEmail: "info@neues-brett.de",
 	instagramUrl: "https://www.instagram.com/grundstock.neuesbrett",
 	instagramHandle: "grundstock.neuesbrett",
@@ -22,7 +24,6 @@ export const site = {
 		// "Vilswörth Rieden" text search only landed on the village.
 		mapsUrl:
 			"https://www.google.com/maps/search/?api=1&query=49.291944,11.945389",
-		shuttlePriceEur: 5,
 		shuttleStop: "Regensburg Hbf, Flixbus-Haltestelle",
 		busLines: "454 & 451",
 		busStop: "Vilswörth",
@@ -45,15 +46,16 @@ export const site = {
 	cfBeaconToken: "2f403d1780b94f6aaa8a92c2c27531a8",
 } as const;
 
-export const shuttles = [
-	{ direction: "hin", day: "Do", times: ["13:00", "15:30", "18:00"] },
-	{ direction: "hin", day: "Fr", times: ["10:00", "12:00", "14:00"] },
-	{
-		direction: "zurueck",
-		day: "So",
-		times: ["10:00", "12:00", "15:00", "17:00"],
-	},
-] as const;
+type Shuttle = {
+	direction: "hin" | "zurueck";
+	day: "Do" | "Fr" | "So";
+	times: readonly string[];
+};
+
+// Empty until 2027's departures are set; the shuttle tables show "Infos folgen
+// bald" meanwhile. 2026 ran Do 13:00 · 15:30 · 18:00, Fr 10:00 · 12:00 · 14:00
+// out and So 10:00 · 12:00 · 15:00 · 17:00 back, at 5 € a ticket.
+export const shuttles: readonly Shuttle[] = [];
 
 // Curated from the genres actually tagged on artists in Sanity — a vibe strip,
 // not an index, so near-duplicates are collapsed (Indie covers Indie Pop; House

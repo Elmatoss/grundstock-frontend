@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { LogoMark } from "#/components/LogoMark";
 import { useFestival } from "#/features/festival/hooks/useFestival";
+import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
 
@@ -140,8 +141,9 @@ export function SiteMenu() {
 					open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
 				}`}
 			>
-				{/* see Hero: no ticket link to a festival that is over */}
-				{!isOver && (
+				{/* see Hero: no ticket link to a festival that is over or not on sale
+				    yet — the menu skips the placeholder, the hero already shows it */}
+				{!isOver && site.ticketUrl && (
 					<a
 						href={localizeHref("/tickets")}
 						target="_blank"

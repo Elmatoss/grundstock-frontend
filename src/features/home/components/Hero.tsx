@@ -1,6 +1,8 @@
+import { ComingSoon } from "#/components/ComingSoon";
 import { useFestival } from "#/features/festival/hooks/useFestival";
 import { dateRangeLabel } from "#/features/festival/lib/festival";
 import { FestivalLive } from "#/features/timetable/components/FestivalLive";
+import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
 
@@ -39,17 +41,20 @@ export function Hero({ previewNow }: { previewNow?: number | null }) {
 					{/* No ticket link once the festival is over: it points at an Eventfrog
 					    event that has been and gone. Plain anchor via the /tickets proxy,
 					    because the Worker request count is the ticket-conversion metric
-					    (docs/PLAN.md §8) */}
-					{!isOver && (
-						<a
-							href={localizeHref("/tickets")}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="btn btn-primary btn-lg no-underline"
-						>
-							{m.cta_tickets()}
-						</a>
-					)}
+					    (docs/PLAN.md §8). Announced but not on sale yet: a placeholder. */}
+					{!isOver &&
+						(site.ticketUrl ? (
+							<a
+								href={localizeHref("/tickets")}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="btn btn-primary btn-lg no-underline"
+							>
+								{m.cta_tickets()}
+							</a>
+						) : (
+							<ComingSoon label={m.tickets_coming_soon()} />
+						))}
 					<a href="#helfen" className="btn btn-secondary btn-lg no-underline">
 						{m.cta_helfen()}
 					</a>

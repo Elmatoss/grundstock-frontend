@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ComingSoon } from "#/components/ComingSoon";
 import { MittelgschaftlerDialog } from "#/components/MittelgschaftlerDialog";
 import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
@@ -47,21 +48,30 @@ export function VereinPage() {
 					{m.verein_mitmachen_title()}
 				</h2>
 				<p className="mt-3 mb-0 text-moon-dim">{m.verein_mitmachen_text()}</p>
-				<div className="mt-5 flex flex-wrap gap-3">
-					<a
-						href={localizeHref("/helfen")}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="btn btn-primary no-underline"
-					>
-						{m.verein_mitmachen_schicht()}
-					</a>
-					<MittelgschaftlerDialog>
-						<button type="button" className="btn btn-secondary">
-							{m.verein_mitmachen_mittel()}
-						</button>
-					</MittelgschaftlerDialog>
-				</div>
+				{/* One placeholder for both, not two identical badges side by side */}
+				{site.helfertoolUrl || site.mittelgschaftlerEmail ? (
+					<div className="mt-5 flex flex-wrap gap-3">
+						{site.helfertoolUrl && (
+							<a
+								href={localizeHref("/helfen")}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="btn btn-primary no-underline"
+							>
+								{m.verein_mitmachen_schicht()}
+							</a>
+						)}
+						{site.mittelgschaftlerEmail && (
+							<MittelgschaftlerDialog email={site.mittelgschaftlerEmail}>
+								<button type="button" className="btn btn-secondary">
+									{m.verein_mitmachen_mittel()}
+								</button>
+							</MittelgschaftlerDialog>
+						)}
+					</div>
+				) : (
+					<ComingSoon className="mt-5" />
+				)}
 			</section>
 
 			<section id="spenden" className="mt-12 max-w-2xl scroll-mt-24">

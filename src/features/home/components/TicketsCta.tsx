@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
+import { ComingSoon } from "#/components/ComingSoon";
+import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
 
 export function TicketsCta() {
 	return (
-		<section className="page-wrap py-16 sm:py-20">
+		// `id` is where /tickets lands while there is no shop to send it to
+		<section id="tickets" className="page-wrap scroll-mt-24 py-16 sm:py-20">
 			{/* The page's primary conversion, so it's the one panel that gets lit.
 			    .inner-glow puts the light source inside the card (see styles.css)
 			    rather than hanging a halo off its outside edge. */}
@@ -18,14 +21,18 @@ export function TicketsCta() {
 				<p className="mx-auto mt-4 mb-0 max-w-xl text-moon-dim">
 					{m.tickets_text()}
 				</p>
-				<a
-					href={localizeHref("/tickets")}
-					target="_blank"
-					rel="noopener noreferrer"
-					className="mt-6 btn btn-primary btn-lg no-underline"
-				>
-					{m.cta_tickets()}
-				</a>
+				{site.ticketUrl ? (
+					<a
+						href={localizeHref("/tickets")}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="mt-6 btn btn-primary btn-lg no-underline"
+					>
+						{m.cta_tickets()}
+					</a>
+				) : (
+					<ComingSoon className="mt-6" />
+				)}
 				<p className="mt-4 mb-0 text-xs tracking-widest text-moon-dim/85 uppercase">
 					{m.tickets_note_age()}
 				</p>
