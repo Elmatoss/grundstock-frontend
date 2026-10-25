@@ -1,20 +1,20 @@
-// Deliberately hardcoded — the CMS siteSettings singleton only carries the
-// announcement banner. Ticketing & shift management become part of the site
-// itself next year; these values change by deploy, not by CMS edit.
+// Deliberately hardcoded. The festival's dates, its recap text and its
+// aftermovie live in the CMS, because the countdown and the archive have to
+// follow them without a deploy — everything below changes once a year at most,
+// and a reviewed commit is a better place for an IBAN than a text field.
+// See docs/MULTI-YEAR.md.
 export const site = {
 	baseUrl: "https://grundstock-festival.de",
-	// Program starts Thursday; Sunday is teardown & departure only
-	festivalStart: "2026-08-13T14:00:00+02:00",
-	festivalEndDate: "2026-08-16",
-	ticketUrl:
-		"https://eventfrog.de/de/p/festivals/weitere-festivals/grundstock-2026-7440753604112179814.html",
-	helfertoolUrl:
-		"https://airtable.com/appo2wY2SKFOd6ZeL/pagGiBBo6j2Yfpfl2/form",
-	mittelgschaftlerEmail: "grundstock2026@neues-brett.de",
+	// Null until 2027's presale and shift sign-up exist — the in-house shop and
+	// shift picker are due in January (grundstock-backend/docs/PLAN.md). Every
+	// link to one of these renders "Infos folgen bald" instead, and the short
+	// URLs /tickets and /helfen land on the homepage section that says so.
+	ticketUrl: null as string | null,
+	helfertoolUrl: null as string | null,
+	mittelgschaftlerEmail: null as string | null,
 	contactEmail: "info@neues-brett.de",
 	instagramUrl: "https://www.instagram.com/grundstock.neuesbrett",
 	instagramHandle: "grundstock.neuesbrett",
-	recapYoutubeId: "sACZxjbCPls",
 	// Travel logistics (An-/Abreise PDF 2026). The three WhatsApp groups are the
 	// organisers' own channels for the bike tour, carpooling and the parking
 	// shuttle — each one belongs to exactly one travel option below.
@@ -24,7 +24,6 @@ export const site = {
 		// "Vilswörth Rieden" text search only landed on the village.
 		mapsUrl:
 			"https://www.google.com/maps/search/?api=1&query=49.291944,11.945389",
-		shuttlePriceEur: 5,
 		shuttleStop: "Regensburg Hbf, Flixbus-Haltestelle",
 		busLines: "454 & 451",
 		busStop: "Vilswörth",
@@ -47,15 +46,16 @@ export const site = {
 	cfBeaconToken: "2f403d1780b94f6aaa8a92c2c27531a8",
 } as const;
 
-export const shuttles = [
-	{ direction: "hin", day: "Do", times: ["13:00", "15:30", "18:00"] },
-	{ direction: "hin", day: "Fr", times: ["10:00", "12:00", "14:00"] },
-	{
-		direction: "zurueck",
-		day: "So",
-		times: ["10:00", "12:00", "15:00", "17:00"],
-	},
-] as const;
+type Shuttle = {
+	direction: "hin" | "zurueck";
+	day: "Do" | "Fr" | "So";
+	times: readonly string[];
+};
+
+// Empty until 2027's departures are set; the shuttle tables show "Infos folgen
+// bald" meanwhile. 2026 ran Do 13:00 · 15:30 · 18:00, Fr 10:00 · 12:00 · 14:00
+// out and So 10:00 · 12:00 · 15:00 · 17:00 back, at 5 € a ticket.
+export const shuttles: readonly Shuttle[] = [];
 
 // Curated from the genres actually tagged on artists in Sanity — a vibe strip,
 // not an index, so near-duplicates are collapsed (Indie covers Indie Pop; House

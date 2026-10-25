@@ -26,6 +26,16 @@ Verify changes with `pnpm typecheck && pnpm check`. A PostToolUse hook auto-form
 - Import via the `#/*` alias (→ `src/*`), not deep relative paths.
 - All user-facing strings through Paraglide: add keys to both `messages/en.json` and `messages/de.json`, consume via `m.key()` from `#/paraglide/messages`. No hardcoded UI strings in JSX.
 
+## Festival editions — content is year-scoped
+
+Every piece of programme content in the CMS belongs to a `festivalEdition` (a year): artists, stages, workshops, memories. Adding a year is a CMS document, not a deploy. Full rationale in `docs/MULTI-YEAR.md`.
+
+- `useFestival()` / `loadFestivalMode()` (`src/features/festival/`) answer "which festival is this page about": `upcoming`, `featured` (the upcoming edition, or — while none is announced — the last one that ended), `isOver`, `archive`.
+- Programme queries take a year and key hierarchically: `['edition', year, 'artists', 'list']`. Never query artists/workshops/memories without a year.
+- A programme day is `dayIndex` (1-based), resolved to a calendar date against the edition — never a stored weekday. Labels come from `Intl` via `dayLabel(date)`, so an edition running Fri–Sun needs no code change.
+- Dates, recap text and the aftermovie live on the edition. Ticket URL, shuttle times, contact addresses and the curated `genres` list stay in `src/lib/site.ts` — they change by deploy.
+- Ended editions live under `/archiv/<year>`. The archive *index* omits the featured edition, but `/archiv/<year>` serves any ended one so shared links never break.
+
 ## Data layer (TanStack Query + Router)
 
 - `queryOptions`/`mutationOptions` factories live in `src/features/<domain>/api/` — one definition shared by loaders and components. Never inline query keys or queryFns in components.

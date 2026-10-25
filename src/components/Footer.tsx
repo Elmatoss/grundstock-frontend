@@ -29,6 +29,9 @@ export default function Footer() {
 					<Link to="/infos" className="text-moon-dim hover:text-moon">
 						{m.nav_infos()}
 					</Link>
+					<Link to="/archiv" className="text-moon-dim hover:text-moon">
+						{m.nav_archive()}
+					</Link>
 					<Link to="/festival-policy" className="text-moon-dim hover:text-moon">
 						{m.footer_policy()}
 					</Link>

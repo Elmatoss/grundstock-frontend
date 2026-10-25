@@ -20,7 +20,7 @@ const fullArtist = {
 	},
 	performances: [
 		{
-			day: "sa",
+			dayIndex: 3,
 			start: "23:00",
 			end: "00:30",
 			stage: {
@@ -60,16 +60,31 @@ describe("artist schemas", () => {
 		expect(detail.links?.[0]?.title).toBe("Instagram");
 	});
 
-	it("rejects unknown performance days", () => {
+	it("rejects a programme day outside the range an edition can have", () => {
 		expect(() =>
-			zArtistList.parse([{ ...minimalArtist, performances: [{ day: "so" }] }]),
+			zArtistList.parse([
+				{ ...minimalArtist, performances: [{ dayIndex: 0 }] },
+			]),
+		).toThrow();
+		expect(() =>
+			zArtistList.parse([
+				{ ...minimalArtist, performances: [{ dayIndex: 8 }] },
+			]),
+		).toThrow();
+	});
+
+	it("rejects a performance with no programme day at all", () => {
+		expect(() =>
+			zArtistList.parse([
+				{ ...minimalArtist, performances: [{ start: "20:00" }] },
+			]),
 		).toThrow();
 	});
 
 	it("degrades a malformed set time to 'not announced' instead of throwing", () => {
 		// One editor typo must not take the whole lineup page down with it
 		const [artist] = zArtistList.parse([
-			{ ...minimalArtist, performances: [{ day: "sa", start: "23 Uhr" }] },
+			{ ...minimalArtist, performances: [{ dayIndex: 3, start: "23 Uhr" }] },
 		]);
 		expect(artist.performances?.[0]?.start).toBeNull();
 	});
@@ -93,7 +108,7 @@ describe("artist schemas", () => {
 describe("workshop schema", () => {
 	it("accepts a sparse workshop", () => {
 		expect(
-			zWorkshop.parse({ title: "Siebdruck", slug: "siebdruck" }).day,
+			zWorkshop.parse({ title: "Siebdruck", slug: "siebdruck" }).dayIndex,
 		).toBeUndefined();
 	});
 
@@ -103,7 +118,7 @@ describe("workshop schema", () => {
 			slug: "siebdruck",
 			host: "Mara",
 			description: { de: "Bring ein Shirt mit." },
-			day: "fr",
+			dayIndex: 2,
 			time: "11:00",
 			location: "Workshop-Zelt",
 		});

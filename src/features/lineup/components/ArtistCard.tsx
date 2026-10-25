@@ -14,13 +14,27 @@ function initials(name: string) {
 		.toUpperCase();
 }
 
-export function ArtistCard({ artist }: { artist: ArtistCardData }) {
-	return (
-		<Link
-			to="/artists/$slug"
-			params={{ slug: artist.slug }}
-			className="group block overflow-hidden rounded-xs border border-border bg-night-soft/50 no-underline transition-colors hover:border-glow/50"
-		>
+/**
+ * @param archiveYear links into the archive instead of the live lineup. A past
+ *   act's page lives under its year, because the same slug can belong to a
+ *   different booking in a different edition.
+ * @param time the act's set time, shown on archive cards where "when did they
+ *   play" is the thing people come back for. The live lineup leaves it to the
+ *   timetable.
+ */
+export function ArtistCard({
+	artist,
+	archiveYear,
+	time,
+}: {
+	artist: ArtistCardData;
+	archiveYear?: number;
+	time?: string | null;
+}) {
+	const className =
+		"group block overflow-hidden rounded-xs border border-border bg-night-soft/50 no-underline transition-colors hover:border-glow/50";
+	const body = (
+		<>
 			{artist.image ? (
 				<img
 					{...sanityImageProps(artist.image, 480, 640)}
@@ -36,6 +50,9 @@ export function ArtistCard({ artist }: { artist: ArtistCardData }) {
 			)}
 			<div className="p-4">
 				<h3 className="m-0 font-display text-xl text-moon">{artist.name}</h3>
+				{time && (
+					<p className="mt-1 mb-0 text-sm text-moon-dim tabular-nums">{time}</p>
+				)}
 				{artist.genres && artist.genres.length > 0 && (
 					<p className="mt-1 mb-0 text-sm text-glow-soft">
 						{artist.genres.join(", ")}
@@ -47,6 +64,27 @@ export function ArtistCard({ artist }: { artist: ArtistCardData }) {
 					</p>
 				)}
 			</div>
+		</>
+	);
+
+	// Two explicit Links rather than one with spread props: the router's types
+	// describe each route's params exactly, and a union of them is not a valid
+	// prop object
+	return archiveYear ? (
+		<Link
+			to="/archiv/$year/artists/$slug"
+			params={{ year: String(archiveYear), slug: artist.slug }}
+			className={className}
+		>
+			{body}
+		</Link>
+	) : (
+		<Link
+			to="/artists/$slug"
+			params={{ slug: artist.slug }}
+			className={className}
+		>
+			{body}
 		</Link>
 	);
 }

@@ -7,10 +7,16 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "#/components/ui/dialog";
-import { site } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 
-export function MittelgschaftlerDialog({ children }: { children: ReactNode }) {
+/** `email` is `site.mittelgschaftlerEmail`, passed in once the caller has checked it is set. */
+export function MittelgschaftlerDialog({
+	email,
+	children,
+}: {
+	email: string;
+	children: ReactNode;
+}) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>{children}</DialogTrigger>
@@ -24,10 +30,10 @@ export function MittelgschaftlerDialog({ children }: { children: ReactNode }) {
 					</DialogDescription>
 				</DialogHeader>
 				<p className="m-0 text-base text-moon-dim">
-					{m.mittel_dialog_invite({ email: site.mittelgschaftlerEmail })}
+					{m.mittel_dialog_invite({ email })}
 				</p>
 				<a
-					href={`mailto:${site.mittelgschaftlerEmail}?subject=${encodeURIComponent(m.mittel_mail_subject())}`}
+					href={`mailto:${email}?subject=${encodeURIComponent(m.mittel_mail_subject())}`}
 					className="mt-1 justify-self-start btn btn-primary no-underline"
 				>
 					{m.mittel_dialog_cta()}

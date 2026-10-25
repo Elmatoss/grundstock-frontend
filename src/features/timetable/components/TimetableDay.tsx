@@ -5,8 +5,9 @@ import { dayDateLabel, dayLabel } from "../lib/format";
 import type { DaySchedule } from "../lib/schedule";
 import { SlotRow, type SlotState, StageMarker } from "./SlotRow";
 
-export function dayAnchor(day: string) {
-	return `tag-${day}`;
+/** Anchor for a programme day. Numbered, since the weekday now varies by year. */
+export function dayAnchor(dayIndex: number) {
+	return `tag-${dayIndex}`;
 }
 
 /** Slug of the stage of the most recent act before `index`, if any. */
@@ -21,8 +22,8 @@ function lastActStage(schedule: DaySchedule, index: number) {
 /**
  * One festival day as a single chronological rail.
  *
- * All three days are always rendered — the whole programme has to be readable in
- * one scroll, so there are no tabs that hide two thirds of it. The day headers
+ * Every day is always rendered — the whole programme has to be readable in one
+ * scroll, so there are no tabs that hide most of it. The day headers
  * stick under the site header instead, which keeps you oriented while scrolling
  * through a night that runs to 05:00.
  */
@@ -55,16 +56,16 @@ export function TimetableDay({
 
 	return (
 		<section
-			id={dayAnchor(schedule.day)}
-			aria-labelledby={`${dayAnchor(schedule.day)}-heading`}
+			id={dayAnchor(schedule.dayIndex)}
+			aria-labelledby={`${dayAnchor(schedule.dayIndex)}-heading`}
 			className="tt-day scroll-mt-[calc(var(--header-height)+1rem)]"
 		>
 			<header className="sticky top-(--header-height) z-30 -mx-4 flex items-baseline gap-3 border-b border-border bg-night/85 px-4 py-3 backdrop-blur-md">
 				<h2
-					id={`${dayAnchor(schedule.day)}-heading`}
+					id={`${dayAnchor(schedule.dayIndex)}-heading`}
 					className="m-0 font-display text-2xl text-moon sm:text-3xl"
 				>
-					{dayLabel(schedule.day)}
+					{dayLabel(schedule.date)}
 				</h2>
 				<span className="text-xs tracking-widest text-moon-dim uppercase">
 					{dayDateLabel(schedule.date)}

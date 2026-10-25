@@ -52,12 +52,7 @@ export function AnreisePage() {
 			</a>
 
 			<Option index={1} title={m.anreise_shuttle_title()}>
-				<p className="m-0">
-					{m.anreise_shuttle_text({
-						stop: a.shuttleStop,
-						price: a.shuttlePriceEur,
-					})}
-				</p>
+				<p className="m-0">{m.anreise_shuttle_text({ stop: a.shuttleStop })}</p>
 				<div className="mt-6 max-w-none">
 					<ShuttleTables />
 				</div>

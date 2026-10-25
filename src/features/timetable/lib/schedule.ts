@@ -1,25 +1,23 @@
-import type {
-	ArtistCard,
-	FestivalDay,
-	Performance,
-} from "#/features/lineup/types";
+import { programmeDates } from "#/features/festival/lib/festival";
+import type { Edition } from "#/features/festival/types";
+import type { ArtistCard, Performance } from "#/features/lineup/types";
 import type { Workshop } from "#/features/workshops/types";
-import { site } from "#/lib/site";
 
 /**
  * Resolving the running order to real instants.
  *
- * The CMS stores a set as a festival day (`do`/`fr`/`sa`) plus wall-clock
- * `start`/`end` strings, because that is how the programme is actually written
- * down and how editors think: "Freitag, 01:15". Turning that into an instant
- * needs two rules, both encoded here and nowhere else:
+ * The CMS stores a set as a programme day number plus wall-clock `start`/`end`
+ * strings, because that is how the programme is actually written down and how
+ * editors think: "Freitag, 01:15". The day number is resolved to a calendar date
+ * against the edition (see #/features/festival/lib/festival), and turning that
+ * into an instant needs two rules, both encoded here and nowhere else:
  *
- *  1. A time before 06:00 belongs to the *night* of its festival day, so it
+ *  1. A time before 06:00 belongs to the *night* of its programme day, so it
  *     falls on the next calendar date — Thursday 01:10 is Friday morning.
  *  2. If a set's end lands at or before its start, it ran past midnight.
  *
- * The offset is hardcoded to CEST. These are three fixed days in August, so a
- * timezone database would buy nothing, and a fixed offset means every instant is
+ * The offset is hardcoded to CEST. The festival runs in August, so a timezone
+ * database would buy nothing here, and a fixed offset means every instant is
  * exact no matter what timezone the phone looking at the page is in. Displayed
  * times always come from the stored strings — never from `toLocaleTimeString`,
  * which would show festival times in the viewer's zone.
@@ -29,13 +27,7 @@ const NIGHT_ROLLOVER_HOUR = 6;
 const DAY_MS = 86_400_000;
 const MINUTE_MS = 60_000;
 
-export const FESTIVAL_DAYS = [
-	{ day: "do", date: "2026-08-13" },
-	{ day: "fr", date: "2026-08-14" },
-	{ day: "sa", date: "2026-08-15" },
-] as const satisfies readonly { day: FestivalDay; date: string }[];
-
-/** Berlin-local midnight that a festival day's wall clock counts from. */
+/** Berlin-local midnight that a programme day's wall clock counts from. */
 function midnight(date: string) {
 	return Date.parse(`${date}T00:00:00${CEST}`);
 }
@@ -67,7 +59,8 @@ export type Slot = {
 	/** stable across renders and unique within the festival */
 	key: string;
 	kind: SlotKind;
-	day: FestivalDay;
+	/** which programme day, 1-based */
+	dayIndex: number;
 	title: string;
 	/** artist detail page to link to; workshops have no page of their own */
 	artistSlug: string | null;
@@ -88,7 +81,7 @@ export type Slot = {
 };
 
 export type DaySchedule = {
-	day: FestivalDay;
+	dayIndex: number;
 	date: string;
 	slots: Slot[];
 	/** programme placed on this day whose time is not fixed yet */
@@ -115,11 +108,40 @@ const KIND_RANK: Record<SlotKind, number> = { act: 0, workshop: 1 };
  * Ordering is deterministic all the way down (time, then kind, then stage, then
  * title) so the page never reshuffles between renders.
  */
+/**
+ * The dates the programme is actually spread over.
+ *
+ * Normally just the edition's declared days. If a set is filed on a day beyond
+ * them — an editor typed 4 on a three-day edition, or extended the festival
+ * without updating `programmeDays` — the extra day is added rather than dropped:
+ * an unexpected day on the page is a visible mistake somebody fixes, whereas a
+ * set silently missing from the timetable is not.
+ */
+function scheduleDates(
+	edition: Edition,
+	artists: ArtistCard[],
+	workshops: Workshop[],
+) {
+	const declared = programmeDates(edition);
+	const highest = Math.max(
+		declared.length,
+		...artists.flatMap((artist) =>
+			(artist.performances ?? []).map((performance) => performance.dayIndex),
+		),
+		...workshops.map((workshop) => workshop.dayIndex ?? 0),
+	);
+	return highest > declared.length
+		? programmeDates({ ...edition, programmeDays: highest })
+		: declared;
+}
+
 export function buildSchedule(
 	artists: ArtistCard[],
 	workshops: Workshop[] = [],
+	edition: Edition,
 ): DaySchedule[] {
-	return FESTIVAL_DAYS.map(({ day, date }) => {
+	return scheduleDates(edition, artists, workshops).map((date, index) => {
+		const dayIndex = index + 1;
 		const slots: Slot[] = [];
 		const pending: DaySchedule["pending"] = [];
 
@@ -152,7 +174,7 @@ export function buildSchedule(
 			for (const [index, performance] of (
 				artist.performances ?? []
 			).entries()) {
-				if (performance.day !== day) continue;
+				if (performance.dayIndex !== dayIndex) continue;
 				const key = `act-${artist.slug}-${index}`;
 				if (!performance.start || !performance.end) {
 					pending.push({ key, title: artist.name, artistSlug: artist.slug });
@@ -162,7 +184,7 @@ export function buildSchedule(
 					{
 						key,
 						kind: "act",
-						day,
+						dayIndex,
 						title: artist.name,
 						artistSlug: artist.slug,
 						tags: artist.genres ?? [],
@@ -177,7 +199,7 @@ export function buildSchedule(
 		}
 
 		for (const workshop of workshops) {
-			if (workshop.day !== day) continue;
+			if (workshop.dayIndex !== dayIndex) continue;
 			const key = `workshop-${workshop.slug}`;
 			if (!workshop.start) {
 				pending.push({ key, title: workshop.title, artistSlug: null });
@@ -187,7 +209,7 @@ export function buildSchedule(
 				{
 					key,
 					kind: "workshop",
-					day,
+					dayIndex,
 					title: workshop.title,
 					artistSlug: null,
 					tags: [],
@@ -210,7 +232,7 @@ export function buildSchedule(
 		pending.sort((a, b) => a.title.localeCompare(b.title));
 
 		return {
-			day,
+			dayIndex,
 			date,
 			slots,
 			pending,
@@ -220,26 +242,6 @@ export function buildSchedule(
 			endAt: slots.reduce((latest, slot) => Math.max(latest, slot.endAt), 0),
 		};
 	});
-}
-
-/**
- * The window in which the site switches from "counting down" to "we are live".
- *
- * Deliberately independent of CMS data so the homepage can decide what to render
- * before any query resolves: it opens when the gates do (`site.festivalStart`)
- * and closes at 06:00 on the morning after the last night, an hour past the last
- * set. Sunday is teardown only.
- */
-export const FESTIVAL_MODE = {
-	start: Date.parse(site.festivalStart),
-	end:
-		midnight(FESTIVAL_DAYS[FESTIVAL_DAYS.length - 1].date) +
-		DAY_MS +
-		NIGHT_ROLLOVER_HOUR * 60 * MINUTE_MS,
-} as const;
-
-export function isFestivalMode(now: number) {
-	return now >= FESTIVAL_MODE.start && now < FESTIVAL_MODE.end;
 }
 
 /**
